@@ -1,0 +1,49 @@
+@import '../../assets/styles/common';
+
+.register {
+  &-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 54.5rem;
+    margin: auto;
+    background-size: cover;
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    float: right;
+  }
+
+  &__title {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 3rem;
+  }
+
+  &__subHeader {
+    font-style: italic;
+    font-size: 2rem;
+    color: $blue-light;
+  }
+
+  &-links {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    &__title {
+      margin-top: 0;
+      font-size: 2.4rem;
+    }
+
+    &__subHeader {
+      font-style: italic;
+      font-size: 2rem;
+    }
+  }
+}

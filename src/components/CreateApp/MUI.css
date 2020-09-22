@@ -1,0 +1,22 @@
+.card {
+  max-width: 285px;
+  filter: brightness(85%);
+}
+
+.selectOutline {
+  border-radius: 10px;
+}
+
+.select {
+  min-width: 290px;
+  font-size: 1.6rem;
+}
+
+.selectIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.selectBorder {
+  border: 2px #34ff34;
+}

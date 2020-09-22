@@ -1,0 +1,17 @@
+@import '../../assets/styles/common.scss';
+
+.footer {
+  width: 100%;
+  height: $height__footer;
+  padding: 1rem;
+  text-align: center;
+
+  &__copyright {
+    display: block;
+    white-space: pre;
+  }
+
+  .app__version {
+    color: $green;
+  }
+}

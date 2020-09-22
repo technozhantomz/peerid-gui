@@ -1,0 +1,51 @@
+@import '../../assets/styles/common.scss';
+
+.dropdown {
+  position: relative;
+  bottom: 3.2rem;
+  width: fit-content;
+  height: 10rem;
+  margin: 0 -3.8rem;
+
+  &__input {
+    bottom: 12rem;
+    left: 4.5rem;
+    width: 36rem;
+    height: 9rem;
+    padding: 0;
+    font-size: 2rem;
+    text-align: center;
+
+    &::before {
+      opacity: 0;
+    }
+
+    &::after {
+      opacity: 0;
+    }
+  }
+
+  &__row {
+    width: 45rem;
+    height: 14.7rem;
+  }
+
+  &__menuItem {
+    justify-content: center;
+    border: solid 1px transparent;
+    border-radius: 5px;
+    font-size: 2rem;
+    color: $white;
+    text-transform: capitalize;
+    background-size: 100% 5px;
+
+    &:hover {
+      border: solid 1px $eggshell;
+      border-radius: 5px;
+    }
+  }
+
+  @media only screen and (max-width: 1400px) {
+    bottom: 2.5rem;
+  }
+}

@@ -1,0 +1,74 @@
+@import '../../assets/styles/common.scss';
+
+.root, .modal-login {
+  border: 2px solid rgb(190, 195, 210);
+  border-radius: 3.5rem;
+}
+
+.modal-pill {
+  position: fixed;
+  z-index: 1500;
+  transform: translate(-1px, -6rem);
+  height: 6rem;
+  border-radius: 3rem 3rem 0 0;
+  background: #0071cb;
+}
+
+.modal-register {
+  width: 70rem;
+  margin: 0;
+  border: 2px solid rgb(190, 195, 210);
+  border-radius: 3.5rem;
+  background-color: $blue-green-light;
+}
+
+.modal-forgot {
+  width: 70rem;
+  border: 2px solid rgb(190, 195, 210);
+  border-radius: 3.5rem;
+}
+
+.modal-error {
+  width: 50rem;
+  max-width: 50rem;
+  border: 2px solid rgb(190, 195, 210);
+  box-shadow: 2px 6px 11px #000000bf;
+}
+
+.modal-reset {
+  width: 60rem;
+  max-width: 60rem;
+  border: 2px solid rgb(190, 195, 210);
+  box-shadow: 2px 6px 11px #000000bf;
+}
+
+.modal-peerplays {
+  width: 60rem;
+  border: 2px solid #ffffff;
+  border-radius: 2.5rem;
+  box-shadow: 2px 6px 11px #000000bf;
+  opacity: 1;
+}
+
+.modal-success {
+  width: 70rem;
+  border: 2px solid rgb(190, 195, 210);
+  box-shadow: 2px 6px 11px #000000bf;
+}
+
+.modal-login {
+  margin: 0;
+  background-color: $blue-green-light;
+}
+
+@media only screen and (max-width: 1400px) {
+  .modal-success {
+    width: 60rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .modal-peerplays {
+    min-width: 95%;
+  }
+}

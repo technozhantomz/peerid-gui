@@ -1,0 +1,73 @@
+.peerplays-auth {
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+
+  &-header {
+    font-style: italic;
+    font-size: 3.2rem;
+    text-transform: capitalize;
+    letter-spacing: 0;
+  }
+
+  &-form {
+    &__label {
+      margin-right: 2rem;
+    }
+
+    &__username {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    &__password {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
+
+    &__input {
+      align-items: center;
+      margin-right: 2rem;
+      font-size: 1.8rem;
+    }
+
+    &__submit {
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    &_button {
+      width: 29.8rem;
+      height: 6.5rem;
+    }
+
+    &__err {
+      width: 100%;
+      margin-top: 2rem;
+      margin-left: 10rem;
+      text-align: center;
+
+      span {
+        font-size: 1.6rem;
+        color: #f44336;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1400px) {
+    &-form {
+      &_button {
+        height: 7.5rem;
+      }
+    }
+  }
+}

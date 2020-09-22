@@ -1,0 +1,29 @@
+@import '../../assets/styles/common.scss';
+
+.navlink {
+  &-item {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 2rem;
+    color: $blue-light-one;
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 0;
+
+    &__active, &:hover {
+      color: $blue;
+    }
+
+    &--disabled {
+      @extend .navlink-item;
+
+      color: $gray;
+      cursor: not-allowed;
+    }
+
+    @media only screen and (max-width: 1400px) {
+      margin-top: 1.5rem;
+      font-size: 2rem;
+    }
+  }
+}

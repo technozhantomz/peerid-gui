@@ -1,0 +1,16 @@
+.input {
+  margin-top: -2.7rem;
+  color: black;
+}
+
+.inputRegister {
+  margin-top: -2.7rem;
+  font-family: 'Lato', sans-serif;
+  font-style: italic;
+  font-size: 1.8rem;
+}
+
+.inputRegister::placeholder {
+  color: rgb(51, 153, 255);
+  opacity: 1;
+}
