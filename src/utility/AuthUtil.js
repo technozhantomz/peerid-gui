@@ -15,10 +15,11 @@ const AuthUtil = {
    *
    * @param {string} platform - The platform to authenticate onauthentication is happening on - this is a workaround to only having one callback URL.
    * @param {string} page - The name of the page in which the page is redirected FROM.
+   * @param {string} query - Redirect uri, client id and state.
    * NOTE: The redirect URL after success/failed auth is set on the BACKEND, it cannot be controlled from the client.
    * @memberof AuthUtil
    */
-  authVia(platform, page) {
+  authVia(platform, page, query) {
     const supportedPlatforms = Config.supportedPlatforms;
     StorageUtil.set('se-platform', platform);
     StorageUtil.set('se-page', page);
@@ -28,11 +29,11 @@ const AuthUtil = {
 
       switch (platform) {
         case 'google':
-          authUrl = `${apiRoot}api/v1/auth/google`;
+          authUrl = `${apiRoot}api/v1/auth/google${query}`;
           window.location.assign(authUrl);
           break;
         case 'facebook':
-          authUrl = `${apiRoot}api/v1/auth/facebook`;
+          authUrl = `${apiRoot}api/v1/auth/facebook${query}`;
           window.location.assign(authUrl);
           break;
         default:

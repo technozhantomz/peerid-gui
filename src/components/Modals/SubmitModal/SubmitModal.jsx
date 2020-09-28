@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import {IconButton, Button} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
+import styles from './MUI.css';
 import {ModalActions, NavigateActions, AppActions} from '../../../actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -73,8 +75,6 @@ class SubmitModal extends Component {
     switch(redirect) {
       case RouteConstants.DASHBOARD:
         return this.props.navigateToDashboard();
-      case '/profile/2':
-        return this.props.navigateToCreateProfile('2');
       default:
         break;
     }
@@ -87,7 +87,7 @@ class SubmitModal extends Component {
   }
 
   render() {
-    const {headerText, subText, modalType, isSubmitModal} = this.props;
+    const {headerText, subText, modalType, isSubmitModal, classes} = this.props;
     return (
       <div className='submit-modal__wrapper'>
         <div className='submit-modal'>
@@ -107,7 +107,7 @@ class SubmitModal extends Component {
           </div>
           {/* 'OK' modal type === display ok button */}
           {modalType === 'OK' ?
-            <Button className='submit-modal__ok' onClick={ this.handleOkClicked }>
+            <Button classes={ {root: classes.button} } onClick={ this.handleOkClicked }>
               OK
             </Button>
             : null
@@ -124,7 +124,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     toggleModal: ModalActions.toggleModal,
     setModalData: ModalActions.setModalData,
     navigateToDashboard: NavigateActions.navigateToDashboard,
-    navigateToCreateProfile: NavigateActions.navigateToCreateProfile,
     logout: AppActions.logout
   },
   dispatch
@@ -147,4 +146,4 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SubmitModal);
+)(withStyles(styles)(SubmitModal));

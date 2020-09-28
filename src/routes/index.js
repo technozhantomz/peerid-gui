@@ -9,6 +9,7 @@ import Register from '../components/Register/Register';
 import ResetForm from '../components/ForgotPassword/ResetForm';
 import CreateApp from '../components/CreateApp';
 import {RouteConstants as Routes} from '../constants';
+import AppPermission from '../components/AppPermission';
 
 // https://github.com/supasate/connected-react-router/blob/master/examples/immutable/src/routes/index.js
 
@@ -23,6 +24,7 @@ const routes = (
       <Route path={ Routes.LOGIN } component={ Login }/>
       <Route path={ Routes.REGISTER } component={ Register }/>
       <Route path={ Routes.CREATE_APP } component={ CreateApp }/>
+      <Route path={ Routes.PERMISSIONS } component= { AppPermission }/>
     </Switch>
   </>
 );

@@ -174,6 +174,7 @@ class RegisterForm extends Component {
   };
 
   render() {
+    const {classes} = this.props;
     return (
       <>
         <form className='register-form' onSubmit={ this.handleSubmit }>
@@ -286,7 +287,7 @@ class RegisterForm extends Component {
             </span>
           </div>
           <div className='register__btn-container'>
-            <Button disabled={ this.state.registerDisabled } className='register__btn' type='submit' style={ {color: 'white'} } >
+            <Button disabled={ this.state.registerDisabled } type='submit' classes={ {root: classes.button} } >
               Register
             </Button>
           </div>

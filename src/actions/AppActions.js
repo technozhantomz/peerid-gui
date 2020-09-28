@@ -102,13 +102,18 @@ class AppActions {
    * Public Redux Action Creator.
    *
    * @param {object} account - {name: String, id: String}.
+   * @param {string} next - Redirect url.
    * @memberof AppActions
    * @returns {Dispatch}
    */
-  static login(account) {
+  static login(account, next) {
     return (dispatch) => {
       dispatch(AppPrivateActions.processLogin(account)).then(() => {
-        dispatch(NavigateActions.navigateToDashboard());
+        if(!next) {
+          dispatch(NavigateActions.navigateToDashboard());
+        } else {
+          dispatch(NavigateActions.navigate(next));
+        }
       }).catch((err) => {
         console.log('error in login: ' + err);
 

@@ -10,6 +10,8 @@ import {AuthService} from '../../services';
 import AuthFooter from './../Auth/AuthFooter';
 import {GenUtil, ValidationUtil} from '../../utility';
 import {InvalidIcon} from '../../assets/images';
+import {withStyles} from '@material-ui/core/styles';
+import styles from './MUI.css';
 import CustomInput from '../CustomInput';
 import {IconButton} from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
@@ -87,6 +89,7 @@ class ForgotPassword extends Component {
   };
 
   render() {
+    const {classes} = this.props;
     return (
       <>
         <IconButton className='forgot__back' aria-label='Back' onClick={ this.back }>
@@ -127,7 +130,7 @@ class ForgotPassword extends Component {
             {this.state.validation && this.state.showText ? <span className={ `forgot-result${this.state.resultStatus}` }>{this.state.resultText}</span> :
               null
             }
-            <Button disabled={ this.state.btnDisable } type='submit' style={ {color: 'white'} }>
+            <Button disabled={ this.state.btnDisable } type='submit' classes={ {root: classes.button} }>
               Reset Password
             </Button>
           </div>
@@ -144,4 +147,4 @@ ForgotPassword.propTypes = {
   prev: PropTypes.string
 };
 
-export default withRouter(ForgotPassword);
+export default withRouter(withStyles(styles)(ForgotPassword));

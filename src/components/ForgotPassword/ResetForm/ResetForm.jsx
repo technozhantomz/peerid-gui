@@ -7,7 +7,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Button, FormControl, Card} from '@material-ui/core';
 import querystring from 'query-string';
-
+import {withStyles} from '@material-ui/core/styles';
+import styles from './MUI.css';
 import {AuthService, ProfileService} from '../../../services';
 import {NavigateActions, AccountActions, ModalActions} from '../../../actions';
 import {ValidationUtil, GenUtil} from '../../../utility';
@@ -109,6 +110,7 @@ class ResetForm extends Component {
   };
 
   render() {
+    const {classes} = this.props;
     return (
       <div className='reset'>
         <Card className='reset-card'>
@@ -160,7 +162,7 @@ class ResetForm extends Component {
             </FormControl>
 
             <div className='reset__btn-container'>
-              <Button className='reset__btn' type='submit'
+              <Button classes={ {root: classes.button} } type='submit'
                 disabled={ this.state.passwordErr.success  && this.state.isPasswordInputClicked && this.state.isConfirmPasswordConfirmed ? false : true }>
                 Change Password
               </Button>
@@ -190,4 +192,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
 export default connect(
   null,
   mapDispatchToProps
-)(withRouter(ResetForm));
+)(withRouter(withStyles(styles)(ResetForm)));

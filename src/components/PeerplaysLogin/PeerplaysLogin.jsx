@@ -31,8 +31,6 @@ class PeerplaysLogin extends Component {
           <img
             src={ peerplaysImg2X }
             alt='Peerplays Global'
-            // width='360'
-            // height='90'
             className='peerplayslogin-page__logo'
             onMouseOver={ (e) => (e.currentTarget.src = peerplaysImg2X) }
             onMouseOut={ (e) => (e.currentTarget.src = peerplaysImg2X) }

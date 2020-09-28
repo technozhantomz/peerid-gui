@@ -7,5 +7,6 @@ export default {
   PEERPLAYS_WALLET_LOGIN: '/peerplays',
   LOGIN: '/login',
   REGISTER: '/signup',
-  CREATE_APP: '/create-app'
+  CREATE_APP: '/create-app',
+  PERMISSIONS: '/permissions'
 };

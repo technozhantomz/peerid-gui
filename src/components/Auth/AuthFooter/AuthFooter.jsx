@@ -19,6 +19,16 @@ const translate = GenUtil.translate;
 // Auth footer component, contains third party auth services banner
 // TODO: refactor, remove inline functions
 class AuthFooter extends Component {
+  state = {
+    query: ''
+  };
+
+  componentDidMount() {
+    this.setState({
+      query: this.props.location.search
+    });
+  }
+
   render() {
     return (
       <div className='auth-footer'>
@@ -30,7 +40,7 @@ class AuthFooter extends Component {
               alt='facebook'
               onMouseOver={ (e) => (e.currentTarget.src = facebookImg) }
               onMouseOut={ (e) => (e.currentTarget.src = facebookImgBlue) }
-              onClick={ () => AuthUtil.authVia('facebook', this.props.location.pathname) } // TODO: refactor to use redux path.
+              onClick={ () => AuthUtil.authVia('facebook', this.props.location.pathname, this.state.query) } // TODO: refactor to use redux path.
             />
           </div>
           <div className='youtube'>
@@ -39,7 +49,7 @@ class AuthFooter extends Component {
               alt='youtube'
               onMouseOver={ (e) => (e.currentTarget.src = youtubeImg) }
               onMouseOut={ (e) => (e.currentTarget.src = youtubeImgBlue) }
-              onClick={ () => AuthUtil.authVia('google', this.props.location.pathname) } // TODO: refactor to use redux path.
+              onClick={ () => AuthUtil.authVia('google', this.props.location.pathname, this.state.query) } // TODO: refactor to use redux path.
             />
           </div>
           <div className='peerplays'>

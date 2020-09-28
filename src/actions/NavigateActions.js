@@ -31,6 +31,8 @@ class NavigateActions {
    * @memberof NavigateActions
    */
   static noValidPathRedirect() {
+    console.log('no valid redirect path');
+
     return (dispatch) => {
       dispatch(replace(Routes.DASHBOARD));
     };
@@ -94,6 +96,21 @@ class NavigateActions {
       } else {
         dispatch(push(url));
       }
+    };
+  }
+
+  /**
+   * If the user attempts to view a page they need authentication for, redirect them to the sign in page and then to the page they initially tried to view after authenticated.
+   *
+   * @static
+   * @param {string} [redirect=null] - The destination to redirect to after the user has logged in.
+   * @returns {Dispatch}
+   * @memberof NavigateActions
+   */
+  static navigateToPermissions(redirect = null) {
+    return (dispatch) => {
+      let url = redirect? `/permissions${redirect}` : Routes.PERMISSIONS;
+      dispatch(push(url));
     };
   }
 

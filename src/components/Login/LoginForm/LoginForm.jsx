@@ -5,7 +5,9 @@ import React, {Component} from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
-import {AuthService, ProfileService} from '../../../services/';
+import {withStyles} from '@material-ui/core/styles';
+import styles from './MUI.css';
+import {AuthService} from '../../../services/';
 import {GenUtil, ValidationUtil} from '../../../utility';
 import CustomInput from '../../CustomInput';
 import {InvalidIcon} from '../../../assets/images';
@@ -25,6 +27,14 @@ class LoginForm extends Component {
     }
   };
 
+  componentDidMount() {
+    if(this.props.next) {
+      this.setState({
+        next: this.props.next.substr(6)
+      });
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
 
@@ -41,7 +51,7 @@ class LoginForm extends Component {
       password: this.state.password
     };
 
-    this.props.handleLogin(account);
+    this.props.handleLogin(account, this.state.next);
   };
 
   handleUsernameChange = (user) => {
@@ -62,15 +72,13 @@ class LoginForm extends Component {
     AuthService.logout();
   };
 
-  getProfile = () => {
-    ProfileService.getProfile();
-  };
-
   allowLogin = () => {
     return (this.state.errors.username === null && this.state.errors.password === null) && (this.state.username.length && this.state.password.length);
   };
 
   render() {
+    const {classes} = this.props;
+
     const isDisabled = () => {
       const {username, password, errors} = this.state;
       return username.length < 1 || password < 1 || !!errors.username || !!errors.password;
@@ -133,15 +141,15 @@ class LoginForm extends Component {
             </span>
           </span>
           <div className='login__btn-container'>
-            <Button disabled={ isDisabled() } className='login__btn' type='submit' style={ {color: 'white'} }>
+            <Button disabled={ isDisabled() } type='submit' classes={ {root: classes.button} }>
               Login
             </Button>
           </div>
-          <LoginFooter/>
+          <LoginFooter />
         </form>
       </>
     );
   }
 }
 
-export default LoginForm;
+export default withStyles(styles)(LoginForm);

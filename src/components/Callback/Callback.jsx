@@ -24,6 +24,7 @@ class Callback extends Component {
   // Handle callback based on type passed
   handleCallback = async () => {
     const path = this.props.location;
+    const query = window.location.href.substr(window.location.href.lastIndexOf('?'));
     const pathAry = path.split('/');
     let lastAccessedPage = StorageUtil.get('se-page');
     let cb = pathAry[2] ? pathAry[2] : lastAccessedPage.split('/')[1];
@@ -46,22 +47,27 @@ class Callback extends Component {
           break;
         }
 
-        case 'reset-password': {
+        case 'reset-password':
           this.props.navigateToPasswordReset(pathAry[3]);
           break;
-        }
 
-        case 'login': {
+        case 'permissions': {
+          const response = await ProfileService.getProfile();
+          this.props.setAccount(response);
+          this.props.setLoggedIn(true);
+          this.props.navigateToPermissions(query);
           break;
         }
 
-        default: {
+        case 'login':
+          break;
+
+        default:
           const response = await ProfileService.getProfile();
           this.props.setAccount(response);
           this.props.setLoggedIn(true);
           this.props.navigateToDashboard();
           break;
-        }
       }
     }catch (e) {
       console.log(e);
@@ -97,6 +103,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     setLoggedIn: AccountActions.setIsLoggedInAction,
     navigateToDashboard: NavigateActions.navigateToDashboard,
     navigateToPasswordReset: NavigateActions.navigateToPasswordReset,
+    navigateToPermissions: NavigateActions.navigateToPermissions,
     navigate: NavigateActions.navigate,
     setAccount: AccountActions.setAccountAction,
     setModalData: ModalActions.setModalData,

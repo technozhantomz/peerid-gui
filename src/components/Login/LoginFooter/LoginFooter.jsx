@@ -17,6 +17,19 @@ import {ModalActions} from '../../../actions';
 const translate = GenUtil.translate;
 
 class LoginFooter extends Component {
+  state = {
+    query: ''
+  };
+
+  componentDidMount() {
+    if(this.props.location.search) {
+      const qs = this.props.location.search.substr(this.props.location.search.lastIndexOf('?'));
+      this.setState({
+        query: qs
+      });
+    }
+  }
+
   render() {
     return (
       <div className='login-footer'>
@@ -28,7 +41,7 @@ class LoginFooter extends Component {
               alt='facebook'
               onMouseOut={ (e) => (e.currentTarget.src = facebookImgBlue) }
               onMouseOver={ (e) => (e.currentTarget.src = facebookImg) }
-              onClick={ () => AuthUtil.authVia('facebook', this.props.location.pathname) }
+              onClick={ () => AuthUtil.authVia('facebook', this.props.location.pathname, this.state.query) }
             />
           </div>
           <div className='login-youtube'>
@@ -37,7 +50,7 @@ class LoginFooter extends Component {
               alt='youtube'
               onMouseOut={ (e) => (e.currentTarget.src = youtubeImgBlue) }
               onMouseOver={ (e) => (e.currentTarget.src = youtubeImg) }
-              onClick={ () => AuthUtil.authVia('google', this.props.location.pathname) }
+              onClick={ () => AuthUtil.authVia('google', this.props.location.pathname, this.state.query) }
             />
           </div>
           <div className='login-peerplays'>

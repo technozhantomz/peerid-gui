@@ -37,6 +37,28 @@ class PrivateProfileService {
   }
 
   /**
+   * Retrieves information on the currently logged in user's permission.
+   *
+   * @returns {Promise} A promise that resolves to a permission object.
+   */
+  static getPermission() {
+    const query = `${apiRoot}api/v1/profile/permission`;
+    return new Promise(async(resolve, reject) => {
+      try{
+        const response = await ApiHandler.get(query);
+
+        if (response.data.status !== 200) {
+          return reject(response);
+        }
+
+        return resolve(response.data.result);
+      }catch(err) {
+        return reject(err.response);
+      }
+    });
+  }
+
+  /**
    * Changes the user's email.
    *
    * @static
@@ -79,6 +101,10 @@ class ProfileService {
    */
   static getProfile() {
     return GenUtil.dummyDataWrapper(PrivateProfileService.getProfile());
+  }
+
+  static getPermission() {
+    return GenUtil.dummyDataWrapper(PrivateProfileService.getPermission());
   }
 
   static changeEmail(token) {

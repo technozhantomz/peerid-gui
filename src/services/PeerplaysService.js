@@ -2,11 +2,8 @@ import {
   Apis,
   Login,
   ChainStore,
-  ConnectionManager,
-  TransactionBuilder
+  ConnectionManager
 } from 'peerplaysjs-lib';
-import BigNumber from 'bignumber.js';
-import {listenChainStore} from './ChainStoreService';
 import PeerplaysActions from '../actions/PeerplaysActions';
 import ChainStoreHeartbeater from '../utility/PeerplaysUtil/ChainStoreHeartbeater';
 import Config from '../utility/Config';
@@ -15,7 +12,6 @@ import log from 'loglevel';
 import BlockchainUtils from '../utility/PeerplaysUtil/BlockchainUtils';
 
 const MAX_RECURSION_ATTEMPTS = 10;
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const endpointsGist = 'https://api.github.com/gists/024a306a5dc41fd56bd8656c96d73fd0';
 
 /**
@@ -74,9 +70,6 @@ class PeerplaysService {
       // the blockchain.
       ChainStore
         .init()
-        .then(() => {
-          listenChainStore(ChainStore, store);
-        })
         .catch((err) => {
           console.error('error: ',err);//TODO: real error handling for production
         });
@@ -96,13 +89,6 @@ class PeerplaysService {
         store.dispatch(PeerplaysActions.setPeerplaysPrecision(this.balancePrecision));
       }).catch(() => {
         //disconnect since we are not synced
-        this.closeConnectionToBlockchain();
-        this.delayedInit();
-      });
-
-      this.getTransferFee().then((fee)=> {
-        store.dispatch(PeerplaysActions.setPeerplaysTransferFee(fee));
-      }).catch(()=> {
         this.closeConnectionToBlockchain();
         this.delayedInit();
       });
@@ -373,20 +359,6 @@ class PeerplaysService {
   }
 
   /**
-   * Get the transfer transaction fee from the blockchain for the provided currency.
-   *
-   * @returns {number} TransferFee for the transactions.
-   * @memberof PeerplaysService
-   */
-  getTransferFee() {
-    return this.callBlockchainDbApi('get_required_fees', [[[0]], Config.sUSD]).then((result) => {
-      const transferFee = this.formatBalance(result.getIn([0,'amount']));
-      // Return the transfer fee
-      return transferFee;
-    });
-  }
-
-  /**
    * Using provided paramters, retrieves key auths from blockchain account data passed in and then checks for a match with form generated keys with aid from peerplaysjs-lib against blockchain keys.
    *
    * @param {*} fullAccount - Received from @AuthActions processLogin.
@@ -415,56 +387,6 @@ class PeerplaysService {
     return isAuth;
   }
 
-  /**
-   * Create transaction with logged user's ppyAccountName and password.
-   *
-   * @param {string} peerplaysAccountUsername - Username for peerplays account.
-   * @param {string} peerplaysAccountPassword - Password for peerplays account.
-   * @param {string} depositAccountId - Account Id in which the amount has to be deposited.
-   * @param {number} ppyAmount - Total transaction fee.
-   * @returns {string} Stringify of transaction.
-   * @memberof PeerplaysService
-   */
-  async createTransaction(peerplaysAccountUsername, peerplaysAccountPassword, depositAccountId, ppyAmount) {
-    const x = new BigNumber(ppyAmount);
-    const amount = x.shiftedBy(this.balancePrecision || 8);
-    const peerplaysAccount = await this.getFullAccount(peerplaysAccountUsername);
-    const peerplaysAccountId = peerplaysAccount.getIn(['account', 'id']);
-    const tr = new TransactionBuilder();
-    const keys = Login.generateKeys(
-      peerplaysAccountUsername,
-      peerplaysAccountPassword,
-      ['owner', 'active'],
-      IS_PRODUCTION ? 'PPY' : 'BTF'
-    );
-
-    try {
-      tr.add_type_operation('transfer', {
-        fee: {
-          amount: 0,
-          asset_id: Config.sUSD
-        },
-        from: peerplaysAccountId,
-        to: depositAccountId,
-        amount: {
-          amount: amount.toNumber(),
-          asset_id: Config.sUSD
-        }
-      });
-
-      await tr.set_required_fees();
-      tr.add_signer(keys.privKeys.active, keys.pubKeys.active);
-    } catch (err) {
-      throw err;
-    }
-
-    await tr.serialize();
-    await tr.finalize();
-    await tr.sign();
-
-    return JSON.stringify(tr.toObject());
-  }
-
   setDefaultRpcConnectionStatusCallback(callback) {
     return Apis
       .instance()
@@ -488,7 +410,7 @@ class PeerplaysService {
     }
 
     // Request object 2.1.0, 2.0.0, and the asset object.
-    return this.callBlockchainDbApi('get_objects', [['2.1.0', '2.0.0', Config.sUSD]])
+    return this.callBlockchainDbApi('get_objects', [['2.1.0', '2.0.0', '1.3.0']])
       .then((result) => {
         let isBlockchainTimeDifferenceAcceptable = false;
         const blockchainDynamicGlobalProperty = result.get(0);

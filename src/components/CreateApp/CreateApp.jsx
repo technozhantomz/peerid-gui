@@ -45,58 +45,62 @@ class CreateApp extends Component {
   };
 
   componentDidMount() {
-    if(this.state.countrySelected !== '') {
-      const operations = Object.keys(ChainTypes.operations).map((op) => {
-        return {
-          name: op,
-          id: ChainTypes.operations[op]
-        };
-      });
-      this.setState({
-        operations,
-        countryList: csc.getAllCountries(),
-        provinceList: csc.getStatesOfCountry(this.state.countrySelected)
-      });
+    if(!this.props.isLoggedIn) {
+      this.props.navigateToSignIn();
     } else {
-      const operations = Object.keys(ChainTypes.operations).map((op) => {
-        return {
-          name: op,
-          id: ChainTypes.operations[op]
-        };
-      });
-      this.setState({
-        operations,
-        countryList: csc.getAllCountries()
-      });
-    }
+      if(this.state.countrySelected !== '') {
+        const operations = Object.keys(ChainTypes.operations).map((op) => {
+          return {
+            name: op,
+            id: ChainTypes.operations[op]
+          };
+        });
+        this.setState({
+          operations,
+          countryList: csc.getAllCountries(),
+          provinceList: csc.getStatesOfCountry(this.state.countrySelected)
+        });
+      } else {
+        const operations = Object.keys(ChainTypes.operations).map((op) => {
+          return {
+            name: op,
+            id: ChainTypes.operations[op]
+          };
+        });
+        this.setState({
+          operations,
+          countryList: csc.getAllCountries()
+        });
+      }
 
-    if(this.props.location.state) {
-      const data = this.props.location.state;
-      console.log(data);
-      let countryId = csc.getAllCountries().find((c) => c.name === data.country).id;
-      this.setState({
-        provinceList: csc.getStatesOfCountry(countryId)
-      });
+      if(this.props.location.state) {
+        const data = this.props.location.state;
+        let countryId = csc.getAllCountries().find((c) => c.name === data.country).id;
+        this.setState({
+          provinceList: csc.getStatesOfCountry(countryId)
+        });
 
-      let provinceId = csc.getStatesOfCountry(countryId).find((p) => p.name === data.province).id;
+        let provinceId = csc.getStatesOfCountry(countryId).find((p) => p.name === data.province).id;
 
-      this.setState({
-        appId: data.id,
-        appName: data.appname,
-        description: data.description,
-        organizationName: data.organization_name,
-        countrySelected: countryId,
-        addressLine1: data.address_line1,
-        addressLine2: data.address_line2,
-        city: data.city,
-        provinceSelected: provinceId,
-        postalCode: data.postal_code,
-        contact: data.contactname,
-        email: data.email,
-        phone: data.phone,
-        domains: data.domains.join(),
-        operationsSelected: data.operations
-      });
+        this.setState({
+          appId: data.id,
+          appName: data.appname,
+          description: data.description,
+          organizationName: data.organization_name,
+          countrySelected: countryId,
+          addressLine1: data.address_line1,
+          addressLine2: data.address_line2,
+          city: data.city,
+          provinceSelected: provinceId,
+          postalCode: data.postal_code,
+          contact: data.contactname,
+          email: data.email,
+          phone: data.phone,
+          domains: data.domains.join(),
+          operationsSelected: data.operations,
+          btnDisable: !this.validate()
+        });
+      }
     }
   }
 
@@ -224,16 +228,24 @@ class CreateApp extends Component {
   selectCountry = (e) => {
     this.setState({
       countrySelected: e.target.value,
-      provinceList: csc.getStatesOfCountry(e.target.value)
+      provinceSelected: '',
+      provinceList: csc.getStatesOfCountry(e.target.value),
+      btnDisable: !this.validate()
     });
   }
 
   selectRegion = (e) => {
-    this.setState({provinceSelected: e.target.value});
+    this.setState({
+      provinceSelected: e.target.value,
+      btnDisable: !this.validate()
+    });
   }
 
   selectOperations = (e) => {
-    this.setState({operationsSelected: e.target.value});
+    this.setState({
+      operationsSelected: e.target.value,
+      btnDisable: !this.validate()
+    });
   }
 
   handleSubmit = async (e) => {
@@ -564,7 +576,7 @@ class CreateApp extends Component {
               </Select>
             </FormControl>
             <div className='login__btn-container'>
-              <Button disabled={ this.state.btnDisable } className='createapp__btn' type='submit' style={ {color: 'white'} } onClick={ this.handleSubmit }>
+              <Button disabled={ this.state.btnDisable } classes={ {root: classes.button} } type='submit' onClick={ this.handleSubmit }>
                 Reset Password
               </Button>
             </div>
@@ -575,15 +587,20 @@ class CreateApp extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['profiles', 'isLoggedIn'])
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    navigateToDashboard: NavigateActions.navigateToDashboard
+    navigateToDashboard: NavigateActions.navigateToDashboard,
+    navigateToSignIn: NavigateActions.navigateToSignIn
   },
   dispatch
 );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(CreateApp));

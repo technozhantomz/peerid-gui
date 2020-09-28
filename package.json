@@ -121,6 +121,7 @@
     "loglevel": "^1.6.2",
     "moment": "^2.24.0",
     "peerplaysjs-lib": "https://gitlab.com/PBSA/PeerplaysIO/tools-libs/peerplaysjs-lib.git#role-based-permissions",
+    "psl": "^1.8.0",
     "query-string": "^6.11.0",
     "react": "^16.8.6",
     "react-async-script-loader": "^0.3.0",

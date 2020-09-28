@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {FormControl, Button} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
+import styles from './MUI.css';
 import {GenUtil} from '../../../utility';
 import {AuthService} from '../../../services';
 import {ModalTypes} from '../../../constants';
@@ -150,7 +152,7 @@ class PeerplaysLoginForm extends Component {
   };
 
   render() {
-
+    const {classes} = this.props;
     return (
       <>
         <form className='peerplayslogin-form' onSubmit={ this.handleSubmit }>
@@ -192,7 +194,7 @@ class PeerplaysLoginForm extends Component {
             {this.state.errors.username}
           </div>
           <div className='peerplayslogin__btn-container'>
-            <Button disabled={ this.isDisabled() } className='peerplayslogin__btn' type='submit' style={ {color: 'white'} }>
+            <Button disabled={ this.isDisabled() }  type='submit' classes={ {root: classes.button} }>
               Login
             </Button>
           </div>
@@ -225,4 +227,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
 export default connect(
   null,
   mapDispatchToProps
-)(PeerplaysLoginForm);
+)(withStyles(styles)(PeerplaysLoginForm));

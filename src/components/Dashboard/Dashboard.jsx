@@ -95,13 +95,17 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
-    AppService.getApps().then((res) => {
-      this.setState({
-        data: res
+    if(!this.props.isLoggedIn) {
+      this.props.navigateToSignIn();
+    } else {
+      AppService.getApps().then((res) => {
+        this.setState({
+          data: res
+        });
+      }).catch((err) => {
+        console.error(err);
       });
-    }).catch((err) => {
-      console.error(err);
-    });
+    }
   }
 
   render() {
@@ -136,15 +140,20 @@ class Dashboard extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['profiles', 'isLoggedIn'])
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
-    navigateToCreateApp: NavigateActions.navigateToCreateApp
+    navigateToCreateApp: NavigateActions.navigateToCreateApp,
+    navigateToSignIn: NavigateActions.navigateToSignIn
   },
   dispatch
 );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(Dashboard));
