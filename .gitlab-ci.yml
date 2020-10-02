@@ -1,0 +1,24 @@
+# gitlab scanning
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Management.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
+  - template: Code-Quality.gitlab-ci.yml
+
+retire-js-dependency_scanning:
+  before_script:
+    - apk add autoconf libtool automake
+
+# node docker image on which this would be run
+image: node:12.18.4
+
+stages:
+  - test
+
+# builds app
+build:
+  stage: test
+  script:
+    - npm install
+  tags:
+    - docker
