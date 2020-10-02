@@ -141,7 +141,7 @@ module.exports = {
     new Clean(),
     new webpack.ProgressPlugin((percentage, msg) => {
       process.stdout.write(chalk.green(
-        (percentage * 100).toFixed(2) + '% ' + msg + '                 \033[0G'
+        (percentage * 100).toFixed(2) + '% ' + msg + '                   \n'
       ));
     }),
     new StyleLintPlugin({
