@@ -267,14 +267,12 @@ class CreateApp extends Component {
         address_line1: this.state.addressLine1,
         contactname: this.state.contact,
         phone: this.state.phone,
-        operations: this.state.operationsSelected
+        operations: [],
+        domains: []
       };
 
-      if(this.state.domains.indexOf(',') >= 0) {
-        app.domains = this.state.domains.split(',');
-      } else {
-        app.domains = [this.state.domains];
-      }
+      app.domains.push(this.state.domains.split(','));
+      app.operations.push(this.state.operationsSelected);
 
       if(this.state.addressLine2 && this.state.addressLine2.length > 0) {
         app.address_line2 = this.state.addressLine2;
@@ -296,7 +294,7 @@ class CreateApp extends Component {
       if(err.status === 400 && typeof err.data.error !== 'string') {
         let errText = '';
         Object.keys(err.data.error).map((key)=>{
-          errText += err.data.error[key];
+          errText += `${key}: ${err.data.error[key]}\n`;
           return null;
         });
         this.setState({
@@ -380,15 +378,17 @@ class CreateApp extends Component {
               />
             </FormControl>
             <FormControl variant='outlined' margin='normal'>
-              <InputLabel id='countrylabel'>Country</InputLabel>
+              <InputLabel classes={ {root: classes.selectlabel} } id='countrylabel'>Country</InputLabel>
               <Select
                 labelId='countrylabel'
                 id='country'
                 classes={ {
                   root: classes.select,
-                  outlined: classes.selectOutline,
-                  icon: classes.selectIcon
+                  icon: classes.selectIcon,
+                  outlined: classes.selectOutline
                 } }
+                className='createapp__textfield'
+                MenuProps={ {classes: {paper: classes.menuitem}} }
                 value={ countrySelected }
                 onChange={ this.selectCountry }
               >
@@ -449,7 +449,7 @@ class CreateApp extends Component {
               />
             </FormControl>
             <FormControl variant='outlined' margin='normal'>
-              <InputLabel id='statelabel'>Province/State</InputLabel>
+              <InputLabel classes={ {root: classes.selectlabel} } id='statelabel'>Province/State</InputLabel>
               <Select
                 labelId='statelabel'
                 id='state'
@@ -458,7 +458,8 @@ class CreateApp extends Component {
                   outlined: classes.selectOutline,
                   icon: classes.selectIcon
                 } }
-                MenuProps={ {} }
+                className='createapp__textfield'
+                MenuProps={ {classes: {paper: classes.menuitem}} }
                 value={ provinceSelected }
                 onChange={ this.selectRegion }
               >
@@ -536,6 +537,28 @@ class CreateApp extends Component {
                 } }
               />
             </FormControl>
+            <FormControl variant='outlined' margin='normal'>
+              <InputLabel classes={ {root: classes.selectlabel} } id='operationslabel'>Operations</InputLabel>
+              <Select
+                labelId='operationslabel'
+                id='operations'
+                multiple
+                classes={ {
+                  root: classes.select,
+                  outlined: classes.selectOutline,
+                  icon: classes.selectIcon
+                } }
+                className='createapp__textfield'
+                MenuProps={ {classes: {paper: classes.menuitem}} }
+                value={ operationsSelected }
+                onChange={ this.selectOperations }
+              >
+                <MenuItem value=''>
+                  <em>None</em>
+                </MenuItem>
+                {operations && operations.map(({name, id}) => <MenuItem key={ id } value={ id }>{ name }</MenuItem>)}
+              </Select>
+            </FormControl>
             <FormControl className='login-form__input' margin='normal' required>
               <CustomInput
                 name='domains'
@@ -555,29 +578,11 @@ class CreateApp extends Component {
                 } }
               />
             </FormControl>
-            <FormControl variant='outlined' margin='normal'>
-              <InputLabel id='operationslabel'>Operations</InputLabel>
-              <Select
-                labelId='operationslabel'
-                id='operations'
-                multiple
-                classes={ {
-                  root: classes.select,
-                  outlined: classes.selectOutline,
-                  icon: classes.selectIcon
-                } }
-                value={ operationsSelected }
-                onChange={ this.selectOperations }
-              >
-                <MenuItem value=''>
-                  <em>None</em>
-                </MenuItem>
-                {operations && operations.map(({name, id}) => <MenuItem key={ id } value={ id }>{ name }</MenuItem>)}
-              </Select>
-            </FormControl>
+
+            <span className='register__apiTxt--error'>{this.state.errorMessage}</span>
             <div className='login__btn-container'>
               <Button disabled={ this.state.btnDisable } classes={ {root: classes.button} } type='submit' onClick={ this.handleSubmit }>
-                Reset Password
+                Create App
               </Button>
             </div>
           </form>

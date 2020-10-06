@@ -120,7 +120,7 @@
     "lodash": "^4.17.15",
     "loglevel": "^1.6.2",
     "moment": "^2.24.0",
-    "peerplaysjs-lib": "https://gitlab.com/PBSA/PeerplaysIO/tools-libs/peerplaysjs-lib.git#role-based-permissions",
+    "peerplaysjs-lib": "https://gitlab.com/PBSA/PeerplaysIO/tools-libs/peerplaysjs-lib.git#account-roles",
     "psl": "^1.8.0",
     "query-string": "^6.11.0",
     "react": "^16.8.6",

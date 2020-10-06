@@ -32,7 +32,7 @@ const useRowStyles = makeStyles({
   }
 });
 
-const Row = ({row, classes, edit}) => {
+const Row = ({row, classes, edit, deleteApp}) => {
   const [open, setOpen] = React.useState(false);
   const classRow = useRowStyles();
 
@@ -43,7 +43,7 @@ const Row = ({row, classes, edit}) => {
   );
 
   let deleteButton = (
-    <span className='header__link'>
+    <span className='header__link' onClick={ () => deleteApp(row) }>
       {translate('dashboard.tableLinks.delete')}
     </span>
   );
@@ -108,6 +108,18 @@ class Dashboard extends Component {
     }
   }
 
+  deleteApp(app) {
+    AppService.deleteApp(app.id).then(() => {
+      AppService.getApps().then((res) => {
+        this.setState({
+          data: res
+        });
+      });
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
   render() {
     const {classes, navigateToCreateApp} = this.props;
     return (
@@ -130,7 +142,7 @@ class Dashboard extends Component {
             </TableHead>
             <TableBody>
               {this.state.data.map((row) => (
-                <Row key={ row.id } row={ row } classes={ classes } edit={ navigateToCreateApp }/>
+                <Row key={ row.id } row={ row } classes={ classes } edit={ navigateToCreateApp } deleteApp={ this.deleteApp }/>
               ))}
             </TableBody>
           </Table>

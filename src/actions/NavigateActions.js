@@ -52,6 +52,19 @@ class NavigateActions {
   }
 
   /**
+   * Navigate the user to the account page.
+   *
+   * @static
+   * @returns {Dispatch}
+   * @memberof NavigateActions
+   */
+  static navigateToAccount() {
+    return (dispatch) => {
+      dispatch(push('/account'));
+    };
+  }
+
+  /**
    * Navigate the user to the sign up page.
    *
    * @static

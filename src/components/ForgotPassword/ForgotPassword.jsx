@@ -15,7 +15,6 @@ import styles from './MUI.css';
 import CustomInput from '../CustomInput';
 import {IconButton} from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import {ModalTypes} from '../../constants';
 import PropTypes from 'prop-types';
 
 const translate = GenUtil.translate;
@@ -48,9 +47,7 @@ class ForgotPassword extends Component {
   };
 
   back = () => {
-    if (this.props.prev in ModalTypes) {
-      this.props.setModalType(this.props.prev);
-    }
+    this.props.toggleModal();
   };
 
   // Update the result message and re-enable the button submissions
@@ -143,8 +140,7 @@ class ForgotPassword extends Component {
 
 ForgotPassword.propTypes = {
   goRegister: PropTypes.func.isRequired,
-  setModalType: PropTypes.func.isRequired,
-  prev: PropTypes.string
+  toggleModal: PropTypes.func.isRequired
 };
 
 export default withRouter(withStyles(styles)(ForgotPassword));

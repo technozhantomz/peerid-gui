@@ -6,7 +6,31 @@
 
   &__textfield {
     margin-top: 1rem;
+    border-radius: 1.1rem;
     font-size: 1.6rem;
+
+    &--active {
+      @extend .createapp__textfield;
+
+      border: 2px solid $input-green;
+
+      &-red {
+        @extend .createapp__textfield;
+
+        border: 2px solid red;
+      }
+
+      &-glowless {
+        @extend .createapp__textfield;
+
+        border: 2px solid $blue-light;
+        box-shadow: none;
+
+        &::after {
+          box-shadow: none;
+        }
+      }
+    }
   }
 
   @media only screen and (max-width: 1400px) {

@@ -37,6 +37,28 @@ class PrivateAppService {
   }
 
   /**
+   * Retrieves information about user's permitted apps.
+   *
+   * @returns {Promise} A promise that resolves to an app object.
+   */
+  static getPermittedApps() {
+    const query = `${apiRoot}api/v1/apps/permitted`;
+    return new Promise(async(resolve, reject) => {
+      try{
+        const response = await ApiHandler.get(query);
+
+        if (response.data.status !== 200) {
+          return reject(response);
+        }
+
+        return resolve(response.data.result);
+      }catch(err) {
+        return reject(err.response);
+      }
+    });
+  }
+
+  /**
    * Retrieves information about the current app.
    *
    * @param {string} appId - Id of the app.
@@ -47,6 +69,29 @@ class PrivateAppService {
     return new Promise(async(resolve, reject) => {
       try{
         const response = await ApiHandler.get(query);
+
+        if (response.data.status !== 200) {
+          return reject(response);
+        }
+
+        return resolve(response.data.result);
+      }catch(err) {
+        return reject(err.response);
+      }
+    });
+  }
+
+  /**
+   * Deletes an app.
+   *
+   * @param {string} appId - Id of the app.
+   * @returns {Promise} A promise that resolves to an app object.
+   */
+  static deleteApp(appId) {
+    const query = `${apiRoot}api/v1/app?id=${appId}`;
+    return new Promise(async(resolve, reject) => {
+      try{
+        const response = await ApiHandler.delete(query);
 
         if (response.data.status !== 200) {
           return reject(response);
@@ -79,7 +124,7 @@ class PrivateAppService {
       };
 
       try {
-        response = await ApiHandler.post(query, querystring.stringify(app), headers);
+        response = await ApiHandler.post(query, querystring.stringify(app, {arrayFormat: 'bracket'}), headers);
         return resolve(response.data.result);
       } catch (err) {
         return reject(err.response);
@@ -122,6 +167,40 @@ class PrivateAppService {
       }
     });
   }
+
+  /**
+   * Revoke permission for an app.
+   *
+   * @static
+   * @param {number} appId - App ID of the app to unjoin.
+   * @param {object} accountAuth - Account auth delete transaction.
+   * @returns {Promise} - A promise that indicates success or failure.
+   * @memberof PrivateAppService
+   */
+  static revokeAppPermission(appId, accountAuth) {
+    let response;
+    const query = `${apiRoot}api/v1/app/unjoin`;
+
+    const body = {
+      app_id: appId,
+      custom_account_auth_trx: accountAuth
+    };
+
+    return new Promise(async(resolve, reject) => {
+      const headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      };
+
+      try {
+        response = await ApiHandler.post(query, querystring.stringify(body), headers);
+        return resolve(response.data.result);
+      } catch (err) {
+        return reject(err.response);
+      }
+    });
+  }
 }
 
 /**
@@ -139,6 +218,10 @@ class AppService {
     return GenUtil.dummyDataWrapper(PrivateAppService.getApps());
   }
 
+  static getPermittedApps() {
+    return GenUtil.dummyDataWrapper(PrivateAppService.getPermittedApps());
+  }
+
   static createApp(app) {
     return GenUtil.dummyDataWrapper(PrivateAppService.createApp(app));
   }
@@ -151,6 +234,13 @@ class AppService {
     return GenUtil.dummyDataWrapper(PrivateAppService.joinApp(appId, redirectUri, accountAuth));
   }
 
+  static deleteApp(appId) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.deleteApp(appId));
+  }
+
+  static revokeAppPermission(appId, accountAuth) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.revokeAppPermission(appId, accountAuth));
+  }
 }
 
 export default AppService;

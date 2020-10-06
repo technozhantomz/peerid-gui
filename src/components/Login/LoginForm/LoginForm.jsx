@@ -131,7 +131,7 @@ class LoginForm extends Component {
           <span className='login-form__apiTxt--error'>{this.props.errorText}</span>
           <span className='login__textlink'>
             {translate('login.dontHaveAccount')}
-            <span onClick={ this.props.goRegister } className='login__textlink-register'>
+            <span onClick={ this.props.navigateToSignUp } className='login__textlink-register'>
               {translate('login.register')}
             </span>
           </span>

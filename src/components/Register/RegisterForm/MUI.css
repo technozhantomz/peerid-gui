@@ -8,3 +8,7 @@
   color: white;
   background-color:  rgb(51, 153, 255);
 }
+
+.button:hover {
+  background-color: rgb(17, 107, 197);
+}

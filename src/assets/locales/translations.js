@@ -144,7 +144,8 @@ export const translationObject = {
     },
     rightMenu: {
       links: {
-        account: 'Account'
+        account: 'Account',
+        developer: 'Developer'
       }
     },
     error: 'Error!',
@@ -155,7 +156,8 @@ export const translationObject = {
     dashboard: {
       tableLinks: {
         edit: 'Edit',
-        delete: 'Delete'
+        delete: 'Delete',
+        revoke: 'Revoke Permission'
       }
     }
   }

@@ -123,7 +123,7 @@ class AppPermission extends Component {
   handleSave = async (e) => {
     e.preventDefault();
 
-    this.props.setModalData({operations: this.state.operationNums, appId: this.state.appId, redirect_uri: this.state.redirect_uri, state: this.state.state});
+    this.props.setModalData({operations: this.state.operationNums, appId: this.state.appId, redirect_uri: this.state.redirect_uri, state: this.state.state, intent: 'JOIN_APP'});
     this.props.setModalType(ModalTypes.PEERPLAYS_AUTH);
     this.props.toggleModal();
   }

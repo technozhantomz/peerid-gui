@@ -276,7 +276,7 @@ class RegisterForm extends Component {
           <div className='register-links'>
             <span className='login-txt-link'>
               <span className='register__blue'>{translate('register.alreadyHaveAccount')}</span>
-              <span className='register-form__gologin' onClick={ this.props.openLoginModal }>
+              <span className='register-form__gologin' onClick={ this.props.navigateToLogin }>
                 {translate('register.login')}
               </span>
             </span>

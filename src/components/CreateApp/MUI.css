@@ -27,3 +27,16 @@
   color: white;
   background-color:  rgb(51, 153, 255);
 }
+
+.button:hover {
+  background-color: rgb(17, 107, 197);
+}
+
+.menuitem li {
+  font-size: 1.6rem;
+}
+
+.selectlabel {
+  line-height: 2;
+  font-size: 1.6rem;
+}

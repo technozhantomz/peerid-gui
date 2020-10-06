@@ -8,5 +8,6 @@ export default {
   LOGIN: '/login',
   REGISTER: '/signup',
   CREATE_APP: '/create-app',
-  PERMISSIONS: '/permissions'
+  PERMISSIONS: '/permissions',
+  ACCOUNT: '/account'
 };

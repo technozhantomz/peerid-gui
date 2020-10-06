@@ -50,12 +50,22 @@ class PeerplausAuth extends Component {
     AuthService.peerplaysLogin(peerplaysAccount).then((account) => {
       this.props.setAccount(account);
       this.props.setPeerplaysPassword(this.state.password);
-      this.joinApp().catch((err) => {
-        console.log(err);
-        this.setState({loading: false});
-        this.props.setModalData({headerText: translate('error'), subText: JSON.stringify(err.data.error), redirect: RouteConstants.DASHBOARD});
-        this.props.setModalType(ModalTypes.ERROR);
-      });
+
+      if(this.props.modalData.intent === 'JOIN_APP') {
+        this.joinApp().catch((err) => {
+          console.log(err);
+          this.setState({loading: false});
+          this.props.setModalData({headerText: translate('error'), subText: JSON.stringify(err.data.error), redirect: RouteConstants.DASHBOARD});
+          this.props.setModalType(ModalTypes.ERROR);
+        });
+      } else if(this.props.modalData.intent === 'UNJOIN_APP') {
+        this.unjoinApp().catch((err) => {
+          console.log(err);
+          this.setState({loading: false});
+          this.props.setModalData({headerText: translate('error'), subText: JSON.stringify(err.data.error), redirect: RouteConstants.DASHBOARD});
+          this.props.setModalType(ModalTypes.ERROR);
+        });
+      }
     }).catch((err) => {
       this.setState({loading: false});
       this.setState({error: err});
@@ -71,7 +81,6 @@ class PeerplausAuth extends Component {
 
     const customPermission = await ProfileService.getPermission();
     const {operations, appId, redirect_uri, state} = this.props.modalData;
-    console.log(operations);
 
     for(let i = 0; i < operations.length; i++) {
       tr.add_type_operation('custom_account_authority_create', {
@@ -83,7 +92,8 @@ class PeerplausAuth extends Component {
         operation_type: operations[i],
         valid_from: Math.floor(Number(new Date())/1000),
         valid_to: Math.floor(Number(new Date())/1000) + 15000,
-        owner_account: this.props.peerplaysAccountId
+        owner_account: this.props.peerplaysAccountId,
+        extensions: null
       });
     }
 
@@ -104,6 +114,39 @@ class PeerplausAuth extends Component {
     }
 
     window.open(redirect, '_self');
+  }
+
+  unjoinApp = async () => {
+    const tr = new TransactionBuilder();
+
+    const keys = Login.generateKeys(this.state.peerplaysUsername, this.state.password,
+      ['active'],
+      Config.isDev ? 'TEST' : 'PPY');
+
+    const {appId, auth_id} = this.props.modalData;
+
+    tr.add_type_operation('custom_account_authority_delete', {
+      fee: {
+        amount: 0,
+        asset_id: '1.3.0'
+      },
+      auth_id: auth_id,
+      owner_account: this.props.peerplaysAccountId,
+      extensions: null
+    });
+
+    await tr.set_required_fees();
+    tr.add_signer(keys.privKeys.active, keys.pubKeys.active);
+    await tr.serialize();
+    await tr.finalize();
+    await tr.sign();
+
+    const accountAuth = JSON.stringify(tr.toObject());
+
+    await AppService.revokeAppPermission(appId, accountAuth);
+
+    this.props.toggleModal();
+    this.props.navigateToDashboard();
   }
 
   render() {

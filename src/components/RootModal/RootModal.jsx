@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import {AppActions, ModalActions} from '../../actions/';
+import {AppActions, ModalActions, NavigateActions} from '../../actions/';
 import {ModalTypes} from '../../constants';
 import LoginForm from '../Login/LoginForm';
 import PeerplaysLogin from '../PeerplaysLogin';
@@ -31,7 +31,8 @@ class RootModal extends Component {
 
   toggleModalAndRegister = () => {
     this.props.setErrorText('');
-    this.props.setModalType(ModalTypes.SIGN_UP);
+    this.props.toggleModal();
+    this.props.navigateToSignUp();
   };
 
   render() {
@@ -60,7 +61,7 @@ class RootModal extends Component {
       }
 
       case ModalTypes.FORGOT: {
-        modalContent = <ForgotPassword goRegister={ this.toggleModalAndRegister } prev={ this.props.previousModal } setModalType={ this.props.setModalType }/>;
+        modalContent = <ForgotPassword goRegister={ this.toggleModalAndRegister } toggleModal={ this.props.toggleModal }/>;
         modalClass = 'modal-forgot';
         break;
       }
@@ -114,6 +115,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     toggleModal: ModalActions.toggleModal,
     setModalType: ModalActions.setModalType,
     setModalData: ModalActions.setModalData,
+    navigateToSignUp: NavigateActions.navigateToSignUp,
     login: AppActions.login,
     setErrorText: AppActions.setLoginError
   },

@@ -10,7 +10,8 @@ const trans = GenUtil.translate;
 class RightMenu extends Component {
   state = {
     links: [
-      {title: trans('rightMenu.links.account'), href: '/account'}
+      {title: trans('rightMenu.links.account'), href: '/account'},
+      {title: trans('rightMenu.links.developer'), href: '/dashboard'}
     ]
   };
 
