@@ -155,6 +155,7 @@ class PeerplausAuth extends Component {
       <>
         <div className='peerplays-auth-wrapper'>
           <IconButton
+            classes={ {root: classes.close} }
             aria-label='Close'
             onClick={ () => {
               this.props.toggleModal();

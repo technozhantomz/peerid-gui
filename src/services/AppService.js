@@ -119,12 +119,12 @@ class PrivateAppService {
     return new Promise(async(resolve, reject) => {
       const headers = {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
         }
       };
 
       try {
-        response = await ApiHandler.post(query, querystring.stringify(app, {arrayFormat: 'bracket'}), headers);
+        response = await ApiHandler.post(query, app, headers);
         return resolve(response.data.result);
       } catch (err) {
         return reject(err.response);

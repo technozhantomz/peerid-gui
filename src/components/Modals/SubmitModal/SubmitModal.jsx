@@ -91,7 +91,7 @@ class SubmitModal extends Component {
     return (
       <div className='submit-modal__wrapper'>
         <div className='submit-modal'>
-          <IconButton className='link-account__cross' aria-label='Close' onClick={ this.handleClose }>
+          <IconButton className='link-account__cross' classes={ {root: classes.close} } aria-label='Close' onClick={ this.handleClose }>
             <CloseIcon />
           </IconButton>
           <div className='submit-modal-text'>

@@ -242,8 +242,16 @@ class CreateApp extends Component {
   }
 
   selectOperations = (e) => {
+    let value;
+
+    if(e.target.value.includes('')) {
+      value = [];
+    } else {
+      value = e.target.value;
+    }
+
     this.setState({
-      operationsSelected: e.target.value,
+      operationsSelected: value,
       btnDisable: !this.validate()
     });
   }
@@ -252,6 +260,9 @@ class CreateApp extends Component {
     e.preventDefault();
 
     if(!this.validate()) {
+      this.setState({
+        btnDisable: true
+      });
       return;
     }
 
@@ -271,8 +282,8 @@ class CreateApp extends Component {
         domains: []
       };
 
-      app.domains.push(this.state.domains.split(','));
-      app.operations.push(this.state.operationsSelected);
+      app.domains.push(...this.state.domains.split(','));
+      app.operations.push(...this.state.operationsSelected);
 
       if(this.state.addressLine2 && this.state.addressLine2.length > 0) {
         app.address_line2 = this.state.addressLine2;

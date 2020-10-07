@@ -73,9 +73,6 @@ const Row = ({row, classes, edit, deleteApp}) => {
                 Client Credentials
               </Typography>
               <div className='dashboard__table-row'>
-                Your client credentials are:
-              </div>
-              <div className='dashboard__table-row'>
                 {`Client ID: ${row.id}`}
               </div>
               <div className='dashboard__table-row'>
