@@ -71,7 +71,7 @@ class AppPermission extends Component {
 
             let domain = psl.parse(url.hostname).domain;
 
-            if(!res.domains.includes(domain)) {
+            if(!res.domains.map((a) => a.toLowerCase()).includes(domain.toLowerCase())) {
               console.log('not a match: ' + domain + ' in ' + res.domains);
               this.props.setModalType(ModalTypes.ERROR);
               this.props.setModalData({headerText: translate('error'), subText: 'Redirect URI is invalid', redirect: RouteConstants.DASHBOARD});
@@ -123,9 +123,14 @@ class AppPermission extends Component {
   handleSave = async (e) => {
     e.preventDefault();
 
-    this.props.setModalData({operations: this.state.operationNums, appId: this.state.appId, redirect_uri: this.state.redirect_uri, state: this.state.state, intent: 'JOIN_APP'});
-    this.props.setModalType(ModalTypes.PEERPLAYS_AUTH);
-    this.props.toggleModal();
+    const code = await AppService.joinApp(this.state.appId, this.state.redirect_uri);
+    let redirect = `${this.state.redirect_uri}?code=${code}`;
+
+    if(this.state.state) {
+      redirect = redirect + '&state=' + this.state.state;
+    }
+
+    window.open(redirect, '_self');
   }
 
   render() {
@@ -174,10 +179,7 @@ class AppPermission extends Component {
 
 const mapStateToProps = (state) => ({
   username: state.getIn(['profiles', 'currentAccount', 'username']),
-  peerplaysAccountID: state.getIn(['profiles', 'currentAccount', 'peerplays_account_id']),
-  isLoggedIn: state.getIn(['profiles', 'isLoggedIn']),
-  peerplaysPassword: state.getIn(['peerplays','password']),
-  peerplaysUsername: state.getIn(['peerplays','username'])
+  isLoggedIn: state.getIn(['profiles', 'isLoggedIn'])
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(

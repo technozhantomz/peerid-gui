@@ -138,18 +138,16 @@ class PrivateAppService {
    * @static
    * @param {number} appId - App ID of the app to join.
    * @param {string} redirectUri - The Uri to redirect to after joining the app.
-   * @param {object} accountAuth - Account auth transaction.
    * @returns {Promise} - A promise that indicates success or failure.
    * @memberof PrivateAppService
    */
-  static joinApp(appId, redirectUri, accountAuth) {
+  static joinApp(appId, redirectUri) {
     let response;
     const query = `${apiRoot}api/v1/app/join`;
 
     const body = {
       client_id: appId,
-      redirect_uri: redirectUri,
-      custom_account_auth_trx: accountAuth
+      redirect_uri: redirectUri
     };
 
     return new Promise(async(resolve, reject) => {
@@ -173,17 +171,15 @@ class PrivateAppService {
    *
    * @static
    * @param {number} appId - App ID of the app to unjoin.
-   * @param {object} accountAuth - Account auth delete transaction.
    * @returns {Promise} - A promise that indicates success or failure.
    * @memberof PrivateAppService
    */
-  static revokeAppPermission(appId, accountAuth) {
+  static revokeAppPermission(appId) {
     let response;
     const query = `${apiRoot}api/v1/app/unjoin`;
 
     const body = {
-      app_id: appId,
-      custom_account_auth_trx: accountAuth
+      app_id: appId
     };
 
     return new Promise(async(resolve, reject) => {
@@ -230,16 +226,16 @@ class AppService {
     return GenUtil.dummyDataWrapper(PrivateAppService.getApp(appId));
   }
 
-  static joinApp(appId, redirectUri, accountAuth) {
-    return GenUtil.dummyDataWrapper(PrivateAppService.joinApp(appId, redirectUri, accountAuth));
+  static joinApp(appId, redirectUri) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.joinApp(appId, redirectUri));
   }
 
   static deleteApp(appId) {
     return GenUtil.dummyDataWrapper(PrivateAppService.deleteApp(appId));
   }
 
-  static revokeAppPermission(appId, accountAuth) {
-    return GenUtil.dummyDataWrapper(PrivateAppService.revokeAppPermission(appId, accountAuth));
+  static revokeAppPermission(appId) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.revokeAppPermission(appId));
   }
 }
 

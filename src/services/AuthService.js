@@ -97,7 +97,6 @@ class PrivateAuthService {
 
       const body = {
         email: account.email,
-        username: account.username,
         password: account.password,
         repeatPassword: account.repeatPassword
       };

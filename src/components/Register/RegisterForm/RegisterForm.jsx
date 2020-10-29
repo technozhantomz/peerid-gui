@@ -21,7 +21,6 @@ class RegisterForm extends Component {
 
     this.state = {
       email: '',
-      username: '',
       password: '',
       confirmPassword: '',
       resultText: '',
@@ -29,12 +28,10 @@ class RegisterForm extends Component {
       registerDisabled: false,
       isPasswordInputClicked: false,
       isConfirmPasswordConfirmed: false,
-      isUsernameInputClicked: false,
       isEmailInputClicked: false,
       resetToDefault: false,
       errors: {
         email: '',
-        username: '',
         password: '',
         confirmPassword: ''
       }
@@ -44,14 +41,14 @@ class RegisterForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.email === '' || this.state.username === '' || this.state.password === '' || this.state.confirmPassword === '') {
+    if (this.state.email === '' || this.state.password === '' || this.state.confirmPassword === '') {
       this.setState({
         errText: translate('register.responses.errorMissing')
       });
       return;
     }
 
-    if (this.state.errors.email.success !== true || this.state.errors.username.success !== true || this.state.errors.password.success !== true || this.state.errors.confirmPassword.success !== true) {
+    if (this.state.errors.email.success !== true|| this.state.errors.password.success !== true || this.state.errors.confirmPassword.success !== true) {
       this.setState({
         errText: ''
       });
@@ -60,7 +57,6 @@ class RegisterForm extends Component {
 
     const account = {
       email: this.state.email,
-      username: this.state.username,
       password: this.state.password,
       repeatPassword: this.state.password
     };
@@ -79,12 +75,10 @@ class RegisterForm extends Component {
 
           // Clear Form Data
           email: '',
-          username: '',
           password: '',
           confirmPassword: '',
           isPasswordInputClicked: false,
           isConfirmPasswordConfirmed: false,
-          isUsernameInputClicked: false,
           isEmailInputClicked: false
         });
       })
@@ -108,13 +102,6 @@ class RegisterForm extends Component {
       }
     }, () => this.validate('email'));
   }
-
-  handleUsernameChange = (user) => {
-    this.setState({
-      username: user,
-      isUsernameInputClicked: true
-    }, () => this.validate('username'));
-  };
 
   handlePasswordChange = (password) => {
     this.setState({
@@ -158,14 +145,6 @@ class RegisterForm extends Component {
           errors: {
             ...this.state.errors,
             confirmPassword: ValidationUtil.seConfirmPassword(this.state.password, this.state.confirmPassword)
-          }
-        });
-        break;
-      case 'username':
-        this.setState({
-          errors: {
-            ...this.state.errors,
-            username: ValidationUtil.seUsername(this.state.username)
           }
         });
         break;
@@ -242,28 +221,6 @@ class RegisterForm extends Component {
               isValid={ () => {
                 if (this.state.isConfirmPasswordConfirmed) {
                   return ValidationUtil.seConfirmPassword(this.state.password, this.state.confirmPassword).success;
-                } else {
-                  return true;
-                }
-              }  }
-            />
-          </FormControl>
-          <FormControl className='register-input' margin='normal' required fullWidth>
-            <CustomInput
-              name='username'
-              muiInputClass='inputRegister'
-              hasActiveGlow={ true }
-              placeholder={ translate('register.enterUsername') }
-              handleChange={ this.handleUsernameChange }
-              iconRightActive={ InvalidIcon }
-              handleRightIconClick={ () => {
-                return  ValidationUtil.seUsername(this.state.username).errors;
-              } }
-              resetToDefault={ this.state.resetToDefault }
-              resetHandler={ this.resetHandler }
-              isValid={ () => {
-                if (this.state.isUsernameInputClicked) {
-                  return ValidationUtil.seUsername(this.state.username).success;
                 } else {
                   return true;
                 }
