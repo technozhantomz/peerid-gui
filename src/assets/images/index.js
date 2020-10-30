@@ -6,6 +6,8 @@ import youtubeImgBlue from './YouTube_1.png';
 import facebookImgBlue from './Facebook_1.png';
 import peerplaysImgBlue from './Peerplays_1.png';
 import ValidIcon from './valid.svg';
+import discordImgBlue from './discordBlue.png';
+import discordImg from './discord.png';
 
 export {
   InvalidIcon,
@@ -15,5 +17,7 @@ export {
   facebookImg,
   facebookImgBlue,
   peerplaysImg,
-  peerplaysImgBlue
+  peerplaysImgBlue,
+  discordImg,
+  discordImgBlue
 };

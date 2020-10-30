@@ -18,6 +18,7 @@ const mergeDummyAccountState = {
       'googleName': null,
       'youtube': null,
       'facebook': null,
+      'discord': null,
       'peerplaysAccountName': null,
       'bitcoinAddress': '1NbhnkGbiaRxNUvKnTNfEomH1Nk1dVUxAR',
       'userType': 'gamer'

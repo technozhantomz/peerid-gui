@@ -31,6 +31,7 @@ class ErrorCallback extends Component {
 
     switch(errType) {
       case 'google-auth-error':
+      case 'discord-auth-error':
       case 'facebook-auth-error':
         this.props.navigate(lastAccessedPage);
         this.handleError(errString);

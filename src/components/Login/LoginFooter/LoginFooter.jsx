@@ -9,7 +9,9 @@ import {
   youtubeImg,
   peerplaysImg,
   facebookImgBlue,
-  peerplaysImgBlue
+  peerplaysImgBlue,
+  discordImg,
+  discordImgBlue
 } from '../../../assets/images';
 import ModalTypes from '../../../constants/ModalTypes';
 import {ModalActions} from '../../../actions';
@@ -51,6 +53,15 @@ class LoginFooter extends Component {
               onMouseOut={ (e) => (e.currentTarget.src = youtubeImgBlue) }
               onMouseOver={ (e) => (e.currentTarget.src = youtubeImg) }
               onClick={ () => AuthUtil.authVia('google', this.props.location.pathname, this.state.query) }
+            />
+          </div>
+          <div className='login-facebook'>
+            <img
+              src={ discordImgBlue }
+              alt='discord'
+              onMouseOut={ (e) => (e.currentTarget.src = discordImgBlue) }
+              onMouseOver={ (e) => (e.currentTarget.src = discordImg) }
+              onClick={ () => AuthUtil.authVia('discord', this.props.location.pathname, this.state.query) }
             />
           </div>
           <div className='login-peerplays'>

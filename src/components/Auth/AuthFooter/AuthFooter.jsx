@@ -9,7 +9,9 @@ import {
   facebookImg,
   facebookImgBlue,
   peerplaysImg,
-  peerplaysImgBlue
+  peerplaysImgBlue,
+  discordImg,
+  discordImgBlue
 } from '../../../assets/images';
 import ModalTypes from '../../../constants/ModalTypes';
 import {ModalActions} from '../../../actions';
@@ -50,6 +52,15 @@ class AuthFooter extends Component {
               onMouseOver={ (e) => (e.currentTarget.src = youtubeImg) }
               onMouseOut={ (e) => (e.currentTarget.src = youtubeImgBlue) }
               onClick={ () => AuthUtil.authVia('google', this.props.location.pathname, this.state.query) } // TODO: refactor to use redux path.
+            />
+          </div>
+          <div className='facebook'>
+            <img
+              src={ discordImgBlue }
+              alt='discord'
+              onMouseOver={ (e) => (e.currentTarget.src = discordImg) }
+              onMouseOut={ (e) => (e.currentTarget.src = discordImgBlue) }
+              onClick={ () => AuthUtil.authVia('discord', this.props.location.pathname, this.state.query) } // TODO: refactor to use redux path.
             />
           </div>
           <div className='peerplays'>

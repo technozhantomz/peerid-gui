@@ -60,7 +60,7 @@ const Config = {
    * @type {string[]}
    * @memberof Config
    */
-  supportedPlatforms: ['google', 'facebook', 'peerplays'],
+  supportedPlatforms: ['google', 'facebook', 'peerplays', 'discord'],
   /**
    * Specifies how many results are returned when calling get all users.
    *
