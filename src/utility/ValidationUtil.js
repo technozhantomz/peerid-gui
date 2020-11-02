@@ -4,7 +4,7 @@ import {EOL} from 'os';
 
 const PrivateValidationUtils = {
   /**
-   * Validate a Streamers Edge username.
+   * Validate a PeerID username.
    *
    * @param {string} username - Username to validate.
    * @returns {string} Error if one is found.
@@ -161,7 +161,7 @@ const PrivateValidationUtils = {
   },
 
   /**
-   * Validate a Streamers Edge password.
+   * Validate a PeerID password.
    *
    * @param {string} password - String to validate.
    * @returns {{success: boolean, errors: *[]}} Error if one is found.
@@ -232,7 +232,7 @@ const PrivateValidationUtils = {
   },
 
   /**
-   * Confirm a Streamers Edge password.
+   * Confirm a PeerID password.
    *
    * @param {string} password - Password from form to validate.
    * @param {string} confirmPassword - Password from form to validate.
@@ -352,7 +352,7 @@ const PrivateValidationUtils = {
  */
 const ValidationUtil = {
   /**
-   * Validate a Streamers Edge password.
+   * Validate a PeerID password.
    *
    * @param {string} pass - Password from form to validate.
    * @returns {string} - Error if one is found.
@@ -363,7 +363,7 @@ const ValidationUtil = {
   },
 
   /**
-   * Confirm a Streamers Edge password.
+   * Confirm a PeerID password.
    *
    * @param {string} pass - Password from form to validate.
    * @param {string} confirmPass - Password from form to validate.
@@ -387,7 +387,7 @@ const ValidationUtil = {
   },
 
   /**
-   * Validate a Streamers Edge username.
+   * Validate a PeerID username.
    *
    * @param {string} string - Value to validate.
    * @returns {string} Error if one is found.

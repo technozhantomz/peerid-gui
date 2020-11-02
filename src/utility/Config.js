@@ -5,10 +5,7 @@ const {
   DEV_API_ROUTE,
   PRODUCTION_API_ROUTE,
   DEV_BASE_ROUTE,
-  PRODUCTION_BASE_ROUTE,
-  BLOCKCHAIN_USE_TESTNET,
-  BLOCKCHAIN_ENDPOINTS,
-  PEERPLAYS_PAYMENT_ACCOUNT_ID
+  PRODUCTION_BASE_ROUTE
 } = process.env;
 
 /**
@@ -61,34 +58,6 @@ const Config = {
    * @memberof Config
    */
   supportedPlatforms: ['google', 'facebook', 'peerplays', 'discord'],
-  /**
-   * Specifies how many results are returned when calling get all users.
-   *
-   * @type {number}
-   * @memberof Config
-   */
-  userSearchLimit: 100,
-
-  /**
-   * Specifies whether testnet or mainnet endpoints are used for the Peerplays connection.
-   */
-  usePeerplaysTestnet: BLOCKCHAIN_USE_TESTNET === 'true',
-
-  /**
-   * Endpoints for elizabeth testnet. Used for Peerplays Global Login.
-   *
-   * @type {string[]}
-   * @memberof Config
-   */
-  elizabethEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
-
-  /**
-   * Represents payment id.
-   *
-   * @type {string}
-   * @memberof Config
-   */
-  payment: PEERPLAYS_PAYMENT_ACCOUNT_ID,
 
   /**
    * Represents the base uri.

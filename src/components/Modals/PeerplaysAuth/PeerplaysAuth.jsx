@@ -5,7 +5,7 @@ import {Button, IconButton} from '@material-ui/core';
 import {withStyles} from '@material-ui/core/styles';
 import styles from './MUI.css';
 import CustomInput from '../../CustomInput';
-import {AccountActions, ModalActions, NavigateActions, PeerplaysActions} from '../../../actions';
+import {AccountActions, ModalActions, NavigateActions} from '../../../actions';
 import {GenUtil} from '../../../utility';
 import {AuthService} from '../../../services';
 import CloseIcon from '@material-ui/icons/Close';
@@ -46,7 +46,6 @@ class PeerplausAuth extends Component {
 
     AuthService.peerplaysLogin(peerplaysAccount).then((account) => {
       this.props.setAccount(account);
-      this.props.setPeerplaysPassword(this.state.password);
     }).catch((err) => {
       this.setState({loading: false});
       this.setState({error: err});
@@ -117,7 +116,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     toggleModal: ModalActions.toggleModal,
     setAccount: AccountActions.setAccountAction,
-    setPeerplaysPassword: PeerplaysActions.setPeerplaysPassword,
     navigateToDashboard: NavigateActions.navigateToDashboard
   },
   dispatch

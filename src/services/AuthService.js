@@ -254,7 +254,7 @@ class PrivateAuthService {
 }
 
 /**
- * Handles all server calls related to Streamers Edge accounts.
+ * Handles all server calls related to PeerID accounts.
  *
  * @class AuthService
  */
