@@ -57,7 +57,8 @@ DEV_BASE_ROUTE='http://localhost:8082'
 PRODUCTION_BASE_ROUTE='http://localhost:8082'
 ```
 
+The API routes mentioned above are the urls for the PeerID backend. Start PeerID backend before starting this project.
+
 ## Starting the app
 
 Once the `.env` file has been added, use the command `npm i` to install the dependencies and then `npm run start` to start the app. The app will build and run at `http://localhost:8082`.
-
