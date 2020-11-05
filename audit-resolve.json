@@ -1,0 +1,42 @@
+{
+  "decisions": {
+    "1179|react-dev-utils>fork-ts-checker-webpack-plugin>chokidar>fsevents>node-pre-gyp>mkdirp>minimist": {
+      "decision": "fix",
+      "madeAt": 1604597747816
+    },
+    "1179|react-dev-utils>fork-ts-checker-webpack-plugin>chokidar>fsevents>node-pre-gyp>tar>mkdirp>minimist": {
+      "decision": "fix",
+      "madeAt": 1604597747816
+    },
+    "1179|react-dev-utils>fork-ts-checker-webpack-plugin>chokidar>fsevents>node-pre-gyp>rc>minimist": {
+      "decision": "fix",
+      "madeAt": 1604597747816
+    },
+    "1426|terser-webpack-plugin>serialize-javascript": {
+      "decision": "fix",
+      "madeAt": 1604597766301
+    },
+    "1548|terser-webpack-plugin>serialize-javascript": {
+      "decision": "fix",
+      "madeAt": 1604597766301
+    },
+    "1179|eslint-loader>loader-fs-cache>find-cache-dir>mkdirp>minimist": {
+      "decision": "fix",
+      "madeAt": 1604598368817
+    },
+    "1213|optimize-css-assets-webpack-plugin>cssnano>cssnano-preset-default>postcss-merge-longhand>stylehacks>postcss-selector-parser>dot-prop": {
+      "decision": "fix",
+      "madeAt": 1604597792637
+    },
+    "1213|optimize-css-assets-webpack-plugin>cssnano>cssnano-preset-default>postcss-merge-rules>postcss-selector-parser>dot-prop": {
+      "decision": "fix",
+      "madeAt": 1604597792637
+    },
+    "1213|optimize-css-assets-webpack-plugin>cssnano>cssnano-preset-default>postcss-minify-selectors>postcss-selector-parser>dot-prop": {
+      "decision": "fix",
+      "madeAt": 1604597792637
+    }
+  },
+  "rules": {},
+  "version": 1
+}
