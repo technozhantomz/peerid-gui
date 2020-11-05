@@ -1,64 +1,68 @@
-# PeerID Front End
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[![JavaScript](https://img.shields.io/badge/</>-JavaScript-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
+## Available Scripts
 
-> Sonar badges can be retrieved from your SonarCloud dashboard once you have configured it.
+In the project directory, you can run:
 
-## STACK
+### `npm start`
 
-- React
-- [react-hot-loader](https://www.npmjs.com/package/react-hot-loader)
-  - React-🔥-Dom
-  - Updating translation file contents will not work with hot reloading.
-- [Redux](https://redux.js.org/) (single source of truth state management)
-- Redux dev tools (allow user to debug )
-- React-Router (we use this to control navigation)
-- React-Router-Redux (sync React-Router with Redux so we can handle navigation with Redux)
-- [ESlint](https://eslint.org/) (to ensure code style consistency)
-- Stylelint (to ensure stylesheet consistency)
-- [Commitlint](https://www.npmjs.com/package/@commitlint/cli) (to ensure commit message adhere to [Conventional Commits](https://www.conventionalcommits.org))
-- SCSS (CSS preprocessor)
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Commits
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-> If you have run the init script, you can commit via `git cz`.  
-> If you have not run the init script, you must commit via `npm run commit`.  
-> If you do neither, commit message consistency will be difficult for you.
+### `npm test`
 
-This repository uses a combination of tools to aid in consistent commit messages. The reason we do this is so we can have dynamic changelog creation and smart semantic versioning based on commits (with the ability to override).
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-NEVER COMMIT THE .ENV FILE
+### `npm run build`
 
-The following tools are used:
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-1. [commitizen](https://www.npmjs.com/package/commitizen)  
-   Used for prompting recommended entries within a commit message to ensure it contains the necessary information.
-   - [conventional changelog](https://www.npmjs.com/package/cz-conventional-changelog)  
-     - Prompts for conventional changelog standard.
-2. [husky](https://www.npmjs.com/package/husky)  
-   By using the hooks from this package we intercept commits being made and verify them with commitlint.
-   - Prevent bad commits/pushes.
-3. [commitlint](https://www.npmjs.com/package/@commitlint/cli)
-   - cli
-   - [config-conventional](https://www.npmjs.com/package/@commitlint/config-conventional)
-     - rule preset in use
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-## .ENV Requirements
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-You must provide the following information in a `.env` file in the root of the repository for full application functionality.
+### `npm run eject`
 
-The application requires certain parameters to be provided such as the API endpoint for calls to the backend node server API:
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-```js
-DEV_API_ROUTE='http://localhost:3000/'
-PRODUCTION_API_ROUTE='http://localhost:3000/'
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-DEV_BASE_ROUTE='http://localhost:8082'
-PRODUCTION_BASE_ROUTE='http://localhost:8082'
-```
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-The API routes mentioned above are the urls for the PeerID backend. Start PeerID backend before starting this project.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Starting the app
+## Learn More
 
-Once the `.env` file has been added, use the command `npm i` to install the dependencies and then `npm run start` to start the app. The app will build and run at `http://localhost:8082`.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

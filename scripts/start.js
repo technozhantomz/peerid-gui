@@ -1,177 +1,145 @@
+'use strict';
+
+// Do this as the first thing so that any code reading it knows the right env.
+process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-var config = require('../config/webpack.dev');
-var chalk = require('chalk');
-var paths = require('../config/paths');
-var detect = require('detect-port');
-var clearConsole = require('react-dev-utils/clearConsole');
-var inquirer = require('react-dev-utils/inquirer');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-var getProcessForPort = require('react-dev-utils/getProcessForPort');
-var isInteractive = process.stdout.isTTY;
-var compiler = webpack(config);
-var fs = require('fs');
-var useYarn = fs.existsSync(paths.yarnLockFile);
-var cli = useYarn ? 'yarn' : 'npm';
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
+// Ensure environment variables are read.
+require('../config/env');
+
+
+const fs = require('fs');
+const chalk = require('react-dev-utils/chalk');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const clearConsole = require('react-dev-utils/clearConsole');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const {
+  choosePort,
+  createCompiler,
+  prepareProxy,
+  prepareUrls,
+} = require('react-dev-utils/WebpackDevServerUtils');
+const openBrowser = require('react-dev-utils/openBrowser');
+const paths = require('../config/paths');
+const configFactory = require('../config/webpack.config');
+const createDevServerConfig = require('../config/webpackDevServer.config');
+
+const useYarn = fs.existsSync(paths.yarnLockFile);
+const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-var DEFAULT_PORT = process.env.PORT || 8082;
+// Tools like Cloud9 rely on this.
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 
-/**
- * Initialize the compiler.
- *
- * @param {string} host - The host.
- * @param {string} port - The port.
- * @param {string} protocol - The protocol {http(s)}.
- */
-function setupCompiler(host, port, protocol) {
-  var isFirstCompile = true;
+if (process.env.HOST) {
+  console.log(
+    chalk.cyan(
+      `Attempting to bind to HOST environment variable: ${chalk.yellow(
+        chalk.bold(process.env.HOST)
+      )}`
+    )
+  );
+  console.log(
+    `If this was unintentional, check that you haven't mistakenly set it in your shell.`
+  );
+  console.log(
+    `Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}`
+  );
+  console.log();
+}
 
-  // "invalid" event fires when you have changed a file, and Webpack is
-  // recompiling a bundle. WebpackDevServer takes care to pause serving the
-  // bundle, so if you refresh, it'll wait instead of serving the old one.
-  // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('beforeCompile', function() {
-    if (isInteractive) {
-      clearConsole();
-    }
-  });
-
-  compiler.plugin('beforeRun', function() {
-    if (isInteractive) {
-      clearConsole();
-    }
-  });
-  // "done" event fires when Webpack has finished recompiling the bundle.
-  // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', function(stats) {
-    // console.log('formatting message from stats: ', stats.toJson())
-    // We have switched off the default Webpack output in WebpackDevServer
-    // options so we are going to "massage" the warnings and errors and present
-    // them in a readable focused way.
-    var messages = formatWebpackMessages(stats.toJson({}, true));
-    var isSuccessful = !messages.errors.length && !messages.warnings.length;
-    var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
-
-    if (showInstructions) {
-      isFirstCompile = false;
-      console.log();
-      console.log('The app is running at:');
-      console.log();
-      console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
-      console.log();
-      console.log('Note that the development build is not optimized.');
-      console.log('To create a production build, use ' + chalk.cyan(cli + ' run build') + '.');
-      console.log();
-    }
-
-    // If errors exist, only show errors.
-    if (messages.errors.length) {
-      console.log(chalk.red('Failed to compile.'));
-      console.log();
-      messages.errors.forEach((message) => {
-        console.log(message);
-        console.log();
-      });
+// We require that you explicitly set browsers and do not fall back to
+// browserslist defaults.
+const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+checkBrowsers(paths.appPath, isInteractive)
+  .then(() => {
+    // We attempt to use the default port but if it is busy, we offer the user to
+    // run on a different port. `choosePort()` Promise resolves to the next free port.
+    return choosePort(HOST, DEFAULT_PORT);
+  })
+  .then(port => {
+    if (port == null) {
+      // We have not found a port.
       return;
     }
+    const config = configFactory('development');
+    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+    const appName = require(paths.appPackageJson).name;
+    const useTypeScript = fs.existsSync(paths.appTsConfig);
+    const urls = prepareUrls(protocol, HOST, port);
+    const devSocket = {
+      warnings: warnings =>
+        devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+      errors: errors =>
+        devServer.sockWrite(devServer.sockets, 'errors', errors),
+    };
+    // Create a webpack compiler that is configured with custom messages.
+    const compiler = createCompiler({
+      appName,
+      config,
+      devSocket,
+      urls,
+      useYarn,
+      useTypeScript,
+      webpack,
+    });
+    // Load proxy config
+    const proxySetting = require(paths.appPackageJson).proxy;
+    const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
+    // Serve webpack assets generated by the compiler over a web server.
+    const serverConfig = createDevServerConfig(
+      proxyConfig,
+      urls.lanUrlForConfig
+    );
+    const devServer = new WebpackDevServer(compiler, serverConfig);
+    // Launch WebpackDevServer.
+    devServer.listen(port, HOST, err => {
+      if (err) {
+        return console.log(err);
+      }
+      if (isInteractive) {
+        clearConsole();
+      }
 
-    // Show warnings if no errors were found.
-    if (messages.warnings.length) {
-      console.log(chalk.yellow('Compiled with warnings.'));
-      console.log();
-      messages.warnings.forEach((message) => {
-        console.log(chalk.yellow(message));
+      // We used to support resolving modules according to `NODE_PATH`.
+      // This now has been deprecated in favor of jsconfig/tsconfig.json
+      // This lets you use absolute paths in imports inside large monorepos:
+      if (process.env.NODE_PATH) {
+        console.log(
+          chalk.yellow(
+            'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.'
+          )
+        );
         console.log();
+      }
+
+      console.log(chalk.cyan('Starting the development server...\n'));
+      openBrowser(urls.localUrlForBrowser);
+    });
+
+    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
+      process.on(sig, function() {
+        devServer.close();
+        process.exit();
       });
-      // Teach some ESLint/Stylelint tricks.
-      console.log('You may use special comments to disable some warnings.');
-      console.log('ESlint:');
-      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
-      console.log('Stylelint:');
-      console.log('Use ' + chalk.yellow('/* stylelint-disable-next-line */') + ' to ignore the next line.');
-      console.log('Use ' + chalk.yellow('/* stylelint-disable */') + ' to ignore all warnings in a file.');
+    });
+  })
+  .catch(err => {
+    if (err && err.message) {
+      console.log(err.message);
     }
+    process.exit(1);
   });
-}
-
-// eslint-disable-next-line jsdoc/require-jsdoc
-function runDevServer(host, port, protocol) {
-  var devServer = new WebpackDevServer(compiler, {
-    compress: true,
-    clientLogLevel: 'none',
-    contentBase: paths.appPublic,
-    publicPath: config.output.publicPath,
-    hot: true,
-    historyApiFallback: true,
-    quiet: true,
-    // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: protocol === 'https',
-    host: host
-  });
-
-  // Required for the local server to 'see' our files.
-  devServer.listen(port, (err, result) => {
-    if (err) {
-      console.log(chalk.red(err));
-    }
-  });
-}
-
-// eslint-disable-next-line jsdoc/require-jsdoc
-function run(port) {
-  var protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  var host = process.env.HOST || 'localhost';
-  setupCompiler(host, port, protocol);
-  runDevServer(host, port, protocol);
-}
-
-// We attempt to use the default port but if it is busy, we offer the user to
-// run on a different port. `detect()` Promise resolves to the next free port.
-detect(DEFAULT_PORT).then((port) => {
-  if (port === DEFAULT_PORT) {
-    run(port);
-    return;
-  }
-
-  if (isInteractive) {
-    clearConsole();
-
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    function changePort(answer) {
-      if (answer.newPort) {
-        console.log(chalk.green('Using port: ' + port + ' instead.'));
-        run(port);
-      }
-    }
-
-    var existingProcess = getProcessForPort(DEFAULT_PORT);
-    var askChangePort =
-      chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
-        ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
-      '\n\nWould you like to run the app on another port instead?';
-
-    const questions = [
-      {
-        message: askChangePort,
-        type: 'confirm',
-        name: 'newPort',
-        validate: (shouldChangePort) => {
-          return shouldChangePort !== '';
-        }
-      }
-    ];
-
-    inquirer.prompt(questions).then(changePort);
-  } else {
-    console.log(chalk.red('Something is already running on port ' + DEFAULT_PORT + '.'));
-  }
-});
