@@ -13,9 +13,9 @@
     "build": "node scripts/build.js",
     "server": "cd ../PeerID-backend && npm run serve",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
-    "test": "jest",
+    "test": "jest || true",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --colors"
+    "test:coverage": "jest --coverage --colors || true"
   },
   "author": "Peerplays Labs",
   "license": "ISC",
@@ -68,6 +68,7 @@
     "html-webpack-plugin": "^4.0.0-beta.5",
     "husky": "^3.0.9",
     "jest": "^24.8.0",
+    "jest-sonar-reporter": "^2.0.0",
     "jsdoc": "^3.6.3",
     "lint-staged": "^8.1.6",
     "mini-css-extract-plugin": "^0.8.0",
@@ -168,5 +169,8 @@
     "ignore": [
       "**/dist/*.min.js"
     ]
+  },
+  "jest": {
+    "testResultsProcessor": "jest-sonar-reported"
   }
 }

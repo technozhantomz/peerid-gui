@@ -18,6 +18,8 @@ stages:
 # builds app
 build:
   stage: test
+  artifacts:
+    untracked: true
   script:
     - npm install
   tags:
@@ -27,6 +29,8 @@ variables:
  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
 sonarcloud-check:
+ dependencies:
+    build
  image:
    name: sonarsource/sonar-scanner-cli:latest
    entrypoint: [""]
@@ -35,5 +39,6 @@ sonarcloud-check:
    paths:
      - .sonar/cache
  script:
+   - npm run test
    - sonar-scanner
  when: manual
