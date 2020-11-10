@@ -13,11 +13,12 @@ retire-js-dependency_scanning:
 image: node:12.18.4
 
 stages:
+  - build
   - test
 
 # builds app
 build:
-  stage: test
+  stage: build
   artifacts:
     untracked: true
   script:
@@ -30,7 +31,7 @@ variables:
  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
 sonarcloud-check:
  dependencies:
-    build
+   - build
  image:
    name: sonarsource/sonar-scanner-cli:latest
    entrypoint: [""]
