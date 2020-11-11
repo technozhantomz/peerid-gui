@@ -40,6 +40,6 @@ sonarcloud-check:
    paths:
      - .sonar/cache
  script:
-   - npm run test
+   - npm run test:coverage
    - sonar-scanner
  when: manual
