@@ -1,3 +1,3 @@
 export default {
-    defaultPath: '/dashboard/default',
+    defaultPath: '/auth/signin-1',
 };
