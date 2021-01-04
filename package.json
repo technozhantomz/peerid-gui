@@ -11,7 +11,7 @@
     "release": "standard-version",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "server": "cd ../PeerID-backend && npm run serve",
+    "server": "cd ../peerid-backend && npm run serve",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
     "test": "jest",
     "test:watch": "jest --watch",
