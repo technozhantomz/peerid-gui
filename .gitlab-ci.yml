@@ -14,6 +14,7 @@ image: node:12.18.4
 
 stages:
   - test
+  - deployDev
 
 # builds app
 build:
@@ -22,6 +23,17 @@ build:
     - npm install
   tags:
     - docker
+
+deploy:
+  stage: deployDev
+  script:
+    - npm install
+    - npm run build
+    - rm -rf $DOC_ROOT/*
+    - cp -R build/* $DOC_ROOT
+  when: manual 
+  tags:
+    - peerid-runner
 
 variables:
  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
