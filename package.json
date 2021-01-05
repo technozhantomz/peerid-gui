@@ -118,6 +118,7 @@
     "immutable": "^4.0.0-rc.12",
     "is-valid-domain": "0.0.15",
     "jsdoc-mermaid": "^1.0.0",
+    "jquery": "3.5.1",
     "lodash": "^4.17.15",
     "loglevel": "^1.6.2",
     "moment": "^2.24.0",
