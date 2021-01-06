@@ -1,0 +1,21 @@
+/**  =====================
+      Label & Badges css start
+==========================  **/
+
+.label {
+  position: relative;
+  min-height: auto;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 4px 10px;
+
+  @each $value in $color-bt-name {
+    $i: index($color-bt-name, $value);
+
+    &.label-#{$value} {
+      color: #ffffff;
+      background: nth($color-bt-color, $i);
+    }
+  }
+}
+/**====== Label & Badges css end ======**/

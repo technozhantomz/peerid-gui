@@ -1,0 +1,271 @@
+/**  =====================
+      Radio & Checked css start
+==========================  **/
+.checkbox {
+  position: relative;
+  min-height: auto;
+  margin-right: 5px;
+  padding: 10px 0;
+
+  input[type=checkbox] {
+    display: none;
+    width: 22px;
+    margin: 0;
+
+    + .form-check-label,
+    + .cr {
+      padding-left: 0;
+
+      &::before {
+        content: '\e83f';
+        display: inline-block;
+        vertical-align: bottom;
+        width: 22px;
+        height: 22px;
+        margin-right: 10px;
+        border: 2px solid #e9eaec;
+        border-radius: 3px;
+        line-height: 19px;
+        color: transparent;
+        text-align: center;
+        background: #ffffff;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        font: {
+          size: 15px;
+          family: 'feather';
+          weight: 400;
+        }
+      }
+    }
+
+    &:checked + .form-check-label::before,
+    &:checked + .cr::before {
+      color: #ffffff;
+      background: #1dd5d2;
+      border-color: #1dd5d2;
+    }
+
+    &.disabled + .form-check-label,
+    &:disabled + .form-check-label,
+    &.disabled + .cr,
+    &:disabled + .cr {
+      opacity: 0.5;
+    }
+
+    &.disabled + .form-check-label::before,
+    &:disabled + .form-check-label::before,
+    &.disabled + .cr::before,
+    &:disabled + .cr::before {
+      cursor: not-allowed;
+    }
+  }
+
+  &.checkbox-fill {
+    input[type=checkbox] {
+      + .form-check-label,
+      + .cr {
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 8.5px;
+          left: 3px;
+          vertical-align: bottom;
+          width: 22.5px;
+          height: 22.5px;
+          margin-right: 10px;
+          border: 2px solid #e9eaec;
+          border-radius: 2px;
+          text-align: center;
+          background: transparent;
+          transition: all 0.2s ease-in-out;
+          cursor: pointer;
+        }
+
+        &::before {
+          content: '\e840';
+          font-size: 27px;
+          background: transparent;
+          opacity: 0;
+        }
+      }
+
+      &:checked {
+        + .form-check-label,
+        + .cr {
+          &::after {
+            opacity: 0;
+          }
+
+          &::before {
+            color: #1dd5d2;
+            background: transparent;
+            opacity: 1;
+            border-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  @each $value in $color-bt-name {
+    $i: index($color-bt-name, $value);
+
+    &.checkbox-#{$value} input[type=checkbox]:checked + .form-check-label::before,
+    &.checkbox-#{$value} input[type=checkbox]:checked + .cr::before {
+      color: #ffffff;
+      background: nth($color-bt-color, $i);
+      border-color: nth($color-bt-color, $i);
+    }
+
+    &.checkbox-fill.checkbox-#{$value} input[type=checkbox]:checked + .form-check-label::before,
+    &.checkbox-fill.checkbox-#{$value} input[type=checkbox]:checked + .cr::before {
+      color: nth($color-bt-color, $i);
+      background: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .form-check-label,
+  .cr {
+    cursor: pointer;
+  }
+}
+
+.radio {
+  position: relative;
+  min-height: auto;
+  margin-right: 5px;
+  padding: 10px 0;
+
+  input[type=radio] {
+    display: none;
+    width: 22px;
+    margin: 0;
+
+    + .form-check-label,
+    + .cr {
+      padding-left: 0;
+
+      &::after,
+      &::before {
+        content: '';
+        display: inline-block;
+        vertical-align: bottom;
+        margin-right: 10px;
+        border-radius: 50%;
+        color: transparent;
+        background: #ffffff;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+      }
+
+      &::before {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #e9eaec;
+      }
+
+      &::after {
+        position: absolute;
+        top: 13px;
+        left: 5px;
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &:checked {
+      + .form-check-label,
+      + .cr {
+        &::before {
+          border-color: #1dd5d2;
+        }
+
+        &::after {
+          background: $theme-color;
+        }
+      }
+    }
+
+    &:disabled {
+      + .form-check-label,
+      + .cr {
+        opacity: 0.5;
+        cursor: not-allowed;
+
+        &::after,
+        &::before {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  &.radio-fill {
+    input[type=radio] {
+      + .form-check-label,
+      + .cr {
+        &::after {
+          top: 10px;
+          left: 2px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  @each $value in $color-bt-name {
+    $i: index($color-bt-name, $value);
+
+    &.radio-#{$value} input[type=radio]:checked + .form-check-label,
+    &.radio-#{$value} input[type=radio]:checked + .cr {
+      &::before {
+        border-color: nth($color-bt-color, $i);
+      }
+
+      &::after {
+        background: nth($color-bt-color, $i);
+      }
+    }
+  }
+
+  .form-check-label,
+  .cr {
+    cursor: pointer;
+  }
+}
+
+@-moz-document url-prefix() {
+  .radio input[type='radio'] + .form-check-label::after,
+  .radio input[type='radio'] + .cr::after {
+    top: 14px;
+  }
+}
+
+.custom-controls-stacked {
+  .radio {
+    input[type=radio] {
+      + .form-check-label,
+      + .cr {
+        &::after {
+          top: 15px;
+        }
+      }
+    }
+  }
+}
+/**====== Radio & Checked css end ======**/
+
+.radio, .checkbox {
+  .form-check {
+    margin-bottom: 6px;
+    padding-left: 0;
+
+    input[type=radio] + .form-check-label::after {
+      top: 5px;
+    }
+  }
+}

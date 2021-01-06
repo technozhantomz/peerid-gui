@@ -1,0 +1,73 @@
+/**  =====================
+      tooltip css start
+==========================  **/
+.tooltip {
+  &.show {
+    opacity: 1;
+  }
+
+  .arrow {
+    display: block;
+    position: absolute;
+
+    &::before {
+      content: '\6d';
+      left: 0;
+      border: none;
+      line-height: 0.3;
+      font-family: 'pct';
+      font-size: 20px;
+      color: #000000;
+      text-shadow: 0 2px 3px rgba(220, 220, 220, 0.46);
+    }
+  }
+}
+
+.bs-tooltip-right {
+  .arrow {
+    &::before {
+      content: '\6a';
+      top: 2.6px;
+      left: -7px;
+      border: none;
+      text-shadow: -2px 0 3px rgba(220, 220, 220, 0.46);
+    }
+  }
+
+  .tooltip-inner {
+    border-radius: 15px 20px 20px 15px;
+  }
+}
+
+.bs-tooltip-bottom {
+  .arrow {
+    &::before {
+      content: '\6c';
+      border: none;
+      text-shadow: 0 -2px 3px rgba(220, 220, 220, 0.46);
+    }
+  }
+}
+
+.bs-tooltip-left {
+  .arrow {
+    &::before {
+      content: '\6b';
+      top: 3.6px;
+      left: -8px;
+      border: none;
+      text-shadow: 2px 0 3px rgba(220, 220, 220, 0.46);
+    }
+  }
+
+  .tooltip-inner {
+    border-radius: 20px 15px 15px 20px;
+  }
+}
+
+.tooltip-inner {
+  padding: 6px 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px #dcdcdc;
+}
+/**====== tooltip css end ======**/
