@@ -131,7 +131,7 @@ const mapStateToProps = (state) => {
   return {
     layout: state.layout,
     preLayout: state.preLayout,
-    collapseMenu: state.navReducer.collapseMenu,
+    collapseMenu: state.collapseMenu,
     layoutType: state.layoutType,
     navBackColor: state.navBackColor,
     navBackImage: state.navBackImage,

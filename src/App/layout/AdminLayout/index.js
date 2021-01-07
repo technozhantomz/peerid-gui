@@ -11,7 +11,7 @@ import routes from '../../../routes';
 import Aux from '../../../hoc/_Aux';
 import * as actionTypes from '../../../actions/actions';
 
-import './app.scss';
+// import './app.scss';
 
 class AdminLayout extends Component {
 
@@ -72,7 +72,7 @@ class AdminLayout extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    defaultPath: state.navReducer.defaultPath,
+    defaultPath: state.defaultPath,
     collapseMenu: state.collapseMenu,
     configBlock: state.configBlock,
     layout: state.layout
