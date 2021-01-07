@@ -16,6 +16,6 @@ export default (history) => combineReducers({
   profiles: AccountReducer,
   errorBox: ErrorBoxReducer,
   peerplays: PeerplaysReducer,
-  navReducer: navReducer
+  nav: navReducer
 
 });
