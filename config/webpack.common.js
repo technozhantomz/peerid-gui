@@ -85,6 +85,10 @@ module.exports = {
       {
         test: /\.txt$/i,
         use: 'raw-loader',
+      },
+      {
+        test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
+        loader: 'file-loader?name=assets/fonts/[name].[ext]',
       }
     ]
   },

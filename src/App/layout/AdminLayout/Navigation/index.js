@@ -13,6 +13,9 @@ import navigation from '../../../../menu-items';
 class Navigation extends Component {
 
     resize = () => {
+      if(document.getElementById('root') === null)
+        return;
+
       const contentWidth = document.getElementById('root').clientWidth;
 
       if (this.props.layout === 'horizontal' && contentWidth < 992) {

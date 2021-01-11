@@ -11,7 +11,7 @@ import routes from '../../../routes';
 import Aux from '../../../hoc/_Aux';
 import * as actionTypes from '../../../actions/actions';
 
-// import './app.scss';
+import './app.scss';
 
 class AdminLayout extends Component {
 
