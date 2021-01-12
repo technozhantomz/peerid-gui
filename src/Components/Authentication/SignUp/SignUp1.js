@@ -9,8 +9,7 @@ import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import {bindActionCreators} from 'redux';
 import {AuthService} from '../../../services';
 import {ValidationUtil, GenUtil} from '../../../utility';
-import {InvalidIcon} from '../../../assets/images';
-import {ModalActions, NavigateActions} from '../../../actions';
+import {NavigateActions} from '../../../actions';
 import {connect} from 'react-redux';
 
 const translate = GenUtil.translate;
@@ -75,9 +74,9 @@ class SignUp1 extends React.Component {
           });
       };
     
-      handleEmailChange = (email) => {
+      handleEmailChange = (e) => {
         this.setState({
-          email: email,
+          email: e.target.value,
           isEmailInputClicked: true,
           errors: {
             ...this.state.errors,
@@ -86,16 +85,16 @@ class SignUp1 extends React.Component {
         }, () => this.validate('email'));
       }
     
-      handlePasswordChange = (password) => {
+      handlePasswordChange = (e) => {
         this.setState({
-          password: password,
+          password: e.target.value,
           isPasswordInputClicked: true
         }, () => this.validate('password'));
       }
     
-      handleConfirmPasswordChange = (password) => {
+      handleConfirmPasswordChange = (e) => {
         this.setState({
-          confirmPassword: password,
+          confirmPassword: e.target.value,
           isConfirmPasswordConfirmed: true
         }, () => this.validate('confirmPassword'));
       }
@@ -159,42 +158,24 @@ class SignUp1 extends React.Component {
                                     <input className="form-control" 
                                     name='email'
                                     type='email'
-                                    muiInputClass='inputRegister'
-                                    hasActiveGlow={ true }
                                     placeholder={ translate('register.enterEmail') }
-                                    handleChange={ this.handleEmailChange }
-                                    iconRightActive={ InvalidIcon }
-                                    resetToDefault={ this.state.resetToDefault }
-                                    resetHandler={ this.resetHandler }
-                                   
+                                    onChange={ this.handleEmailChange }
                                     />
                                 </div>
                                 <div className="input-group mb-3">
                                     <input className="form-control" 
                                      name='password'
                                      type='password'
-                                     muiInputClass='inputRegister'
-                                     hasActiveGlow={ true }
                                      placeholder={ translate('register.enterPassword') }
-                                     handleChange={ this.handlePasswordChange }
-                                     iconRightActive={ InvalidIcon }
-                                     resetToDefault={ this.state.resetToDefault }
-                                     resetHandler={ this.resetHandler }
-                                    
+                                     onChange={ this.handlePasswordChange }
                                    />
                                 </div>
                                 <div className="input-group mb-4">
                                     <input className="form-control"
                                     name='confirmPassword'
                                     type='password'
-                                    muiInputClass='inputRegister'
-                                    hasActiveGlow={ true }
                                     placeholder={ translate('register.confirmPassword') }
-                                    handleChange={ this.handleConfirmPasswordChange }
-                                    iconRightActive={ InvalidIcon }
-                                    resetToDefault={ this.state.resetToDefault }
-                                    resetHandler={ this.resetHandler }
-                                  
+                                    onChange={ this.handleConfirmPasswordChange }
                                     />
                                 </div>
                                 <div className="form-group text-left">
@@ -219,8 +200,6 @@ const mapStateToProps = (state) => ({isLoggedIn: state.getIn(['account', 'isLogg
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
-    toggleModal: ModalActions.toggleModal,
-    setModalType: ModalActions.setModalType,
     navigateToLogin: NavigateActions.navigateToSignIn
   },
   dispatch
