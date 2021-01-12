@@ -47,7 +47,7 @@ class NavigateActions {
    */
   static navigateToDashboard() {
     return (dispatch) => {
-      dispatch(push('/dashboard'));
+      dispatch(push('/dashboard/default'));
     };
   }
 

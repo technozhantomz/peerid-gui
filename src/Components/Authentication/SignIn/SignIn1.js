@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {connect} from 'react-redux';
 
-// import '../../../assets/scss/style.scss';
+import '../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import {AuthService} from '../../../services/';
@@ -88,14 +88,14 @@ class SignUp1 extends React.Component {
                                     <h3 className="mb-4">Login</h3>
 
                                     <div className="input-group mb-3">
-                                        <input 
+                                        <input className="form-control"
                                             name='username'
                                             placeholder={ translate('login.enterUsername') }
                                             onChange={ this.handleUsernameChange }
                                         />
                                     </div>
                                     <div className="input-group mb-4">
-                                        <input 
+                                        <input className="form-control"
                                             name='password'
                                             type='password'
                                             placeholder={ translate('login.enterPassword') }
