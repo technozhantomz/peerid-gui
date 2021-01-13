@@ -13,7 +13,7 @@ import navigation from '../../../../menu-items';
 class Navigation extends Component {
 
     resize = () => {
-      const contentWidth = document.getElementById('root').clientWidth;
+      const contentWidth = document.getElementById('content').clientWidth;
 
       if (this.props.layout === 'horizontal' && contentWidth < 992) {
         this.props.onChangeLayout('vertical');
@@ -131,7 +131,7 @@ const mapStateToProps = (state) => {
   return {
     layout: state.layout,
     preLayout: state.preLayout,
-    collapseMenu: state.navReducer.collapseMenu,
+    collapseMenu: state.collapseMenu,
     layoutType: state.layoutType,
     navBackColor: state.navBackColor,
     navBackImage: state.navBackImage,

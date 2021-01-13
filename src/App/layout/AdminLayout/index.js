@@ -72,10 +72,10 @@ class AdminLayout extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    defaultPath: state.navReducer.defaultPath,
-    collapseMenu: state.collapseMenu,
-    configBlock: state.configBlock,
-    layout: state.layout
+    defaultPath: state.getIn(['nav','defaultPath']),
+    collapseMenu: state.getIn(['nav','collapseMenu']),
+    configBlock: state.getIn(['nav','configBlock']),
+    layout: state.getIn(['nav','layout'])
   };
 };
 

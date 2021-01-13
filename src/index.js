@@ -1,22 +1,30 @@
-import {Provider} from 'react-redux';
-import configureStore, {history} from './store/configureStore';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import App from './App/index';
+import * as serviceWorker from './serviceWorker';
+import config from './config';
+
 import {PeerplaysService} from './services';
 import {GenUtil} from './utility';
-// Initialize store
+import configureStore, { history } from './store/configureStore';
 const store = configureStore();
 PeerplaysService.init(store);
-GenUtil.initConsole();
+GenUtil.initConsole();  
 
-const render = () => {
-  ReactDOM.render(
-    <Provider store={ store }>
-      <App history={ history } />
-    </Provider>,
-    document.getElementById('content')
-  );
-};
+// const store = createStore(reducer);
 
-render();
+const app = (
+    <Provider store={store}>
+        <BrowserRouter basename={config.basename}>
+            <App history={history} />
+        </BrowserRouter>
+    </Provider>
+);
+
+ReactDOM.render(app, document.getElementById('content'));
+
+serviceWorker.unregister();
+
