@@ -7,7 +7,7 @@ include:
 
 retire-js-dependency_scanning:
   before_script:
-    - apk add autoconf libtool automake
+    - apk add autoconf libtool automake build-base gcc
 
 # node docker image on which this would be run
 image: node:12.18.4
@@ -21,14 +21,21 @@ build:
   stage: test
   script:
     - npm install
+    - npm run build
+  artifacts:
+    untracked: true
+    paths:
+      - build/
+    expire_in: 1 week
+    
   tags:
     - docker
 
 deploy:
   stage: deployDev
+  dependencies: 
+    - build
   script:
-    - npm install
-    - npm run build
     - rm -rf $DOC_ROOT/*
     - cp -R build/* $DOC_ROOT
   when: manual 
