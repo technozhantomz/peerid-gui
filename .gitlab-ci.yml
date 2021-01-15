@@ -21,7 +21,7 @@ build:
   stage: test
   script:
     - npm install
-    - npm run build
+    - CI=false npm run build
   artifacts:
     untracked: true
     paths:
