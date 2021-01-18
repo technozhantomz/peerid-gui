@@ -21,7 +21,7 @@ build:
   stage: test
   script:
     - npm install
-    - CI=false npm run build
+    - npm run build
   artifacts:
     untracked: true
     paths:
@@ -30,6 +30,10 @@ build:
     
   tags:
     - docker
+    
+  allow_failure:
+    exit_codes:
+      - 1
 
 deploy:
   stage: deployDev
