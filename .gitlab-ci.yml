@@ -28,9 +28,7 @@ build:
 deploy:
   stage: deployDev
   script:
-    - build_peerid
-    - rm -rf $DOC_ROOT/*
-    - cp -R build/* $DOC_ROOT
+    - deploy_peerid
   tags:
     - peerid-runner
 
