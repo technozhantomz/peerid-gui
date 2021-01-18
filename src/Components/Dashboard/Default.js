@@ -7,72 +7,8 @@ import Aux from "../../hoc/_Aux";
 import DEMO from "../../store/constant";
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../actions';
-import { GenUtil } from '../../utility';
 import { AppService } from '../../services';
-import {
-  Collapse,
-  IconButton,
-  // Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  Paper
-} from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
-import avatar2 from '../../assets/images/user/avatar-2.jpg';
-import avatar3 from '../../assets/images/user/avatar-3.jpg';
-
-const translate = GenUtil.translate;
-
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset'
-    }
-  }
-});
-
-const RowW = ({ row, classes, edit, deleteApp }) => {
-  const [open, setOpen] = React.useState(false);
-  const classRow = useRowStyles();
-
-  let editButton = (
-    <span onClick={() => edit(row)} className='header__link'>
-      {translate('dashboard.tableLinks.edit')}
-    </span>
-  );
-
-  let deleteButton = (
-    <span className='header__link' onClick={() => deleteApp(row)}>
-      {translate('dashboard.tableLinks.delete')}
-    </span>
-  );
-  return (
-    <React.Fragment>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6} >
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <div className='dashboard__creds-container'>
-              <Typography variant='h5' gutterBottom component='div'>
-                Client Credentials
-              </Typography>
-              <div className='dashboard__table-row'>
-                {`Client ID: ${row.id}`}
-              </div>
-              <div className='dashboard__table-row'>
-                {`Client Secret: ${row.app_secret}`}
-              </div>
-            </div>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-};
 
 class Dashboard extends React.Component {
   state = {

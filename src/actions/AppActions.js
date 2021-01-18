@@ -2,7 +2,6 @@ import ActionTypes from './ActionTypes';
 import {NavigateActions, AccountActions, ModalActions} from '../actions';
 import {AuthService} from '../services';
 import {StorageUtil, GenUtil} from '../utility';
-import {Action, Dispatch} from 'redux';
 import ModalTypes from '../constants/ModalTypes';
 
 const translate = GenUtil.translate;

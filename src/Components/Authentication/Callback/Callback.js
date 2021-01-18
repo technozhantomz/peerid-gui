@@ -8,7 +8,6 @@ import {ProfileService, AuthService} from '../../../services';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {StorageUtil, GenUtil} from '../../../utility';
-import {ModalTypes} from '../../../constants';
 
 const translate = GenUtil.translate;
 
