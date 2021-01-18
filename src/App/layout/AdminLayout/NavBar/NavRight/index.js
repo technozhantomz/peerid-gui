@@ -33,10 +33,10 @@ class NavRight extends Component {
                     </a>
                   </div>
                   <ul className='pro-body'>
-                    <li><a className='dropdown-item'><i className='feather icon-settings'/> Username : {username}</a></li>
-                    <li><a className='dropdown-item'><i className='feather icon-settings'/> Email ID : {email}</a></li>
-                    <li><a className='dropdown-item'><i className='feather icon-settings'/> Peerplays ID : {peerplaysAccountId}</a></li>
-                    <li><a className='dropdown-item'><i className='feather icon-settings'/> Peerplays Account Name : {peerplaysAccountName}</a></li>
+                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Username : {username}</a></li>
+                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Email ID : {email}</a></li>
+                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Peerplays ID : {peerplaysAccountId}</a></li>
+                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Peerplays Account Name : {peerplaysAccountName}</a></li>
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-user'/> AccountId</a></li> */}
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-mail'/> My Messages</a></li> */}
                     <li><a href={ DEMO.BLANK_LINK } onClick={ this.props.logout } className='dropdown-item'><i className='feather icon-lock'/> Logout</a></li>

@@ -1,6 +1,5 @@
 import {push, replace} from 'connected-react-router';
 import {RouteConstants as Routes} from '../constants';
-import {Dispatch} from 'redux';
 
 /**
  * Handles all navigation within the application.
