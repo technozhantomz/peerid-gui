@@ -7,21 +7,30 @@ include:
 
 retire-js-dependency_scanning:
   before_script:
-    - apk add autoconf libtool automake
+    - apk add autoconf libtool automake build-base gcc
 
 # node docker image on which this would be run
 image: node:12.18.4
 
 stages:
   - test
+  - deployDev
 
 # builds app
 build:
   stage: test
   script:
     - npm install
+    
   tags:
     - docker
+
+deploy:
+  stage: deployDev
+  script:
+    - deploy_peerid
+  tags:
+    - peerid-runner
 
 variables:
  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
