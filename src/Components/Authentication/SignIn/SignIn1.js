@@ -68,6 +68,12 @@ class SignUp1 extends React.Component {
       };
 
     render() {
+
+      const isDisabled = () => {
+        const {username, password, errors} = this.state;
+        return username.length < 1 || password < 1 || !!errors.username || !!errors.password;
+      };
+
         return (
             <Aux>
                 <Breadcrumb />
@@ -102,9 +108,11 @@ class SignUp1 extends React.Component {
                                             onChange={ this.handlePasswordChange }
                                         />
                                     </div>
-                                    <button type="submit"  className="btn btn-primary shadow-2 mb-4">Login</button>
+                                    <button disabled={ isDisabled() } type="submit"  className="btn btn-primary shadow-2 mb-4">Login</button>
                                     <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
                                     <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p>
+                                    <span style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.email}</span>
+                                    
                                     {/* <LoginFooter></LoginFooter> */}
                                 </div>
                             </div>
@@ -116,7 +124,10 @@ class SignUp1 extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({isLoggedIn: state.getIn(['profiles', 'isLoggedIn'])});
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['profiles', 'isLoggedIn']),
+  errorText: state.getIn(['profiles', 'loginErrorText'])
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
