@@ -1,140 +1,651 @@
 import React from 'react';
 import { Row, Col, Card, Form, Button } from 'react-bootstrap';
-
 import Aux from "../../hoc/_Aux";
+import supportedEmailDomains from '../../assets/locales/SupportedEmailDomains.txt';
+import { EOL } from 'os';
+import isValidDomain from 'is-valid-domain';
+import csc from 'country-state-city';
+import { ChainTypes } from 'peerplaysjs-lib';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { NavigateActions } from '../../actions';
+import { InputLabel, Select, MenuItem } from '@material-ui/core';
+import { AppService } from '../../services';
+import { ValidationUtil } from '../../utility';
+import { toast } from 'react-toastify';
 
+toast.configure()
 class FormsElements extends React.Component {
 
-    render() {
+  state = {
+    appName: '',
+    description: '',
+    organizationName: '',
+    countrySelected: '',
+    countryList: [],
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    provinceSelected: '',
+    provinceList: [],
+    postalCode: '',
+    contact: '',
+    email: '',
+    phone: '',
+    domains: '',
+    operations: [],
+    operationsSelected: [],
+    btnDisable: true,
+    resetToDefault: false,
+    // validations Errors
+    appErr: '',
+    descriptionErr: '',
+    organizationErr: '',
+    addLine1Err: '',
+    addLine2Err: '',
+    cityErr: '',
+    contactErr: '',
+    emailErr: '',
+    domainErr: '',
+    phoneErr: ''
+  };
 
-        return (
-            <Aux>
-                <Row>
-                    <Col>
-                        <Card>
-                            <Card.Header>
-                                <Card.Title as="h5">Create App</Card.Title>
-                            </Card.Header>
-                            <Card.Body>
-                                <Form>
-                                    <h5>App Info</h5>
-                                    <hr />
-                                    <Row>
-                                        <Col md={6}>
-                                            <Form.Group controlId="formBasicEmail">
-                                                <Form.Label>App Name</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter app name" />
-                                            </Form.Group>
+  componentDidMount() {
+    if (!this.props.isLoggedIn) {
+      this.props.history.push('/auth/signin-1');
+    } else {
+      if (this.state.countrySelected !== '') {
+        const operations = Object.keys(ChainTypes.operations).map((op) => {
+          return {
+            name: op,
+            id: ChainTypes.operations[op]
+          };
+        });
+        this.setState({
+          operations,
+          countryList: csc.getAllCountries(),
+          provinceList: csc.getStatesOfCountry(this.state.countrySelected)
+        });
+      } else {
+        const operations = Object.keys(ChainTypes.operations).map((op) => {
+          return {
+            name: op,
+            id: ChainTypes.operations[op]
+          };
+        });
+        this.setState({
+          operations,
+          countryList: csc.getAllCountries()
+        });
+      }
 
-                                            <Form.Group controlId="formBasicPassword">
-                                                <Form.Label>Organization Name</Form.Label>
-                                                <Form.Control type="text" placeholder="Organization Name" />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Description</Form.Label>
-                                                <Form.Control as="textarea" rows="5" placeholder="Description" />
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <h5 className="mt-5">Address Info</h5>
-                                    <hr />
-                                    <Row>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Country</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter Country" />
-                                            </Form.Group>
+      if (this.props.location.state) {
+        const data = this.props.location.state;
+        let countryId = csc.getAllCountries().find((c) => c.name === data.country).id;
+        this.setState({
+          provinceList: csc.getStatesOfCountry(countryId)
+        });
 
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Address Line 1</Form.Label>
-                                                <Form.Control type="text" placeholder="Address Line 1" />
-                                            </Form.Group>
-                                        </Col>
+        let provinceId = csc.getStatesOfCountry(countryId).find((p) => p.name === data.province).id;
 
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Address Line 2</Form.Label>
-                                                <Form.Control type="text" placeholder="Address Line 2" />
-                                            </Form.Group>
-
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>City</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter City" />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>State</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter state" />
-                                            </Form.Group>
-
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Zip Code</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter Postal/Zip code" />
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <h5 className="mt-5">Conctact Details</h5>
-                                    <hr />
-                                    <Row>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Contact Person</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter contact person" />
-                                            </Form.Group>
-
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Email</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter email" />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Phone</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter Phone" />
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <h5 className="mt-5">Others</h5>
-                                    <hr />
-                                    <Row>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Operations</Form.Label>
-                                                <Form.Control as="textarea" rows="3" placeholder="Operations" />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col md={6}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Description</Form.Label>
-                                                <Form.Control as="textarea" rows="3" placeholder="Description" />
-                                            </Form.Group>
-                                        </Col>
-
-                                    </Row>
-                                    <Col md={6} xl={4} >
-                                        <Button variant="primary">
-                                            Create App
-                                </Button>
-                                    </Col>
-                                </Form>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Aux>
-        );
+        this.setState({
+          appId: data.id,
+          appName: data.appname,
+          description: data.description,
+          organizationName: data.organization_name,
+          countrySelected: countryId,
+          addressLine1: data.address_line1,
+          addressLine2: data.address_line2,
+          city: data.city,
+          provinceSelected: provinceId,
+          postalCode: data.postal_code,
+          contact: data.contactname,
+          email: data.email,
+          phone: data.phone,
+          domains: data.domains.join(),
+          operationsSelected: data.operations,
+          btnDisable: !this.validate()
+        });
+      }
     }
+  }
+  // Form validations
+  validateForm = () => {
+    return this.state.appName && this.state.appName.length >= 3
+      && this.state.description && this.state.description.length >= 10
+      && this.state.organizationName && this.state.organizationName.length >= 5
+      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5
+      && this.state.city && this.state.city.length >= 2
+      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 3
+      && this.state.email && ValidationUtil.seEmail(this.state.email).success
+      && this.state.phone && this.validatePhone(this.state.phone)
+      && this.state.domains && this.validateDomains(this.state.domains)
+      && this.state.operationsSelected && this.state.operationsSelected.length > 0;
+  }
+
+  validatePhone = (phone) => {
+    var regex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
+
+    return phone.match(regex);
+  }
+
+  emailDomain(email) {
+    const regex = /\.([^.]+?)$/;
+    const lineBreak = EOL;
+    const acceptedDomains = supportedEmailDomains.split(lineBreak);
+    const extractedDomain = regex.exec(email);
+    return extractedDomain === null ? false : acceptedDomains.includes(extractedDomain[1].toUpperCase());
+  }
+
+  validateDomains = (domains) => {
+    var domainsSplit = domains.split(',');
+
+    for (let i = 0; i < domainsSplit.length; i++) {
+      if (!isValidDomain(domainsSplit[i].trim(), { subdomain: false, wildcard: false })) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Change state handle
+  handleAppNameChange = (e) => {
+    this.setState({
+      appName: e.target.value,
+    }, () => this.validate('appName'));
+  };
+
+  handleDescritionChange = (e) => {
+    this.setState({
+      description: e.target.value,
+    }, () => this.validate('description'));
+  };
+
+  handleOrganizationChange = (e) => {
+    this.setState({
+      organizationName: e.target.value,
+    }, () => this.validate('organizationName'));
+  };
+
+  handleAddressLine1Change = (e) => {
+    this.setState({
+      addressLine1: e.target.value,
+    }, () => this.validate('addressLine1'));
+  };
+
+  handleAddressLine2Change = (e) => {
+    this.setState({
+      addressLine2: e.target.value,
+    });
+  };
+
+  handleCityChange = (e) => {
+    this.setState({
+      city: e.target.value,
+    }, () => this.validate('city'));
+  };
+
+  handlePostalCodeChange = (e) => {
+    this.setState({
+      postalCode: e.target.value,
+    });
+  };
+
+  handleContactChange = (e) => {
+    this.setState({
+      contact: e.target.value,
+    }, () => this.validate('contact'));
+  };
+
+  handleEmailChange = (e) => {
+    this.setState({
+      email: e.target.value,
+    }, () => this.validate('email'));
+  };
+
+  handlePhoneChange = (e) => {
+    this.setState({
+      phone: e.target.value,
+    }, () => this.validate('phone'));
+  };
+
+  handleDomainChange = (e) => {
+    this.setState({
+      domains: e.target.value,
+    }, () => this.validate('domains'));
+  };
+
+
+  selectCountry = (e) => {
+    this.setState({
+      countrySelected: e.target.value,
+      provinceSelected: '',
+      provinceList: csc.getStatesOfCountry(e.target.value),
+    });
+  }
+
+  selectRegion = (e) => {
+    this.setState({
+      provinceSelected: e.target.value,
+    });
+  }
+
+  selectOperations = (e) => {
+    let value;
+
+    if (e.target.value.includes('')) {
+      value = [];
+    } else {
+      value = e.target.value;
+    }
+
+    this.setState({
+      operationsSelected: value,
+    });
+  }
+
+  // Toast alert for create app 
+  appSuccessAlert() {
+    toast.success('App Created Successfully!')
+  }
+
+  appErrorAlert() {
+    toast.error('App not created!')
+  }
+
+  // Trigger on onClick of Submit btn
+  handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const app = {
+        appname: this.state.appName,
+        email: this.state.email,
+        description: this.state.description,
+        organization_name: this.state.organizationName,
+        country: csc.getCountryById(this.state.countrySelected).name,
+        province: csc.getStateById(this.state.provinceSelected).name,
+        city: this.state.city,
+        address_line1: this.state.addressLine1,
+        contactname: this.state.contact,
+        phone: this.state.phone,
+        operations: [],
+        domains: []
+      };
+
+      app.domains.push(...this.state.domains.split(','));
+      app.operations.push(...this.state.operationsSelected);
+
+      if (this.state.addressLine2 && this.state.addressLine2.length > 0) {
+        app.address_line2 = this.state.addressLine2;
+      }
+
+      if (this.state.postalCode && this.state.postalCode.length > 0) {
+        app.postal_code = this.state.postalCode;
+      }
+
+      if (this.state.appId) {
+        app.id = this.state.appId;
+      }
+
+      await AppService.createApp(app);
+      // this.props.navigateToDashboard();
+      this.props.history.push('/dashboard/default');
+      this.appSuccessAlert();
+
+    } catch (err) {
+      console.error(err);
+      this.appErrorAlert();
+
+      if (err.status === 400 && typeof err.data.error !== 'string') {
+        let errText = '';
+        Object.keys(err.data.error).map((key) => {
+          errText += `${key}: ${err.data.error[key]}\n`;
+          return null;
+        });
+        this.setState({
+          errorMessage: errText
+        });
+      } else {
+        this.setState({
+          errorMessage: err.data.error
+        });
+      }
+
+      this.setState({ loading: false });
+    }
+  }
+
+  // Validating the form fields
+  validate = (type) => {
+    switch (type) {
+      case 'appName':
+        if (this.state.appName.length >= 3 && this.state.appName.length <= 50) {
+          this.setState({
+            appErr: '',
+          })
+        } else {
+          this.setState({
+            appErr: '* Should be between 3 and 50 characters',
+          })
+        }
+        break;
+      case 'description':
+        if (this.state.description.length >= 10 && this.state.description.length <= 1000) {
+          this.setState({
+            descriptionErr: '',
+          })
+        } else {
+          this.setState({
+            descriptionErr: '* Should be between 10 and 1000 characters',
+          })
+        }
+        break;
+      case 'organizationName':
+        if (this.state.organizationName.length >= 5 && this.state.organizationName.length <= 255) {
+          this.setState({
+            organizationErr: '',
+          })
+        } else {
+          this.setState({
+            organizationErr: '* Should be between 5 and 255 characters',
+          })
+        }
+        break;
+      case 'addressLine1':
+        if (this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255) {
+          this.setState({
+            addLine1Err: '',
+          })
+        } else {
+          this.setState({
+            addLine1Err: '* Should be between 5 and 255 characters',
+          })
+        }
+        break;
+      case 'city':
+        if (this.state.city.length >= 2 && this.state.city.length <= 50) {
+          this.setState({
+            cityErr: '',
+          })
+        } else {
+          this.setState({
+            cityErr: '* Should be between 2 and 50 characters',
+          })
+        }
+        break;
+      case 'contact':
+        if (this.state.contact.length >= 3 && this.state.contact.length <= 50) {
+          this.setState({
+            contactErr: '',
+          })
+        } else {
+          this.setState({
+            contactErr: '* Should be between 3 and 50 characters',
+          })
+        }
+        break;
+      case 'email':
+        const email = this.state.email;
+
+        if (ValidationUtil.seEmail(email).success) {
+          this.setState({
+            emailErr: '',
+          })
+        } else {
+          this.setState({
+            emailErr: '* Invalid email address',
+          })
+        }
+        break;
+      case 'phone':
+        var phoneregex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
+
+        if (phoneregex.test(this.state.phone)) {
+          this.setState({
+            phoneErr: '',
+          })
+        } else {
+          this.setState({
+            phoneErr: '* Should be a valid phone number',
+          })
+        }
+        break;
+      case 'domains':
+        if (this.validateDomains(this.state.domains)) {
+          this.setState({
+            domainsErr: '',
+          })
+        } else {
+          this.setState({
+            domainsErr: '* Should be valid domains separated by commas',
+          })
+        }
+        break;
+      default:
+    }
+  };
+  render() {
+    const { countrySelected, provinceSelected, countryList, provinceList, operations, operationsSelected } = this.state;
+
+    return (
+      <Aux>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Header>
+                <Card.Title as="h5">Create App</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                <form onSubmit={this.handleSubmit}>
+                  <h5>App Info</h5>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group controlId="formBasicEmail">
+                        <Form.Label>App Name</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter app name"
+                          name='appName'
+                          onChange={this.handleAppNameChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.appErr}</h6>
+
+                      <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Organization Name</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Organization Name"
+                          name='organizationName'
+                          onChange={this.handleOrganizationChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.organizationErr}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control as="textarea" rows="5"
+                          placeholder="Description"
+                          name='description'
+                          onChange={this.handleDescritionChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.descriptionErr}</h6>
+                    </Col>
+                  </Row>
+                  <h5 className="mt-5">Address Info</h5>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control as="select"
+                          placeholder="Enter Country"
+                          value={countrySelected}
+                          onChange={this.selectCountry}
+                        >
+                          <option value=''>None</option>
+                          {countryList && countryList.map(({ name, id }) => <option key={id} value={id}>{name}</option>)}
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Address Line 1</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Address Line 1"
+                          name='addressLine1'
+                          onChange={this.handleAddressLine1Change}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.addLine1Err}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Address Line 2</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Address Line 2"
+                          name='addressLine2'
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.addLine2Err}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>City</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter City"
+                          name='city'
+                          onChange={this.handleCityChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.cityErr}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>State</Form.Label>
+                        <Form.Control as="select"
+                          placeholder="Enter state"
+                          value={provinceSelected}
+                          onChange={this.selectRegion}
+                        >
+                          <option>None</option>
+                          {provinceList && provinceList.map(({ name, id }) => <option key={id} value={id}>{name}</option>)}
+                        </Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Zip Code</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter Postal/Zip code"
+                          name='postalCode'
+                          onChange={this.handlePostalCodeChange}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <h5 className="mt-5">Conctact Details</h5>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Contact Person</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter contact person"
+                          name='contact'
+                          onChange={this.handleContactChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.contactErr}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter email"
+                          name='email'
+                          onChange={this.handleEmailChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.emailErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.domainErr}</h6>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Phone</Form.Label>
+                        <Form.Control type="text"
+                          placeholder="Enter Phone"
+                          name='phone'
+                          onChange={this.handlePhoneChange}
+                        />
+                      </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.phoneErr}</h6>
+                    </Col>
+                  </Row>
+                  <h5 className="mt-5">Others</h5>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group variant='outlined' margin='normal'>
+                        <InputLabel id='operationslabel'>Operations</InputLabel>
+                        <Select
+                          labelId='operationslabel'
+                          id='operations'
+                          multiple
+                          value={operationsSelected}
+                          onChange={this.selectOperations}
+                        >
+                          <MenuItem value=''>
+                            <em>None</em>
+                          </MenuItem>
+                          {operations && operations.map(({ name, id }) => <MenuItem key={id} value={id}>{name}</MenuItem>)}
+                        </Select>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group >
+                        <Form.Label>Domains</Form.Label>
+                        <Form.Control as="textarea" rows="3"
+                          placeholder="Domains"
+                          name='domains'
+                          onChange={this.handleDomainChange}
+                        />
+                        <h6 style={{ color: "red" }} >{this.state.domainsErr}</h6>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Col md={6} xl={4} >
+                    <Button variant="primary" disabled={!this.validateForm()} type='submit'>
+                      Create App
+                    </Button>
+                  </Col>
+                  <span style={{ color: "red" }}>{this.state.errorMessage}</span>
+                </form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Aux>
+    );
+  }
 }
 
-export default FormsElements;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.getIn(['profiles', 'isLoggedIn'])
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    navigate: NavigateActions.navigate,
+    navigateToDashboard: NavigateActions.navigateToDashboard,
+    navigateToSignIn: NavigateActions.navigateToSignIn
+  },
+  dispatch
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormsElements);
