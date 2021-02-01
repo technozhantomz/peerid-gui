@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import {RouteConstants as Routes} from './constants';
 
 window.jQuery = $;
 window.$ = $;
@@ -11,9 +12,9 @@ const FormsElements = React.lazy(() => import('./Components/Forms/FormsElements'
 const Callback = React.lazy(() => import('./Components/Authentication/Callback'));
 
 const routes = [
-    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
-    { path: '/forms/form-basic', exact: true, name: 'Forms Elements', component: FormsElements },
-    { path: '/callback',  name: 'Callback', component: Callback },
+    { path: Routes.DASHBOARD, exact: true, name: 'Default', component: DashboardDefault },
+    { path: Routes.CREATE_APP, exact: true, name: 'Forms Elements', component: FormsElements },
+    { path: Routes.CALLBACK,  name: 'Callback', component: Callback },
 ];
 
 export default routes;

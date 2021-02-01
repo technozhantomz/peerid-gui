@@ -87,6 +87,7 @@ class FormsElements extends React.Component {
         });
 
         let provinceId = csc.getStatesOfCountry(countryId).find((p) => p.name === data.province).id;
+        console.log(data);
 
         this.setState({
           appId: data.id,
@@ -246,7 +247,11 @@ class FormsElements extends React.Component {
 
   // Toast alert for create app 
   appSuccessAlert() {
-    toast.success('App Created Successfully!')
+    if(this.props.location.state){
+      toast.success('App Edited Successfully!')
+    } else {
+      toast.success('App Created Successfully!')
+    }
   }
 
   appErrorAlert() {
@@ -290,7 +295,7 @@ class FormsElements extends React.Component {
 
       await AppService.createApp(app);
       // this.props.navigateToDashboard();
-      this.props.history.push('/dashboard/default');
+      this.props.history.push('/dashboard');
       this.appSuccessAlert();
 
     } catch (err) {
@@ -427,14 +432,14 @@ class FormsElements extends React.Component {
   };
   render() {
     const { countrySelected, provinceSelected, countryList, provinceList, operations, operationsSelected } = this.state;
-
+    
     return (
       <Aux>
         <Row>
           <Col>
             <Card>
               <Card.Header>
-                <Card.Title as="h5">Create App</Card.Title>
+                <Card.Title as="h5">{ this.props.location.state ? 'Edit App' : 'Create App' }</Card.Title>
               </Card.Header>
               <Card.Body>
                 <form onSubmit={this.handleSubmit}>
@@ -448,6 +453,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter app name"
                           name='appName'
                           onChange={this.handleAppNameChange}
+                          value={ this.state.appName }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.appErr}</h6>
@@ -458,6 +464,7 @@ class FormsElements extends React.Component {
                           placeholder="Organization Name"
                           name='organizationName'
                           onChange={this.handleOrganizationChange}
+                          value={ this.state.organizationName }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.organizationErr}</h6>
@@ -469,6 +476,7 @@ class FormsElements extends React.Component {
                           placeholder="Description"
                           name='description'
                           onChange={this.handleDescritionChange}
+                          value={ this.state.description }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.descriptionErr}</h6>
@@ -497,6 +505,7 @@ class FormsElements extends React.Component {
                           placeholder="Address Line 1"
                           name='addressLine1'
                           onChange={this.handleAddressLine1Change}
+                          value={ this.state.addressLine1 }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.addLine1Err}</h6>
@@ -507,6 +516,8 @@ class FormsElements extends React.Component {
                         <Form.Control type="text"
                           placeholder="Address Line 2"
                           name='addressLine2'
+                          value={ this.state.addressLine2 }
+                          onChange={this.handleAddressLine2Change}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.addLine2Err}</h6>
@@ -518,6 +529,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter City"
                           name='city'
                           onChange={this.handleCityChange}
+                          value={ this.state.city }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.cityErr}</h6>
@@ -542,6 +554,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter Postal/Zip code"
                           name='postalCode'
                           onChange={this.handlePostalCodeChange}
+                          value={ this.state.postalCode }
                         />
                       </Form.Group>
                     </Col>
@@ -556,6 +569,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter contact person"
                           name='contact'
                           onChange={this.handleContactChange}
+                          value={ this.state.contact }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.contactErr}</h6>
@@ -567,6 +581,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter email"
                           name='email'
                           onChange={this.handleEmailChange}
+                          value={ this.state.email }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.emailErr}</h6>
@@ -579,6 +594,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter Phone"
                           name='phone'
                           onChange={this.handlePhoneChange}
+                          value={ this.state.phone }
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.phoneErr}</h6>
@@ -611,6 +627,7 @@ class FormsElements extends React.Component {
                           placeholder="Domains"
                           name='domains'
                           onChange={this.handleDomainChange}
+                          value={ this.state.domains }
                         />
                         <h6 style={{ color: "red" }} >{this.state.domainsErr}</h6>
                       </Form.Group>

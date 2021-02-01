@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
@@ -9,10 +8,36 @@ import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../actions';
 import { AppService } from '../../services';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
+import { toast } from 'react-toastify';
+
+toast.configure()
+
+const AppsRow = ({apps, edit, deleteApp}) => {
+
+  let editButton = (
+    <span onClick={ () => edit(apps) } className='header__link'>
+      Edit
+    </span>
+  );
+
+  let deleteButton = (
+    <span className='header__link' onClick={ () => deleteApp(apps) }>
+      Delete
+    </span>
+  );
+
+  return (
+    <React.Fragment>
+      <a className="label theme-bg2 text-white f-12">{editButton}</a>
+      <a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">{deleteButton}</a>
+    </React.Fragment>
+  );
+};
 
 class Dashboard extends React.Component {
   state = {
-    data: []
+    data: [],
+    appGetErr: ''
   };
 
   componentDidMount() {
@@ -26,14 +51,39 @@ class Dashboard extends React.Component {
         });
       }).catch((err) => {
         console.error(err);
+        this.setState({
+          appGetErr: "Error while fetching the apps..."
+        })
       });
     }
   }
 
+  deleteAppSuccessAlert() {
+    toast.success('App Deleted Successfully!')
+  }
+
+  deleteAppErrorAlert() {
+    toast.error('App not deleted!')
+  }
+
+  deleteApp(app) {
+    AppService.deleteApp(app.id).then(() => {
+      AppService.getApps().then((res) => {
+        this.setState({
+          data: res
+        });
+        this.deleteAppSuccessAlert();
+      });
+    }).catch((err) => {
+      console.error(err);
+        this.deleteAppErrorAlert();
+    });
+  }
 
   render() {
 
     const lengthOfApps = this.state.data.length;
+    const {navigateToCreateApp} = this.props;
 
     return (
       <div>
@@ -49,6 +99,7 @@ class Dashboard extends React.Component {
                     <div className="col">
                       <h3 className="f-w-300">{lengthOfApps}</h3>
                       <span className="d-block text-uppercase">total Registered Apps</span>
+                      <span style={{ color: "red" }} className="d-block text-uppercase">{this.state.appGetErr}</span>
                     </div>
                   </div>
                 </Card.Body>
@@ -68,7 +119,7 @@ class Dashboard extends React.Component {
                         <th>Created</th>
                         <th>Actions</th>
                       </tr>
-                      {this.state.data.map(apps => (
+                      {this.state.data.map((apps) => (
                         <tr key={apps.id} className="unread">
                           <td><img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" /></td>
                           <td>
@@ -79,9 +130,8 @@ class Dashboard extends React.Component {
                           <td>
                             {apps.createdAt}
                           </td>
-                          <td><a href={DEMO.BLANK_LINK}
-                            className="label theme-bg2 text-white f-12">Edit</a>
-                            <a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">Delete</a>
+                          <td>
+                            <AppsRow key={ apps.id } apps={ apps } edit={ navigateToCreateApp } deleteApp={ this.deleteApp.bind(this) }/>
                           </td>
                         </tr>
                       ))}

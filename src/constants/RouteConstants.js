@@ -1,13 +1,13 @@
 export default {
-  ROOT: '/',
+  ROOT: '/dashboard',
   RESET_PASSWORD: '/reset-password',
   DASHBOARD: '/dashboard',
   CALLBACK: '/callback',
   ERROR_CALLBACK: '/error',
   PEERPLAYS_WALLET_LOGIN: '/peerplays',
   LOGIN: '/auth/signin-1',
-  REGISTER: '/signup',
-  CREATE_APP: '/create-app',
+  REGISTER: '/auth/signup-1',
+  CREATE_APP: '/forms/form-basic',
   PERMISSIONS: '/permissions',
   ACCOUNT: '/account'
 };
