@@ -38,7 +38,10 @@ deploy:
     - deploy_peerid
   tags:
     - peerid-runner
-
+  only:
+    refs:
+      - feature/New-UI
+      
 sonarcloud-check:
  image:
    name: sonarsource/sonar-scanner-cli:latest
