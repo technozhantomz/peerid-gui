@@ -15,6 +15,10 @@ retire-js-dependency_scanning:
   before_script:
     - apk add autoconf libtool automake build-base gcc
 
+dast:
+  before_script:
+    - echo "$WEBSITE" > environment_url.txt
+
 # node docker image on which this would be run
 image: node:12.18.4
 
