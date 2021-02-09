@@ -11,6 +11,8 @@ import {GenUtil} from '../../../utility';
 import {bindActionCreators} from 'redux';
 import {AppActions} from '../../../actions';
 
+import LoginFooter from '../../Login/LoginFooter';
+
 const translate = GenUtil.translate;
 
 class SignUp1 extends React.Component {
@@ -26,6 +28,14 @@ class SignUp1 extends React.Component {
         }
       };
     
+      componentDidMount() {
+        if(this.props.location.search) {
+          this.setState({
+            next: this.props.location.search.substr(6)
+          });
+        }
+      }
+
       handleSubmit = (event) => {
         event.preventDefault();
     
@@ -42,7 +52,7 @@ class SignUp1 extends React.Component {
           password: this.state.password
         };
     
-        this.props.login(account);
+        this.props.login(account, this.state.next);
       };
     
       handleUsernameChange = (e) => {
@@ -114,6 +124,7 @@ class SignUp1 extends React.Component {
                                     <span style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.email}</span>
                                     
                                     {/* <LoginFooter></LoginFooter> */}
+                                    <LoginFooter />
                                 </div>
                             </div>
                         </div>

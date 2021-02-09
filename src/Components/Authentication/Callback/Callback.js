@@ -36,7 +36,7 @@ class Callback extends Component {
           this.props.setAccount(account);
           this.props.setLoggedIn(true);
           // this.props.navigateToDashboard();
-         this.props.history.push('/default/dashboard');
+         this.props.history.push('/dashboard');
 
           break;
         }
