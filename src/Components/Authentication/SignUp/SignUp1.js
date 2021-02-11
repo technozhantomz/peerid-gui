@@ -13,6 +13,7 @@ import { NavigateActions } from '../../../actions';
 import { connect } from 'react-redux';
 import supportedEmailDomains from '../../../assets/locales/SupportedEmailDomains.txt';
 import { EOL } from 'os';
+import LoginFooter from '../../Login/LoginFooter';
 
 const translate = GenUtil.translate;
 
@@ -327,6 +328,7 @@ class SignUp1 extends React.Component {
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
                   </div>
+                  <LoginFooter />
                 </div>
               </div>
             </div>
