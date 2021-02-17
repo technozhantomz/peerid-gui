@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import supportedEmailDomains from '../../../assets/locales/SupportedEmailDomains.txt';
 import { EOL } from 'os';
 import LoginFooter from '../../Login/LoginFooter';
+import LoadBar from '../../Spinner/LoadBar'
+import {AppActions} from '../../../actions';
 
 const translate = GenUtil.translate;
 
@@ -79,6 +81,7 @@ class SignUp1 extends React.Component {
     // this.setState({
     //   registerDisabled: true
     // });
+    this.props.ShowLoader()
 
     AuthService.register(account)
       .then(() => {
@@ -96,6 +99,7 @@ class SignUp1 extends React.Component {
           isEmailInputClicked: false,
           resultText: translate('register.responses.confirmSent'),
         });
+        this.props.HideLoader()
       })
       .catch((e) => {
         console.error(e);
@@ -104,6 +108,7 @@ class SignUp1 extends React.Component {
           resultText: '',
           registerDisabled: false
         });
+        this.props.HideLoader()
       });
   };
 
@@ -322,9 +327,9 @@ class SignUp1 extends React.Component {
                       {/* <label htmlFor="checkbox-fill-2" className="cr">Send me the <a href={DEMO.BLANK_LINK}> Newsletter</a> weekly.</label> */}
                     </div>
                   </div>
-                  <button disabled={this.state.registerDisabled} type='submit' className="btn btn-primary shadow-2 mb-4">Sign up</button>
+                  <LoadBar btnStatus={'Creating account...'} btnName={'Sign up'} disabled={ this.state.registerDisabled }/>
                   <p className="mb-0 text-muted">Allready have an account? <NavLink to="/auth/signin-1">Login</NavLink></p>
-                  <span style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</span>
+                  <h6 style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</h6>
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
                   </div>
@@ -343,7 +348,9 @@ const mapStateToProps = (state) => ({ isLoggedIn: state.getIn(['account', 'isLog
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
-    navigateToLogin: NavigateActions.navigateToSignIn
+    navigateToLogin: NavigateActions.navigateToSignIn,
+    ShowLoader: AppActions.showLoader,
+    HideLoader: AppActions.hideLoader
   },
   dispatch
 );

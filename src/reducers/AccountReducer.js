@@ -20,7 +20,8 @@ export const dummyState = fromJS({
 let initialState = Config.useDummy ? dummyState : fromJS({
   isLoggedIn: StorageUtil.get('se-user') ? true : false,
   currentAccount: fromJS(JSON.parse(StorageUtil.get('se-user'))),
-  loginErrorText: ''
+  loginErrorText: '',
+  loading: false
 });
 
 export default (state = initialState, action) => {
@@ -63,6 +64,18 @@ export default (state = initialState, action) => {
       return state.merge({
         isLoggedIn: action.payload.isLoggedIn,
         currentAccount: action.payload.account
+      });
+    }
+
+    case ActionTypes.SHOW_LOADER: {
+      return state.merge({
+        loading:true
+      });
+    }
+
+    case ActionTypes.HIDE_LOADER : {
+      return state.merge({
+        loading:false
       });
     }
 

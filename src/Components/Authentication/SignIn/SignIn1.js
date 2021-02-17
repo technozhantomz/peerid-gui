@@ -12,7 +12,7 @@ import {bindActionCreators} from 'redux';
 import {AppActions} from '../../../actions';
 
 import LoginFooter from '../../Login/LoginFooter';
-
+import LoadBar from '../../Spinner/LoadBar'
 const translate = GenUtil.translate;
 
 class SignUp1 extends React.Component {
@@ -52,6 +52,7 @@ class SignUp1 extends React.Component {
           password: this.state.password
         };
     
+        this.props.ShowLoader()
         this.props.login(account, this.state.next);
       };
     
@@ -118,11 +119,11 @@ class SignUp1 extends React.Component {
                                             onChange={ this.handlePasswordChange }
                                         />
                                     </div>
-                                    <button disabled={ isDisabled() } type="submit"  className="btn btn-primary shadow-2 mb-4">Login</button>
+                                    <LoadBar btnStatus={'loading'} btnName={'Login'} disabled={ isDisabled() }/>
                                     <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
                                     <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p>
-                                    <span style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.email}</span>
-                                    
+                                    <h6 style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.login}</h6>
+                                    <h6 style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.email}</h6>
                                     {/* <LoginFooter></LoginFooter> */}
                                     <LoginFooter />
                                 </div>
@@ -143,6 +144,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     login: AppActions.login,
+    ShowLoader: AppActions.showLoader
   },
   dispatch
 );

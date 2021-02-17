@@ -129,6 +129,7 @@ class AppActions {
             dispatch(ModalActions.toggleModal());
           }
         } else {
+          dispatch(AppActions.hideLoader());
           dispatch(AppActions.setLoginError(err.data.error));
         }
       });
@@ -184,6 +185,22 @@ class AppActions {
       dispatch(AppPrivateActions.resetAppLoadingStatus());
     };
   }
+
+  static showLoader() {
+   return (dispatch) => {
+     dispatch({
+       type: ActionTypes.SHOW_LOADER
+     })
+   } 
+  }
+
+  static hideLoader() {
+    return (dispatch) => {
+      dispatch({
+        type: ActionTypes.HIDE_LOADER
+      })
+    } 
+   }
 }
 
 export default AppActions;
