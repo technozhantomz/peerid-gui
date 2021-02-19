@@ -101,7 +101,7 @@ class NavigateActions {
    */
   static navigateToSignIn(redirectAfterLogin = null, withReplace = true) {
     return (dispatch) => {
-      let url = redirectAfterLogin ? `/login?next=${redirectAfterLogin}` : Routes.LOGIN;
+      let url = redirectAfterLogin ? `/auth/signin-1?next=${redirectAfterLogin}` : Routes.LOGIN;
 
       if (withReplace) {
         dispatch(replace(url));

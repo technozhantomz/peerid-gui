@@ -42,8 +42,8 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     if (!this.props.isLoggedIn) {
-      //   this.props.navigateToSignIn();
-      this.props.history.push('/auth/signin-1');
+        this.props.navigateToSignIn();
+      // this.props.history.push('/auth/signin-1');
     } else {
       AppService.getApps().then((res) => {
         this.setState({
