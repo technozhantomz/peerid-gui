@@ -46,7 +46,6 @@ class SignUp1 extends React.Component {
       },
 
       emailCheck: '',
-      domainlCheck: '',
       errors: {
         email: '',
         password: '',
@@ -149,26 +148,15 @@ class SignUp1 extends React.Component {
         let regex = /(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/;
         const validEmailDomain = email.length > 0 ? this.emailDomain(email) : false;
         // Email Address check
-        if (!regex.test(email)) {
+        if (!regex.test(email) || !validEmailDomain) {
           this.setState({
-            emailCheck: '* Invalid email address',
+            emailCheck: '* Invalid email address & domain name',
             registerDisabled: true,
 
           })
         } else {
           this.setState({
             emailCheck: '',
-          })
-        }
-        // Top level domain check
-        if (!validEmailDomain) {
-          this.setState({
-            domainlCheck: '* Invalid top level domain name',
-            registerDisabled: true,
-          })
-        } else {
-          this.setState({
-            domainlCheck: '',
           })
         }
         break;
@@ -292,7 +280,6 @@ class SignUp1 extends React.Component {
                     />
                   </div>
                   <h6 style={{ color: "red" }} >{this.state.emailCheck}</h6>
-                  <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.domainlCheck}</h6>
 
                   <div className="input-group mb-3">
                     <input className="form-control"
