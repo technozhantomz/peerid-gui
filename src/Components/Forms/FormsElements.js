@@ -112,9 +112,9 @@ class FormsElements extends React.Component {
   }
   // Form validations
   validateForm = () => {
-    return this.state.appName && this.state.appName.length >= 3
+    return this.state.appName && this.state.appName.length >= 3 && !this.validateSpecialChar(this.state.appName)
       && this.state.description && this.state.description.length >= 10
-      && this.state.organizationName && this.state.organizationName.length >= 5
+      && this.state.organizationName && this.state.organizationName.length >= 5 && !this.validateSpecialChar(this.state.organizationName)
       && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5
       && this.state.city && this.state.city.length >= 2
       && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 3
@@ -128,6 +128,12 @@ class FormsElements extends React.Component {
     var regex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
 
     return phone.match(regex);
+  }
+
+  validateSpecialChar = (field) => {
+    const specialCharRegex = /[().@$!%^*#&/:;<=>+?_{},'"|~`]/g;
+
+    return field.match(specialCharRegex);
   }
 
   emailDomain(email) {
@@ -325,13 +331,13 @@ class FormsElements extends React.Component {
   validate = (type) => {
     switch (type) {
       case 'appName':
-        if (this.state.appName.length >= 3 && this.state.appName.length <= 50) {
+        if ((this.state.appName.length >= 3 && this.state.appName.length <= 50) && !(this.validateSpecialChar(this.state.appName))) {
           this.setState({
             appErr: '',
           })
         } else {
           this.setState({
-            appErr: '* Should be between 3 and 50 characters',
+            appErr: '* Should be between 3 and 50 characters & special characters are not allowed.',
           })
         }
         break;
@@ -347,13 +353,13 @@ class FormsElements extends React.Component {
         }
         break;
       case 'organizationName':
-        if (this.state.organizationName.length >= 5 && this.state.organizationName.length <= 255) {
+        if (this.state.organizationName.length >= 5 && this.state.organizationName.length <= 255 && !(this.validateSpecialChar(this.state.organizationName))) {
           this.setState({
             organizationErr: '',
           })
         } else {
           this.setState({
-            organizationErr: '* Should be between 5 and 255 characters',
+            organizationErr: '* Should be between 5 and 255 characters & special characters are not allowed.',
           })
         }
         break;
