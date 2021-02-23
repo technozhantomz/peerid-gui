@@ -85,6 +85,10 @@ class SignUp1 extends React.Component {
         return username.length < 1 || password < 1 || !!errors.username || !!errors.password;
       };
 
+      const linkStyle = {
+        color: "blue",
+        textDecoration: 'underline'
+      }
         return (
             <Aux>
                 <Breadcrumb />
@@ -120,8 +124,8 @@ class SignUp1 extends React.Component {
                                         />
                                     </div>
                                     <LoadBar btnStatus={'loading'} btnName={'Login'} disabled={ isDisabled() }/>
-                                    <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
-                                    <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p>
+                                    <p className="mb-2 text-muted">Forgot password? <NavLink style={linkStyle} to="/auth/reset-password-1">Reset</NavLink></p>
+                                    <p className="mb-0 text-muted">Don’t have an account? <NavLink style={linkStyle} to="/auth/signup-1">Signup</NavLink></p>
                                     <h6 style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.login}</h6>
                                     <h6 style={{ color: "red" }} className='login-form__apiTxt--error'>{this.props.errorText.email}</h6>
                                     {/* <LoginFooter></LoginFooter> */}

@@ -39,7 +39,7 @@ class NavRight extends Component {
                     <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Peerplays Account Name : {peerplaysAccountName}</a></li>
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-user'/> AccountId</a></li> */}
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-mail'/> My Messages</a></li> */}
-                    <li><a href={ DEMO.BLANK_LINK } onClick={ this.props.logout } className='dropdown-item'><i className='feather icon-lock'/> Logout</a></li>
+                    <li><p style={{cursor: "pointer"}} onClick={ this.props.logout } className='dropdown-item'><i className='feather icon-lock'/> Logout</p></li>
                   </ul>
                 </Dropdown.Menu>
               </Dropdown>

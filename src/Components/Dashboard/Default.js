@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
-import DEMO from "../../store/constant";
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../actions';
 import { AppService } from '../../services';
@@ -28,8 +27,8 @@ const AppsRow = ({apps, edit, deleteApp}) => {
 
   return (
     <React.Fragment>
-      <a className="label theme-bg2 text-white f-12">{editButton}</a>
-      <a href={DEMO.BLANK_LINK} className="label theme-bg text-white f-12">{deleteButton}</a>
+      <span style={{cursor: "pointer"}} className="label theme-bg2 text-white f-12">{editButton}</span>
+      <span style={{cursor: "pointer"}} className="label theme-bg text-white f-12">{deleteButton}</span>
     </React.Fragment>
   );
 };

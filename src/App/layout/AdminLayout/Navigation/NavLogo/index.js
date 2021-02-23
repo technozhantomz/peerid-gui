@@ -12,13 +12,13 @@ const navLogo = (props) => {
   return (
     <Aux>
       <div className='navbar-brand header-logo'>
-        <a href={ DEMO.BLANK_LINK } className='b-brand'>
+        <a href={ DEMO.HOME } className='b-brand'>
           <div className='b-bg'>
             <i className='feather icon-trending-up' />
           </div>
           <span className='b-title'>PeerID</span>
         </a>
-        <a href={ DEMO.BLANK_LINK } className={ toggleClass.join(' ') } id='mobile-collapse' onClick={ props.onToggleNavigation }><span /></a>
+        <a href={ DEMO.HOME } className={ toggleClass.join(' ') } id='mobile-collapse' onClick={ props.onToggleNavigation }><span /></a>
       </div>
     </Aux>
   );

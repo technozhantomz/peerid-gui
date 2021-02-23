@@ -77,9 +77,9 @@ class SignUp1 extends React.Component {
       repeatPassword: this.state.password
     };
 
-    // this.setState({
-    //   registerDisabled: true
-    // });
+    this.setState({
+      registerDisabled: true
+    });
     this.props.ShowLoader()
 
     AuthService.register(account)
@@ -252,6 +252,11 @@ class SignUp1 extends React.Component {
 
   render() {
 
+    const linkStyle = {
+      color: "blue",
+      textDecoration: 'underline'
+    }
+
     return (
       <Aux>
         <Breadcrumb />
@@ -315,7 +320,7 @@ class SignUp1 extends React.Component {
                     </div>
                   </div>
                   <LoadBar btnStatus={'Creating account...'} btnName={'Sign up'} disabled={ this.state.registerDisabled }/>
-                  <p className="mb-0 text-muted">Allready have an account? <NavLink to="/auth/signin-1">Login</NavLink></p>
+                  <p className="mb-0 text-muted">Allready have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
                   <h6 style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</h6>
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
