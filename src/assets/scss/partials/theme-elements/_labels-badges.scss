@@ -3,19 +3,18 @@
 ==========================  **/
 
 .label {
-  position: relative;
-  min-height: auto;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  padding: 4px 10px;
+    padding: 4px 10px;
+    min-height: auto;
+    position: relative;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    @each $value in $color-bt-name {
+        $i: index($color-bt-name, $value);
 
-  @each $value in $color-bt-name {
-    $i: index($color-bt-name, $value);
-
-    &.label-#{$value} {
-      color: #ffffff;
-      background: nth($color-bt-color, $i);
+        &.label-#{$value}{
+            background: nth($color-bt-color,$i);
+            color: #ffffff;
+        }
     }
-  }
 }
 /**====== Label & Badges css end ======**/

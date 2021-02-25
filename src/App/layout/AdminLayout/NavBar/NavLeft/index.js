@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import windowSize from 'react-window-size';
 
-import NavSearch from './NavSearch';
+// import NavSearch from './NavSearch';
 import Aux from '../../../../../hoc/_Aux';
 
 class NavLeft extends Component {
@@ -17,7 +17,7 @@ class NavLeft extends Component {
     return (
       <Aux>
         <ul className='navbar-nav mr-auto'>
-          <li className='nav-item'><NavSearch/></li>
+          {/* <li className='nav-item'><NavSearch/></li> */}
         </ul>
       </Aux>
     );
