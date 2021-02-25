@@ -73,7 +73,7 @@ class NavItem extends Component {
 const mapStateToProps = (state) => {
   return {
     layout: state.layout,
-    collapseMenu: state.collapseMenu
+    collapseMenu: state.getIn(['nav','collapseMenu'])
   };
 };
 

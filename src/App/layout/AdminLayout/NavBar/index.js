@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
   return {
     headerBackColor: state.headerBackColor,
     headerFixedLayout: state.headerFixedLayout,
-    collapseMenu: state.collapseMenu
+    collapseMenu: state.getIn(['nav','collapseMenu'])
   };
 };
 

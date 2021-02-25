@@ -18,7 +18,7 @@ const navLogo = (props) => {
           </div>
           <span className='b-title'>PeerID</span>
         </a>
-        <a href={ DEMO.HOME } className={ toggleClass.join(' ') } id='mobile-collapse' onClick={ props.onToggleNavigation }><span /></a>
+        <p style={{cursor: "pointer"}} className={ toggleClass.join(' ') } id='mobile-collapse' onClick={ props.onToggleNavigation }><span /></p>
       </div>
     </Aux>
   );
