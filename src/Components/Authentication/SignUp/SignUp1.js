@@ -8,7 +8,7 @@ import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 
 import { bindActionCreators } from 'redux';
 import { AuthService } from '../../../services';
-import { GenUtil } from '../../../utility';
+import { GenUtil, ValidationUtil } from '../../../utility';
 import { NavigateActions } from '../../../actions';
 import { connect } from 'react-redux';
 import supportedEmailDomains from '../../../assets/locales/SupportedEmailDomains.txt';
@@ -29,7 +29,6 @@ class SignUp1 extends React.Component {
       confirmPassword: '',
       resultText: '',
       errText: '',
-      registerDisabled: true,
       isPasswordInputClicked: false,
       isConfirmPasswordConfirmed: false,
       isEmailInputClicked: false,
@@ -43,6 +42,7 @@ class SignUp1 extends React.Component {
         passwordSpecialCharCheck: '',
         passwordSpaceCheck: '',
         passwordUnallowedCharCheck: '',
+        passwordStringCharCheck: ''
       },
 
       emailCheck: '',
@@ -52,6 +52,13 @@ class SignUp1 extends React.Component {
         confirmPassword: ''
       }
     };
+  }
+
+  // Form validations
+  validateForm = () => {
+    return this.validatePassword()
+        && this.state.email && ValidationUtil.seEmail(this.state.email).success
+        && this.state.password === this.state.confirmPassword   
   }
 
   handleSubmit = (event) => {
@@ -76,23 +83,18 @@ class SignUp1 extends React.Component {
       password: this.state.password,
       repeatPassword: this.state.password
     };
-
-    this.setState({
-      registerDisabled: true
-    });
+    
     this.props.ShowLoader()
 
     AuthService.register(account)
       .then(() => {
+        // Clear Form Data
+        this.form.reset()
+        
         this.setState({
           errText: '',
-          registerDisabled: false,
           resetToDefault: true,
 
-          // Clear Form Data
-          email: '',
-          password: '',
-          confirmPassword: '',
           isPasswordInputClicked: false,
           isConfirmPasswordConfirmed: false,
           isEmailInputClicked: false,
@@ -105,7 +107,6 @@ class SignUp1 extends React.Component {
         this.setState({
           errText: e,
           resultText: '',
-          registerDisabled: false
         });
         this.props.HideLoader()
       });
@@ -129,16 +130,28 @@ class SignUp1 extends React.Component {
     }, () => this.validate('confirmPassword'));
   }
 
-  resetHandler = () => {
-    this.setState({ resetToDefault: false });
-  }
-
   emailDomain(email) {
     const regex = /\.([^.]+?)$/;
     const lineBreak = EOL;
     const acceptedDomains = supportedEmailDomains.split(lineBreak);
     const extractedDomain = regex.exec(email);
     return extractedDomain === null ? false : acceptedDomains.includes(extractedDomain[1].toUpperCase());
+  }
+
+  validatePassword = () => {
+    const passLength = this.state.password.length;
+    const digitRegex = /[0-9]/g;
+    const specialCharRegex = /[().@$!%^*#]/g;
+    const spaceRegex = /[ ]/g;
+    const unallowedCharsRegex = /[&/:;<=>+?_{},'"|~`]/g;
+    const stringRegex = /[a-zA-Z]/g;
+
+    return passLength >= 6 && passLength <= 60 
+            && digitRegex.test(this.state.password)
+            && specialCharRegex.test(this.state.password)
+            && !(spaceRegex.test(this.state.password))
+            && !(unallowedCharsRegex.test(this.state.password))
+            && (stringRegex.test(this.state.password))
   }
 
   validate = (type) => {
@@ -151,8 +164,6 @@ class SignUp1 extends React.Component {
         if (!regex.test(email) || !validEmailDomain) {
           this.setState({
             emailCheck: '* Invalid email address & domain name',
-            registerDisabled: true,
-
           })
         } else {
           this.setState({
@@ -166,7 +177,7 @@ class SignUp1 extends React.Component {
         const specialCharRegex = /[().@$!%^*#]/g;
         const spaceRegex = /[ ]/g;
         const unallowedCharsRegex = /[&/:;<=>+?_{},'"|~`]/g;
-
+        const stringRegex = /[a-zA-Z]/g;
         // Length check
         if (length >= 6 && length <= 60) {
           this.setState({
@@ -176,7 +187,6 @@ class SignUp1 extends React.Component {
         else {
           this.setState({
             passwordLengthChech: '* Password should be between 6 & 60 chars long',
-            registerDisabled: true
           })
         }
         // Digit check
@@ -188,7 +198,6 @@ class SignUp1 extends React.Component {
         else {
           this.setState({
             passwordDigitCheck: '* Contains at least 1 number',
-            registerDisabled: true
           })
         }
         // Special Char check
@@ -200,7 +209,6 @@ class SignUp1 extends React.Component {
         else {
           this.setState({
             passwordSpecialCharCheck: '* Contains a special character from (.@!#$%^*#)',
-            registerDisabled: true
           })
         }
         // Space check
@@ -212,7 +220,6 @@ class SignUp1 extends React.Component {
         else {
           this.setState({
             passwordSpaceCheck: '* No Spaces',
-            registerDisabled: true
           })
         }
         // Unallowed Char check
@@ -224,7 +231,17 @@ class SignUp1 extends React.Component {
         else {
           this.setState({
             passwordUnallowedCharCheck: '* No Unallowed special character',
-            registerDisabled: true
+          })
+        }
+        // Char check
+        if ((stringRegex.test(this.state.password))) {
+          this.setState({
+            passwordStringCharCheck: '',
+          })
+        }
+        else {
+          this.setState({
+            passwordStringCharCheck: '* Atleast one letter',
           })
         }
         break;
@@ -235,14 +252,10 @@ class SignUp1 extends React.Component {
         if (Password !== confirmPassword) {
           this.setState({
             passwordMatch: '* Passwords must match',
-            registerDisabled: true,
-
           })
         } else {
           this.setState({
             passwordMatch: '',
-            registerDisabled: false,
-
           })
         }
         break;
@@ -260,7 +273,7 @@ class SignUp1 extends React.Component {
     return (
       <Aux>
         <Breadcrumb />
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} ref={form => this.form = form}>
           <div className="auth-wrapper">
             <div className="auth-content">
               <div className="auth-bg">
@@ -301,6 +314,7 @@ class SignUp1 extends React.Component {
                     <h6 style={{ color: "red" }} >{this.state.passwordSpecialCharCheck}</h6>
                     <h6 style={{ color: "red" }} >{this.state.passwordSpaceCheck}</h6>
                     <h6 style={{ color: "red" }} >{this.state.passwordUnallowedCharCheck}</h6>
+                    <h6 style={{ color: "red" }} >{this.state.passwordStringCharCheck}</h6>
                   </div>
                   <div className="input-group mb-4">
                     <input className="form-control"
@@ -319,8 +333,8 @@ class SignUp1 extends React.Component {
                       {/* <label htmlFor="checkbox-fill-2" className="cr">Send me the <a href={DEMO.BLANK_LINK}> Newsletter</a> weekly.</label> */}
                     </div>
                   </div>
-                  <LoadBar btnStatus={'Creating account...'} btnName={'Sign up'} disabled={ this.state.registerDisabled }/>
-                  <p className="mb-0 text-muted">Allready have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
+                  <LoadBar btnStatus={'Creating account...'} btnName={'Sign up'} disabled={ !this.validateForm() }/>
+                  <p className="mb-0 text-muted">Already have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
                   <h6 style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</h6>
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
