@@ -261,7 +261,11 @@ class FormsElements extends React.Component {
   }
 
   appErrorAlert() {
-    toast.error('App not created!')
+    if(this.props.location.state){
+      toast.error('Application not edited!')
+    } else {
+      toast.error('App not created!')
+    }
   }
 
   // Trigger on onClick of Submit btn
@@ -641,7 +645,7 @@ class FormsElements extends React.Component {
                   </Row>
                   <Col md={6} xl={4} >
                     <Button variant="primary" disabled={!this.validateForm()} type='submit'>
-                      Create App
+                    { this.props.location.state ? 'Edit App' : 'Create App' }
                     </Button>
                   </Col>
                   <span style={{ color: "red" }}>{this.state.errorMessage}</span>
