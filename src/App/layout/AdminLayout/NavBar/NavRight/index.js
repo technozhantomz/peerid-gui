@@ -4,7 +4,6 @@ import {bindActionCreators} from 'redux';
 import {AppActions, NavigateActions} from '../../../../../actions';
 import {Dropdown} from 'react-bootstrap';
 import Aux from '../../../../../hoc/_Aux';
-import DEMO from '../../../../../store/constant';
 import Avatar1 from '../../../../../assets/images/user/avatar-1.jpg';
 
 class NavRight extends Component {
@@ -33,10 +32,10 @@ class NavRight extends Component {
                     </a> */}
                   </div>
                   <ul className='pro-body'>
-                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Username : {username}</a></li>
-                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Email ID : {email}</a></li>
-                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Peerplays ID : {peerplaysAccountId}</a></li>
-                    <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-settings'/> Peerplays Account Name : {peerplaysAccountName}</a></li>
+                    <li><p className='dropdown-item'><i className='feather icon-settings'/> Username : {username}</p></li>
+                    <li><p className='dropdown-item'><i className='feather icon-settings'/> Email ID : {email}</p></li>
+                    <li><p className='dropdown-item'><i className='feather icon-settings'/> Peerplays ID : {peerplaysAccountId}</p></li>
+                    <li><p className='dropdown-item'><i className='feather icon-settings'/> Peerplays Account Name : {peerplaysAccountName}</p></li>
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-user'/> AccountId</a></li> */}
                     {/* <li><a href={ DEMO.BLANK_LINK } className='dropdown-item'><i className='feather icon-mail'/> My Messages</a></li> */}
                     <li><p style={{cursor: "pointer"}} onClick={ this.props.logout } className='dropdown-item'><i className='feather icon-lock'/> Logout</p></li>

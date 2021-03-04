@@ -11,24 +11,24 @@ import { toast } from 'react-toastify';
 
 toast.configure()
 
-const AppsRow = ({apps, edit, deleteApp}) => {
+const AppsRow = ({ apps, edit, deleteApp }) => {
 
   let editButton = (
-    <span onClick={ () => edit(apps) } className='header__link'>
+    <span onClick={() => edit(apps)} className='header__link'>
       Edit
     </span>
   );
 
   let deleteButton = (
-    <span className='header__link' onClick={ () => deleteApp(apps) }>
+    <span className='header__link' onClick={() => deleteApp(apps)}>
       Delete
     </span>
   );
 
   return (
     <React.Fragment>
-      <span style={{cursor: "pointer"}} className="label theme-bg2 text-white f-12">{editButton}</span>
-      <span style={{cursor: "pointer"}} className="label theme-bg text-white f-12">{deleteButton}</span>
+      <span style={{ cursor: "pointer" }} className="label theme-bg2 text-white f-12">{editButton}</span>
+      <span style={{ cursor: "pointer" }} className="label theme-bg text-white f-12">{deleteButton}</span>
     </React.Fragment>
   );
 };
@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     if (!this.props.isLoggedIn) {
-        this.props.navigateToSignIn();
+      this.props.navigateToSignIn();
       // this.props.history.push('/auth/signin-1');
     } else {
       AppService.getApps().then((res) => {
@@ -75,14 +75,19 @@ class Dashboard extends React.Component {
       });
     }).catch((err) => {
       console.error(err);
-        this.deleteAppErrorAlert();
+      this.deleteAppErrorAlert();
     });
   }
 
   render() {
 
     const lengthOfApps = this.state.data.length;
-    const {navigateToCreateApp} = this.props;
+    const { navigateToCreateApp } = this.props;
+
+    const linkStyle = {
+      color: "blue",
+      cursor: "pointer" 
+    }
 
     return (
       <div>
@@ -93,12 +98,27 @@ class Dashboard extends React.Component {
                 <Card.Body className='border-bottom'>
                   <div className="row d-flex align-items-center">
                     <div className="col-auto">
-                      <i className="feather icon-zap f-30 text-c-green" />
+                      {/* <i className="feather icon-zap f-30 text-c-green" /> */}
+                      <h3 className="f-w-300">{lengthOfApps}</h3>
                     </div>
                     <div className="col">
-                      <h3 className="f-w-300">{lengthOfApps}</h3>
+                      {/* <h3 className="f-w-300">{lengthOfApps}</h3> */}
                       <span className="d-block text-uppercase">total Registered Apps</span>
                       <span style={{ color: "red" }} className="d-block text-uppercase">{this.state.appGetErr}</span>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={6} xl={4}>
+              <Card>
+                <Card.Body>
+                  <div className="row d-flex align-items-center">
+                    <div className="col-auto">
+                      <i onClick={this.props.navigateAddApp} style={{ cursor: "pointer" }} className="feather icon-plus-square f-30 text-c-blue" />
+                    </div>
+                    <div className="col">
+                      <span onClick={this.props.navigateAddApp} style={linkStyle} className="d-block text-uppercase">Add Apps</span>
                     </div>
                   </div>
                 </Card.Body>
@@ -130,7 +150,7 @@ class Dashboard extends React.Component {
                             {apps.createdAt}
                           </td>
                           <td>
-                            <AppsRow key={ apps.id } apps={ apps } edit={ navigateToCreateApp } deleteApp={ this.deleteApp.bind(this) }/>
+                            <AppsRow key={apps.id} apps={apps} edit={navigateToCreateApp} deleteApp={this.deleteApp.bind(this)} />
                           </td>
                         </tr>
                       ))}
@@ -144,7 +164,7 @@ class Dashboard extends React.Component {
       </div>
 
     );
-  }  
+  }
 }
 
 const mapStateToProps = (state) => ({
@@ -157,7 +177,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigate: NavigateActions.navigate,
     navigateToCreateApp: NavigateActions.navigateToCreateApp,
-    navigateToSignIn: NavigateActions.navigateToSignIn
+    navigateToSignIn: NavigateActions.navigateToSignIn,
+    navigateAddApp: NavigateActions.navigateAddApp
   },
   dispatch
 );
@@ -166,4 +187,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Dashboard);
-// export default Dashboard;

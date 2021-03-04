@@ -141,6 +141,12 @@ class NavigateActions {
     };
   }
 
+  static navigateAddApp() {
+    return (dispatch) => {
+      dispatch(push(Routes.CREATE_APP));
+    };
+  }
+
 }
 
 export default NavigateActions;

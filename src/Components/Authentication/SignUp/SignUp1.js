@@ -244,6 +244,16 @@ class SignUp1 extends React.Component {
             passwordStringCharCheck: '* Atleast one letter',
           })
         }
+        // Password match check
+        if (this.state.password !== this.state.confirmPassword && this.state.confirmPassword !== '') {
+          this.setState({
+            passwordMatch: '* Passwords must match',
+          })
+        } else {
+          this.setState({
+            passwordMatch: '',
+          })
+        }
         break;
       case 'confirmPassword':
         const Password = this.state.password;
