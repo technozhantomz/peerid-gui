@@ -14,7 +14,7 @@ const Callback = React.lazy(() => import('./Components/Authentication/Callback')
 const routes = [
     { path: Routes.DASHBOARD, exact: true, name: 'Default', component: DashboardDefault },
     { path: Routes.CREATE_APP, exact: true, name: 'Forms Elements', component: FormsElements },
-    { path: Routes.CALLBACK,  name: 'Callback', component: Callback },
+    { path: Routes.CALLBACK,  name: 'Callback', component: Callback }
 ];
 
 export default routes;

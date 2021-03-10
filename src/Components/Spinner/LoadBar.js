@@ -11,7 +11,7 @@ class LoadBar extends Component {
     const { loading } = this.props;
     return (
       <div>
-        <Button type="submit" disabled={this.props.disabled}>
+        <Button type="submit" disabled={this.props.disabled} style={this.props.style}>
           {loading && <i className="fa fa-refresh fa-spin"></i>}
           {loading && <span>{this.props.btnStatus}</span>}
           {!loading && <span>{this.props.btnName}</span>}

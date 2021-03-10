@@ -137,7 +137,7 @@ class NavigateActions {
    */
   static navigateToPasswordReset(token) {
     return (dispatch) => {
-      dispatch(push(Routes.RESET_PASSWORD + `/?token=${token}`));
+      dispatch(push(Routes.REGISTER + `/?token=${token}`));
     };
   }
 

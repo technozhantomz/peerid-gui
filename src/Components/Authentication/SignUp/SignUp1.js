@@ -7,16 +7,20 @@ import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 // import DEMO from "../../../store/constant";
 
 import { bindActionCreators } from 'redux';
-import { AuthService } from '../../../services';
+import { AuthService, ProfileService } from '../../../services';
 import { GenUtil, ValidationUtil } from '../../../utility';
-import { NavigateActions } from '../../../actions';
+import { NavigateActions, AccountActions, ModalActions } from '../../../actions';
 import { connect } from 'react-redux';
 import supportedEmailDomains from '../../../assets/locales/SupportedEmailDomains.txt';
 import { EOL } from 'os';
 import LoginFooter from '../../Login/LoginFooter';
 import LoadBar from '../../Spinner/LoadBar'
-import {AppActions} from '../../../actions';
+import { AppActions } from '../../../actions';
+import querystring from 'query-string';
+import { ModalTypes } from '../../../constants';
+import { toast } from 'react-toastify';
 
+toast.configure()
 const translate = GenUtil.translate;
 
 class SignUp1 extends React.Component {
@@ -33,7 +37,12 @@ class SignUp1 extends React.Component {
       isConfirmPasswordConfirmed: false,
       isEmailInputClicked: false,
       resetToDefault: false,
-
+      token: '',
+      passwordErr: '',
+      display: '',
+      resetResult: '',
+      resetErr: '',
+      hideFields: '',
       // Password Check
       passwordCheck: {
         passwordLengthChech: '',
@@ -54,62 +63,130 @@ class SignUp1 extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.location.search) { // TODO: refactor use redux path
+      const token = querystring.parse(this.props.location.search).token;
+
+      this.setState({
+        display: 'none'
+      })
+
+      if (token) {
+        this.setState({
+          token
+        });
+      }
+    }
+  }
+
+  loginAndRedirect = () => {
+    ProfileService.getProfile().then((profile) => {
+      this.props.setAccount(profile);
+      this.props.setLoggedIn(true);
+      this.appSuccessAlert();
+      setTimeout(() => {
+      this.props.navigateToDashboard();
+      }, 3000);
+
+    }).catch((err) => {
+      if (err.status === 401) {
+        this.props.setModalType(ModalTypes.ERROR);
+        this.props.setModalData({
+          headerText: translate('errors.loggedOut')
+        });
+        this.props.toggleModal();
+      }
+    });
+  }
+
+  // Toast alert for reset password 
+  appSuccessAlert() {
+      toast.success('Password reset successfully!')
+  }
+
   // Form validations
   validateForm = () => {
-    return this.validatePassword()
+    if (this.props.location.search) {
+      return this.validatePassword()
+        && this.state.password === this.state.confirmPassword
+    } else {
+      return this.validatePassword()
         && this.state.email && ValidationUtil.seEmail(this.state.email).success
-        && this.state.password === this.state.confirmPassword   
+        && this.state.password === this.state.confirmPassword
+    }
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.email === '' || this.state.password === '' || this.state.confirmPassword === '') {
+    if (this.props.location.search) {
+
+      // if (!this.state.passwordErr.success) {
+      //   return;
+      // }
+      this.props.ShowLoader()
+
       this.setState({
-        errText: translate('register.responses.errorMissing')
-      });
-      return;
-    }
-
-    // if (this.state.errors.email.success !== true || this.state.errors.password.success !== true || this.state.errors.confirmPassword.success !== true) {
-    //   this.setState({
-    //     errText: ''
-    //   });
-    //   return;
-    // }
-
-    const account = {
-      email: this.state.email,
-      password: this.state.password,
-      repeatPassword: this.state.password
-    };
-    
-    this.props.ShowLoader()
-
-    AuthService.register(account)
-      .then(() => {
-        // Clear Form Data
-        this.form.reset()
-        
-        this.setState({
-          errText: '',
-          resetToDefault: true,
-
-          isPasswordInputClicked: false,
-          isConfirmPasswordConfirmed: false,
-          isEmailInputClicked: false,
-          resultText: translate('register.responses.confirmSent'),
-        });
-        this.props.HideLoader()
+        resetErr: ''
       })
-      .catch((e) => {
-        console.error(e);
-        this.setState({
-          errText: e,
-          resultText: '',
+
+      AuthService.resetPassword(this.state.token, this.state.password)
+        .then(() => {
+          this.loginAndRedirect();
+          this.props.HideLoader()
+
+        })
+        .catch((err) => {
+          this.setState({
+            resetErr: translate('forgotPassword.resetForm.expired'),
+            hideFields: 'none'
+          });
+          this.props.HideLoader()
+          console.error(err);
         });
-        this.props.HideLoader()
-      });
+
+    } else {
+
+      if (this.state.email === '' || this.state.password === '' || this.state.confirmPassword === '') {
+        this.setState({
+          errText: translate('register.responses.errorMissing')
+        });
+        return;
+      }
+
+      const account = {
+        email: this.state.email,
+        password: this.state.password,
+        repeatPassword: this.state.password
+      };
+
+      this.props.ShowLoader()
+
+      AuthService.register(account)
+        .then(() => {
+          // Clear Form Data
+          this.form.reset()
+
+          this.setState({
+            errText: '',
+            resetToDefault: true,
+
+            isPasswordInputClicked: false,
+            isConfirmPasswordConfirmed: false,
+            isEmailInputClicked: false,
+            resultText: translate('register.responses.confirmSent'),
+          });
+          this.props.HideLoader()
+        })
+        .catch((e) => {
+          console.error(e);
+          this.setState({
+            errText: e,
+            resultText: '',
+          });
+          this.props.HideLoader()
+        });
+    }
   };
 
   handleEmailChange = (e) => {
@@ -146,12 +223,12 @@ class SignUp1 extends React.Component {
     const unallowedCharsRegex = /[&/:;<=>+?_{},'"|~`]/g;
     const stringRegex = /[a-zA-Z]/g;
 
-    return passLength >= 6 && passLength <= 60 
-            && digitRegex.test(this.state.password)
-            && specialCharRegex.test(this.state.password)
-            && !(spaceRegex.test(this.state.password))
-            && !(unallowedCharsRegex.test(this.state.password))
-            && (stringRegex.test(this.state.password))
+    return passLength >= 6 && passLength <= 60
+      && digitRegex.test(this.state.password)
+      && specialCharRegex.test(this.state.password)
+      && !(spaceRegex.test(this.state.password))
+      && !(unallowedCharsRegex.test(this.state.password))
+      && (stringRegex.test(this.state.password))
   }
 
   validate = (type) => {
@@ -297,14 +374,14 @@ class SignUp1 extends React.Component {
                   <div className="mb-4">
                     <i className="feather icon-user-plus auth-icon" />
                   </div>
-                  <h3 className="mb-4">Sign up</h3>
+                  <h3 className="mb-4">{this.props.location.search ? 'Reset Password' : 'Sign Up'}</h3>
                   <div className="input-group mb-3">
                     <input className="form-control"
                       name='email'
                       type='email'
                       placeholder={translate('register.enterEmail')}
                       onChange={this.handleEmailChange}
-                      required
+                      style={{ display: this.state.display }}
                     />
                   </div>
                   <h6 style={{ color: "red" }} >{this.state.emailCheck}</h6>
@@ -316,6 +393,7 @@ class SignUp1 extends React.Component {
                       placeholder={translate('register.enterPassword')}
                       onChange={this.handlePasswordChange}
                       required
+                      style={{ display: this.state.hideFields }}
                     />
                   </div>
                   <div>
@@ -332,24 +410,25 @@ class SignUp1 extends React.Component {
                       type='password'
                       placeholder={translate('register.confirmPassword')}
                       onChange={this.handleConfirmPasswordChange}
+                      style={{ display: this.state.hideFields }}
                       required
                     />
                   </div>
                   <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.passwordMatch}</h6>
 
-                  <div className="form-group text-left">
-                    <div className="checkbox checkbox-fill d-inline">
-                      {/* <input type="checkbox" name="checkbox-fill-2" id="checkbox-fill-2"/> */}
-                      {/* <label htmlFor="checkbox-fill-2" className="cr">Send me the <a href={DEMO.BLANK_LINK}> Newsletter</a> weekly.</label> */}
-                    </div>
-                  </div>
-                  <LoadBar btnStatus={'Creating account...'} btnName={'Sign up'} disabled={ !this.validateForm() }/>
-                  <p className="mb-0 text-muted">Already have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
+                  <LoadBar btnStatus={this.props.location.search ? 'Loading...' : 'Creating account...'} btnName={this.props.location.search ? 'Reset Password' : 'Sign Up'}
+                    style={{ display: this.state.hideFields }}
+                    disabled={!this.validateForm()} />
+                    
+                  <p className="mb-0 text-muted" style={{ display: this.state.display }}>Already have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
                   <h6 style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</h6>
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
+                    <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.resetErr}</h6>
                   </div>
-                  <LoginFooter />
+                  <div>
+                    {!this.props.location.search ? <LoginFooter /> : ''}
+                  </div>
                 </div>
               </div>
             </div>
@@ -366,7 +445,13 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     navigateToLogin: NavigateActions.navigateToSignIn,
     ShowLoader: AppActions.showLoader,
-    HideLoader: AppActions.hideLoader
+    HideLoader: AppActions.hideLoader,
+    navigateToDashboard: NavigateActions.navigateToDashboard,
+    setAccount: AccountActions.setAccountAction,
+    setLoggedIn: AccountActions.setIsLoggedInAction,
+    setModalData: ModalActions.setModalData,
+    setModalType: ModalActions.setModalType,
+    toggleModal: ModalActions.toggleModal
   },
   dispatch
 );

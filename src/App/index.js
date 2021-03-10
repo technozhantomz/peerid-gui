@@ -15,6 +15,7 @@ import {NavigateActions} from '../actions';
 import {RouteConstants} from '../constants';
 import {TokenUtil} from '../utility';
 import {ConnectedRouter} from 'connected-react-router/immutable';
+import RootModal from '../Components/RootModal/RootModal';
 
 const AdminLayout = Loadable({
   loader: () => import('./layout/AdminLayout'),
@@ -68,6 +69,7 @@ class App extends Component {
       <Aux>
         <ScrollToTop>
           <Suspense fallback={ <Loader/> }>
+          <RootModal/>
             <Switch>
               {menu}
               <Route path='/' component={ AdminLayout } />
