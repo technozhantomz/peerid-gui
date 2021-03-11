@@ -98,12 +98,10 @@ class Dashboard extends React.Component {
                 <Card.Body>
                   <div className="row d-flex align-items-center">
                     <div className="col-auto">
-                      {/* <i className="feather icon-zap f-30 text-c-green" /> */}
-                      <h4 className="f-w-300">{lengthOfApps}</h4>
+                      <i className="feather icon-zap f-30 text-c-green" />
                     </div>
                     <div className="col">
-                      {/* <h3 className="f-w-300">{lengthOfApps}</h3> */}
-                      <span className="d-block text-uppercase">total Registered Apps</span>
+                      <span style={{color:'blue'}} className="d-block text-uppercase">total Registered Apps : {lengthOfApps}</span>
                       <span style={{ color: "red" }} className="d-block text-uppercase">{this.state.appGetErr}</span>
                     </div>
                   </div>
