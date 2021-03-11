@@ -7,7 +7,7 @@ import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 // import DEMO from "../../../store/constant";
 
 import { bindActionCreators } from 'redux';
-import { AuthService, ProfileService } from '../../../services';
+import { AuthService } from '../../../services';
 import { GenUtil, ValidationUtil } from '../../../utility';
 import { NavigateActions, AccountActions, ModalActions } from '../../../actions';
 import { connect } from 'react-redux';
@@ -17,7 +17,6 @@ import LoginFooter from '../../Login/LoginFooter';
 import LoadBar from '../../Spinner/LoadBar'
 import { AppActions } from '../../../actions';
 import querystring from 'query-string';
-import { ModalTypes } from '../../../constants';
 import { toast } from 'react-toastify';
 
 toast.configure()
@@ -79,29 +78,9 @@ class SignUp1 extends React.Component {
     }
   }
 
-  loginAndRedirect = () => {
-    ProfileService.getProfile().then((profile) => {
-      this.props.setAccount(profile);
-      this.props.setLoggedIn(true);
-      this.appSuccessAlert();
-      setTimeout(() => {
-      this.props.navigateToDashboard();
-      }, 3000);
-
-    }).catch((err) => {
-      if (err.status === 401) {
-        this.props.setModalType(ModalTypes.ERROR);
-        this.props.setModalData({
-          headerText: translate('errors.loggedOut')
-        });
-        this.props.toggleModal();
-      }
-    });
-  }
-
   // Toast alert for reset password 
   appSuccessAlert() {
-      toast.success('Password reset successfully!')
+    toast.success('Password reset successfully!')
   }
 
   // Form validations
@@ -132,8 +111,9 @@ class SignUp1 extends React.Component {
 
       AuthService.resetPassword(this.state.token, this.state.password)
         .then(() => {
-          this.loginAndRedirect();
           this.props.HideLoader()
+          this.props.navigateToLogin();
+          this.appSuccessAlert();
 
         })
         .catch((err) => {
