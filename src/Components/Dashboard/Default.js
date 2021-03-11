@@ -95,11 +95,11 @@ class Dashboard extends React.Component {
           <Row>
             <Col md={6} xl={4}>
               <Card>
-                <Card.Body className='border-bottom'>
+                <Card.Body>
                   <div className="row d-flex align-items-center">
                     <div className="col-auto">
                       {/* <i className="feather icon-zap f-30 text-c-green" /> */}
-                      <h3 className="f-w-300">{lengthOfApps}</h3>
+                      <h4 className="f-w-300">{lengthOfApps}</h4>
                     </div>
                     <div className="col">
                       {/* <h3 className="f-w-300">{lengthOfApps}</h3> */}
