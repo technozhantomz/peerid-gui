@@ -112,11 +112,11 @@ class FormsElements extends React.Component {
   }
   // Form validations
   validateForm = () => {
-    return this.state.appName && this.state.appName.length >= 3 && !this.validateSpecialChar(this.state.appName)
-      && this.state.description && this.state.description.length >= 10
-      && this.state.organizationName && this.state.organizationName.length >= 5 && !this.validateSpecialChar(this.state.organizationName)
-      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5
-      && this.state.city && this.state.city.length >= 2
+    return this.state.appName && this.state.appName.length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName)
+      && this.state.description && this.state.description.length >= 5 && this.state.description.length <= 1000
+      && this.state.organizationName && this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
+      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255
+      && this.state.city && this.state.city.length >= 2 && this.state.city.length <= 100
       && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 3
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
       && this.state.phone && this.validatePhone(this.state.phone)
@@ -313,13 +313,24 @@ class FormsElements extends React.Component {
       this.appErrorAlert();
 
       if (err.status === 400 && typeof err.data.error !== 'string') {
-        let errText = '';
-        Object.keys(err.data.error).map((key) => {
-          errText += `${key}: ${err.data.error[key]}\n`;
-          return null;
-        });
+        // let errText = '';
+        // Object.keys(err.data.error).map((key) => {
+        //   errText += `${key}: ${err.data.error[key]}\n`;
+        //   return null;
+        // });
         this.setState({
-          errorMessage: errText
+          errorappname: err.data.error.appname,
+          erroraddress_line1: err.data.error.address_line1,
+          errorcity: err.data.error.city,
+          errorcontactname: err.data.error.contactname,
+          errorcountry: err.data.error.contactname,
+          errordescription: err.data.error.description,
+          errordomains : err.data.error.domains,
+          erroremail: err.data.error.email,
+          errororganization_name: err.data.error.organization_name,
+          errorphone: err.data.error.phone,
+          errorprovince: err.data.error.province,
+          erroroperations: err.data.error.operations
         });
       } else {
         this.setState({
@@ -335,35 +346,35 @@ class FormsElements extends React.Component {
   validate = (type) => {
     switch (type) {
       case 'appName':
-        if ((this.state.appName.length >= 3 && this.state.appName.length <= 50) && !(this.validateSpecialChar(this.state.appName))) {
+        if ((this.state.appName.length >= 3 && this.state.appName.length <= 255) && !(this.validateSpecialChar(this.state.appName))) {
           this.setState({
             appErr: '',
           })
         } else {
           this.setState({
-            appErr: '* Should be between 3 and 50 characters & special characters are not allowed.',
+            appErr: '* Should be between 3 and 255 characters & special characters are not allowed.',
           })
         }
         break;
       case 'description':
-        if (this.state.description.length >= 10 && this.state.description.length <= 1000) {
+        if (this.state.description.length >= 5 && this.state.description.length <= 1000) {
           this.setState({
             descriptionErr: '',
           })
         } else {
           this.setState({
-            descriptionErr: '* Should be between 10 and 1000 characters',
+            descriptionErr: '* Should be between 5 and 1000 characters',
           })
         }
         break;
       case 'organizationName':
-        if (this.state.organizationName.length >= 5 && this.state.organizationName.length <= 255 && !(this.validateSpecialChar(this.state.organizationName))) {
+        if (this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !(this.validateSpecialChar(this.state.organizationName))) {
           this.setState({
             organizationErr: '',
           })
         } else {
           this.setState({
-            organizationErr: '* Should be between 5 and 255 characters & special characters are not allowed.',
+            organizationErr: '* Should be between 2 and 255 characters & special characters are not allowed.',
           })
         }
         break;
@@ -379,13 +390,13 @@ class FormsElements extends React.Component {
         }
         break;
       case 'city':
-        if (this.state.city.length >= 2 && this.state.city.length <= 50) {
+        if (this.state.city.length >= 2 && this.state.city.length <= 100) {
           this.setState({
             cityErr: '',
           })
         } else {
           this.setState({
-            cityErr: '* Should be between 2 and 50 characters',
+            cityErr: '* Should be between 2 and 100 characters',
           })
         }
         break;
@@ -467,6 +478,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.appErr}</h6>
+                      <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errorappname}</h6>
 
                       <Form.Group controlId="formBasicPassword">
                         <Form.Label>Organization Name</Form.Label>
@@ -478,6 +490,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.organizationErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.errororganization_name}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -490,6 +503,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.descriptionErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.errordescription}</h6>
                     </Col>
                   </Row>
                   <h5 className="mt-5">Address Info</h5>
@@ -507,6 +521,7 @@ class FormsElements extends React.Component {
                           {countryList && countryList.map(({ name, id }) => <option key={id} value={id}>{name}</option>)}
                         </Form.Control>
                       </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.errorcountry}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -519,6 +534,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.addLine1Err}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.erroraddress_line1}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -543,6 +559,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.cityErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.errorcity}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -556,6 +573,7 @@ class FormsElements extends React.Component {
                           {provinceList && provinceList.map(({ name, id }) => <option key={id} value={id}>{name}</option>)}
                         </Form.Control>
                       </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.errorprovince}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -583,6 +601,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.contactErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.errorcontactname}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -596,6 +615,7 @@ class FormsElements extends React.Component {
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.emailErr}</h6>
                       <h6 style={{ color: "red" }} >{this.state.domainErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.erroremail}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -608,6 +628,7 @@ class FormsElements extends React.Component {
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.phoneErr}</h6>
+                      <h6 style={{ color: "red" }} >{this.state.errorphone}</h6>
                     </Col>
                   </Row>
                   <h5 className="mt-5">Others</h5>
@@ -629,6 +650,7 @@ class FormsElements extends React.Component {
                           {operations && operations.map(({ name, id }) => <MenuItem key={id} value={id}>{name}</MenuItem>)}
                         </Select>
                       </Form.Group>
+                      <h6 style={{ color: "red" }} >{this.state.erroroperations}</h6>
                     </Col>
                     <Col md={6}>
                       <Form.Group >
@@ -640,6 +662,7 @@ class FormsElements extends React.Component {
                           value={ this.state.domains }
                         />
                         <h6 style={{ color: "red" }} >{this.state.domainsErr}</h6>
+                        <h6 style={{ color: "red" }} >{this.state.errordomains}</h6>
                       </Form.Group>
                     </Col>
                   </Row>

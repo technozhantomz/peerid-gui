@@ -101,7 +101,7 @@ class Dashboard extends React.Component {
                       <i className="feather icon-zap f-30 text-c-green" />
                     </div>
                     <div className="col">
-                      <span style={{color:'blue'}} className="d-block text-uppercase">total Registered Apps : {lengthOfApps}</span>
+                      <span style={{color:'blue'}} className="d-block text-uppercase">Registered Apps : {lengthOfApps}</span>
                       <span style={{ color: "red" }} className="d-block text-uppercase">{this.state.appGetErr}</span>
                     </div>
                   </div>
