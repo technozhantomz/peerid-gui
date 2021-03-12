@@ -117,7 +117,7 @@ class FormsElements extends React.Component {
       && this.state.organizationName && this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
       && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255
       && this.state.city && this.state.city.length >= 2 && this.state.city.length <= 100
-      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 3
+      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 2 && this.state.contact.length <= 255
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
       && this.state.phone && this.validatePhone(this.state.phone)
       && this.state.domains && this.validateDomains(this.state.domains)
@@ -253,7 +253,7 @@ class FormsElements extends React.Component {
 
   // Toast alert for create app 
   appSuccessAlert() {
-    if(this.props.location.state){
+    if (this.props.location.state) {
       toast.success('App Edited Successfully!')
     } else {
       toast.success('App Created Successfully!')
@@ -261,7 +261,7 @@ class FormsElements extends React.Component {
   }
 
   appErrorAlert() {
-    if(this.props.location.state){
+    if (this.props.location.state) {
       toast.error('Application not edited!')
     } else {
       toast.error('App not created!')
@@ -325,7 +325,7 @@ class FormsElements extends React.Component {
           errorcontactname: err.data.error.contactname,
           errorcountry: err.data.error.contactname,
           errordescription: err.data.error.description,
-          errordomains : err.data.error.domains,
+          errordomains: err.data.error.domains,
           erroremail: err.data.error.email,
           errororganization_name: err.data.error.organization_name,
           errorphone: err.data.error.phone,
@@ -401,13 +401,13 @@ class FormsElements extends React.Component {
         }
         break;
       case 'contact':
-        if (this.state.contact.length >= 3 && this.state.contact.length <= 50) {
+        if (this.state.contact.length >= 2 && this.state.contact.length <= 255) {
           this.setState({
             contactErr: '',
           })
         } else {
           this.setState({
-            contactErr: '* Should be between 3 and 50 characters',
+            contactErr: '* Should be between 2 and 255 characters',
           })
         }
         break;
@@ -453,14 +453,14 @@ class FormsElements extends React.Component {
   };
   render() {
     const { countrySelected, provinceSelected, countryList, provinceList, operations, operationsSelected } = this.state;
-    
+
     return (
       <Aux>
         <Row>
           <Col>
             <Card>
               <Card.Header>
-                <Card.Title as="h5">{ this.props.location.state ? 'Edit App' : 'Create App' }</Card.Title>
+                <Card.Title as="h5">{this.props.location.state ? 'Edit App' : 'Create App'}</Card.Title>
               </Card.Header>
               <Card.Body>
                 <form onSubmit={this.handleSubmit}>
@@ -474,7 +474,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter app name"
                           name='appName'
                           onChange={this.handleAppNameChange}
-                          value={ this.state.appName }
+                          value={this.state.appName}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.appErr}</h6>
@@ -486,7 +486,7 @@ class FormsElements extends React.Component {
                           placeholder="Organization Name"
                           name='organizationName'
                           onChange={this.handleOrganizationChange}
-                          value={ this.state.organizationName }
+                          value={this.state.organizationName}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.organizationErr}</h6>
@@ -499,7 +499,7 @@ class FormsElements extends React.Component {
                           placeholder="Description"
                           name='description'
                           onChange={this.handleDescritionChange}
-                          value={ this.state.description }
+                          value={this.state.description}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.descriptionErr}</h6>
@@ -530,7 +530,7 @@ class FormsElements extends React.Component {
                           placeholder="Address Line 1"
                           name='addressLine1'
                           onChange={this.handleAddressLine1Change}
-                          value={ this.state.addressLine1 }
+                          value={this.state.addressLine1}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.addLine1Err}</h6>
@@ -542,7 +542,7 @@ class FormsElements extends React.Component {
                         <Form.Control type="text"
                           placeholder="Address Line 2"
                           name='addressLine2'
-                          value={ this.state.addressLine2 }
+                          value={this.state.addressLine2}
                           onChange={this.handleAddressLine2Change}
                         />
                       </Form.Group>
@@ -555,7 +555,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter City"
                           name='city'
                           onChange={this.handleCityChange}
-                          value={ this.state.city }
+                          value={this.state.city}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.cityErr}</h6>
@@ -582,7 +582,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter Postal/Zip code"
                           name='postalCode'
                           onChange={this.handlePostalCodeChange}
-                          value={ this.state.postalCode }
+                          value={this.state.postalCode}
                         />
                       </Form.Group>
                     </Col>
@@ -597,7 +597,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter contact person"
                           name='contact'
                           onChange={this.handleContactChange}
-                          value={ this.state.contact }
+                          value={this.state.contact}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.contactErr}</h6>
@@ -610,7 +610,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter email"
                           name='email'
                           onChange={this.handleEmailChange}
-                          value={ this.state.email }
+                          value={this.state.email}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.emailErr}</h6>
@@ -624,7 +624,7 @@ class FormsElements extends React.Component {
                           placeholder="Enter Phone"
                           name='phone'
                           onChange={this.handlePhoneChange}
-                          value={ this.state.phone }
+                          value={this.state.phone}
                         />
                       </Form.Group>
                       <h6 style={{ color: "red" }} >{this.state.phoneErr}</h6>
@@ -659,7 +659,7 @@ class FormsElements extends React.Component {
                           placeholder="Domains"
                           name='domains'
                           onChange={this.handleDomainChange}
-                          value={ this.state.domains }
+                          value={this.state.domains}
                         />
                         <h6 style={{ color: "red" }} >{this.state.domainsErr}</h6>
                         <h6 style={{ color: "red" }} >{this.state.errordomains}</h6>
@@ -668,7 +668,7 @@ class FormsElements extends React.Component {
                   </Row>
                   <Col md={6} xl={4} >
                     <Button variant="primary" disabled={!this.validateForm()} type='submit'>
-                    { this.props.location.state ? 'Edit App' : 'Create App' }
+                      {this.props.location.state ? 'Edit App' : 'Create App'}
                     </Button>
                   </Col>
                   <span style={{ color: "red" }}>{this.state.errorMessage}</span>
