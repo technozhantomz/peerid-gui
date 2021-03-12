@@ -183,7 +183,7 @@ class FormsElements extends React.Component {
   handleAddressLine2Change = (e) => {
     this.setState({
       addressLine2: e.target.value,
-    });
+    }, () => this.validate('addressLine2'));
   };
 
   handleCityChange = (e) => {
@@ -386,6 +386,22 @@ class FormsElements extends React.Component {
         } else {
           this.setState({
             addLine1Err: '* Should be between 5 and 255 characters',
+          })
+        }
+        break;
+      case 'addressLine2':
+        if (this.state.addressLine2.length >= 5 && this.state.addressLine2.length <= 255) {
+          this.setState({
+            addLine2Err: '',
+          })
+        } else {
+          this.setState({
+            addLine2Err: '* Should be between 5 and 255 characters',
+          })
+        }
+        if (this.state.addressLine2 === ''){
+          this.setState({
+            addLine2Err: '',
           })
         }
         break;
