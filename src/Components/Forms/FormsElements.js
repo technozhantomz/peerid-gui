@@ -117,7 +117,7 @@ class FormsElements extends React.Component {
       && this.state.organizationName && this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
       && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255
       && this.state.city && this.state.city.length >= 2 && this.state.city.length <= 100
-      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 2 && this.state.contact.length <= 255
+      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact)
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
       && this.state.phone && this.validatePhone(this.state.phone)
       && this.state.domains && this.validateDomains(this.state.domains)
@@ -128,6 +128,12 @@ class FormsElements extends React.Component {
     var regex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
 
     return phone.match(regex);
+  }
+
+  validateNumbersInContact = (contact) => {
+    var contactregex = /[0-9]/g
+
+    return contact.match(contactregex);
   }
 
   validateSpecialChar = (field) => {
@@ -417,13 +423,15 @@ class FormsElements extends React.Component {
         }
         break;
       case 'contact':
-        if (this.state.contact.length >= 2 && this.state.contact.length <= 255) {
+        var contactregex = /[0-9]/g
+
+        if (this.state.contact.length >= 2 && this.state.contact.length <= 255 && !contactregex.test(this.state.contact)) {
           this.setState({
             contactErr: '',
           })
         } else {
           this.setState({
-            contactErr: '* Should be between 2 and 255 characters',
+            contactErr: '* Should be between 2 and 255 characters & numbers not allowed.',
           })
         }
         break;
