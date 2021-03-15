@@ -12,6 +12,13 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'feather icon-home',
+                },
+                {
+                    id: 'account',
+                    title: 'Account',
+                    type: 'item',
+                    url: '/account',
+                    icon: 'feather icon-user',
                 }
             ]
         },
