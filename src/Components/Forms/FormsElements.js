@@ -47,7 +47,8 @@ class FormsElements extends React.Component {
     contactErr: '',
     emailErr: '',
     domainErr: '',
-    phoneErr: ''
+    phoneErr: '',
+    disableBtn: true
   };
 
   componentDidMount() {
@@ -115,7 +116,7 @@ class FormsElements extends React.Component {
     return this.state.appName && this.state.appName.length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName)
       && this.state.description && this.state.description.length >= 5 && this.state.description.length <= 1000
       && this.state.organizationName && this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
-      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255
+      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255 && this.state.disableBtn
       && this.state.city && this.state.city.length >= 2 && this.state.city.length <= 100
       && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact)
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
@@ -399,15 +400,18 @@ class FormsElements extends React.Component {
         if (this.state.addressLine2.length >= 5 && this.state.addressLine2.length <= 255) {
           this.setState({
             addLine2Err: '',
+            disableBtn: true
           })
         } else {
           this.setState({
             addLine2Err: '* Should be between 5 and 255 characters',
+            disableBtn: false 
           })
         }
         if (this.state.addressLine2 === ''){
           this.setState({
             addLine2Err: '',
+            disableBtn: true
           })
         }
         break;
