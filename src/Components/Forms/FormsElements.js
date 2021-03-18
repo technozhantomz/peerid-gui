@@ -671,6 +671,7 @@ class FormsElements extends React.Component {
                           multiple
                           value={operationsSelected}
                           onChange={this.selectOperations}
+                          style={{maxWidth:350}}
                         >
                           <MenuItem value=''>
                             <em>None</em>
