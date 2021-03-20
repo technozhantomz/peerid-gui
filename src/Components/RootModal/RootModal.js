@@ -10,6 +10,7 @@ import {ModalTypes} from '../../constants';
 // import PeerplaysLogin from '../PeerplaysLogin';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 // import Register from '../Register';
+import SubmitModal from '../Modals/SubmitModal/SubmitModal';
 
 import styles from './MUI.css'; 
 
@@ -72,7 +73,7 @@ class RootModal extends Component {
       }
 
       case ModalTypes.ERROR: {
-        // modalContent = <SubmitModal/>;
+        modalContent = <SubmitModal/>;
         modalClass = 'modal-error';
         break;
       }

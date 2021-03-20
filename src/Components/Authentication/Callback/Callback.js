@@ -8,6 +8,7 @@ import {ProfileService, AuthService} from '../../../services';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {StorageUtil, GenUtil} from '../../../utility';
+import {ModalTypes} from '../../../constants';
 
 const translate = GenUtil.translate;
 
@@ -90,7 +91,7 @@ class Callback extends Component {
     const errString = err.error ? err.error : err.message ? err.message : err;
 
     this.props.setModalData({headerText: translate('error'), subText: errString});
-    // this.props.setModalType(ModalTypes.ERROR);
+    this.props.setModalType(ModalTypes.ERROR);
     this.props.toggleModal();
   }
 }
