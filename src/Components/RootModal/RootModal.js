@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import {AppActions, ModalActions, NavigateActions} from '../../actions';
 import {ModalTypes} from '../../constants';
 // import LoginForm from '../Login/LoginForm';
-// import PeerplaysLogin from '../PeerplaysLogin';
+import PeerplaysLogin from '../PeerplaysLogin/PeerplaysLogin';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 // import Register from '../Register';
 import SubmitModal from '../Modals/SubmitModal/SubmitModal';
@@ -67,7 +67,7 @@ class RootModal extends Component {
       }
 
       case ModalTypes.PEERPLAYS_LOGIN: {
-        // modalContent = <PeerplaysLogin goRegister={ this.toggleModalAndRegister }/>;
+        modalContent = <PeerplaysLogin goRegister={ this.toggleModalAndRegister }/>;
         modalClass = 'modal-peerplays';
         break;
       }

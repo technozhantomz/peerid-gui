@@ -70,7 +70,13 @@ class LoginFooter extends Component {
               alt='peerplays'
               onMouseOut={ (e) => (e.currentTarget.src = peerplaysImgBlue) }
               onMouseOver={ (e) => (e.currentTarget.src = peerplaysImg) }
-              onClick={ () => this.props.setModalType(ModalTypes.PEERPLAYS_LOGIN) }
+              onClick={ () => {
+                this.props.setModalType(ModalTypes.PEERPLAYS_LOGIN);
+
+                if(!this.props.isModalOpen) {
+                  this.props.toggleModal();
+                }
+              } }
             />
           </div>
         </div>
@@ -79,14 +85,20 @@ class LoginFooter extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  isModalOpen: state.getIn(['modal', 'isOpen'])
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
-    setModalType: ModalActions.setModalType
+    setModalType: ModalActions.setModalType,
+    toggleModal: ModalActions.toggleModal
   },
   dispatch
 );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(LoginFooter));
+
