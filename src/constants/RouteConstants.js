@@ -5,8 +5,8 @@ export default {
   CALLBACK: '/callback',
   ERROR_CALLBACK: '/error',
   PEERPLAYS_WALLET_LOGIN: '/peerplays',
-  LOGIN: '/auth/signin-1',
-  REGISTER: '/auth/signup-1',
+  LOGIN: '/login',
+  REGISTER: '/signup',
   CREATE_APP: '/forms/form-basic',
   PERMISSIONS: '/permissions',
   ACCOUNT: '/account'

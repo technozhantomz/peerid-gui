@@ -36,9 +36,8 @@ class Callback extends Component {
           const account = await AuthService.confirmEmail(pathAry[3]);
           this.props.setAccount(account);
           this.props.setLoggedIn(true);
-          // this.props.navigateToDashboard();
-         this.props.history.push('/dashboard');
-
+          StorageUtil.set('se-user', JSON.stringify(account));
+          this.props.navigateToDashboard();
           break;
         }
 

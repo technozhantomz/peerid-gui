@@ -53,7 +53,7 @@ class FormsElements extends React.Component {
 
   componentDidMount() {
     if (!this.props.isLoggedIn) {
-      this.props.history.push('/auth/signin-1');
+      this.props.history.push('/login');
     } else {
       if (this.state.countrySelected !== '') {
         const operations = Object.keys(ChainTypes.operations).map((op) => {

@@ -36,7 +36,7 @@ class App extends Component {
 
       if (
         (routeValues.indexOf(this.props.path) !== -1 &&
-        routeValues.indexOf('/auth/signin-1?next=/') === -1) ||
+        routeValues.indexOf('/login?next=/') === -1) ||
         (this.props.path.indexOf(RouteConstants.CALLBACK) !== -1) ||
         (this.props.path.indexOf(RouteConstants.RESET_PASSWORD) !== -1 && TokenUtil.checkUrlLength(this.props.path))
       ) {
