@@ -400,7 +400,7 @@ class SignUp1 extends React.Component {
                     style={{ display: this.state.hideFields }}
                     disabled={!this.validateForm()} />
                     
-                  <p className="mb-0 text-muted" style={{ display: this.state.display }}>Already have an account? <NavLink style={linkStyle} to="/auth/signin-1">Login</NavLink></p>
+                  <p className="mb-0 text-muted" style={{ display: this.state.display }}>Already have an account? <NavLink style={linkStyle} to="/login">Login</NavLink></p>
                   <h6 style={{ color: "green" }} className='register__apiTxt--success'>{this.state.resultText}</h6>
                   <div>
                     <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errText}</h6>
