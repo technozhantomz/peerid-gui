@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
+import PermittedApps from '../PermittedApps/PermittedApps';
 
 class Account extends React.Component {
   state = {
@@ -58,6 +59,7 @@ class Account extends React.Component {
                   </Table>
                 </Card.Body>
               </Card>
+              <PermittedApps />
             </Col>
           </Row>
         </Aux>
