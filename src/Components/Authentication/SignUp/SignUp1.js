@@ -13,7 +13,7 @@ import { NavigateActions, AccountActions, ModalActions } from '../../../actions'
 import { connect } from 'react-redux';
 import supportedEmailDomains from '../../../assets/locales/SupportedEmailDomains.txt';
 import { EOL } from 'os';
-import LoginFooter from '../../Login/LoginFooter';
+import LoginFooter from '../../Login/LoginFooter/LoginFooter';
 import LoadBar from '../../Spinner/LoadBar'
 import { AppActions } from '../../../actions';
 import querystring from 'query-string';
@@ -63,6 +63,7 @@ class SignUp1 extends React.Component {
   }
 
   componentDidMount() {
+    this.props.HideLoader()
     if (this.props.location.search) { // TODO: refactor use redux path
       const token = querystring.parse(this.props.location.search).token;
 

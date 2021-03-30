@@ -17,13 +17,13 @@ class Account extends React.Component {
       <div>
         <Aux>
           <Row>
-            <Col md={6} xl={12}>
+            <Col>
               <Card className='Recent-Users'>
                 <Card.Header>
                   <Card.Title as='h5'>Account Details </Card.Title>
                 </Card.Header>
                 <Card.Body className='px-0 py-2'>
-                  <Table>
+                  <Table responsive>
                     <tbody>
                       <tr className="unread">
                         <td>

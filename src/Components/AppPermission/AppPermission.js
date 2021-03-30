@@ -36,7 +36,6 @@ class AppPermission extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props)
     this.props.HideLoader();
 
     if (!this.props.location.search) {

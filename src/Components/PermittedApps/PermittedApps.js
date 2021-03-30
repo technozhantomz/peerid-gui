@@ -72,7 +72,7 @@ class PermittedApps extends React.Component {
       <div>
         <Aux>
           <Row>
-            <Col md={6} xl={12}>
+            <Col>
               <Card className='Recent-Users'>
                 <Card.Header>
                   <Card.Title as='h5'>Permitted Apps</Card.Title>

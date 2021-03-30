@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux';
 import { AppActions, ModalActions } from '../../../actions';
 import { ModalTypes } from '../../../constants';
 
-import LoginFooter from '../../Login/LoginFooter';
+import LoginFooter from '../../Login/LoginFooter/LoginFooter';
 import LoadBar from '../../Spinner/LoadBar'
 const translate = GenUtil.translate;
 
@@ -30,6 +30,7 @@ class SignUp1 extends React.Component {
   };
 
   componentDidMount() {
+    this.props.HideLoader()
     if (this.props.location.search) {
       this.setState({
         next: this.props.location.search.substr(6)
@@ -156,6 +157,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     login: AppActions.login,
     ShowLoader: AppActions.showLoader,
+    HideLoader: AppActions.hideLoader,
     toggleModal: ModalActions.toggleModal,
     setModalType: ModalActions.setModalType
   },
