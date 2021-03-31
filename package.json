@@ -118,7 +118,7 @@
     "immutable": "^4.0.0-rc.12",
     "is-valid-domain": "0.0.15",
     "jsdoc-mermaid": "^1.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "loglevel": "^1.6.2",
     "moment": "^2.24.0",
     "peerplaysjs-lib": "https://gitlab.com/PBSA/PeerplaysIO/tools-libs/peerplaysjs-lib.git#account-roles",
