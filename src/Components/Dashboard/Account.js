@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Table } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
+import PermittedApps from '../PermittedApps/PermittedApps';
 
 class Account extends React.Component {
   state = {
@@ -16,13 +17,13 @@ class Account extends React.Component {
       <div>
         <Aux>
           <Row>
-            <Col md={6} xl={12}>
+            <Col>
               <Card className='Recent-Users'>
                 <Card.Header>
                   <Card.Title as='h5'>Account Details </Card.Title>
                 </Card.Header>
                 <Card.Body className='px-0 py-2'>
-                  <Table>
+                  <Table responsive>
                     <tbody>
                       <tr className="unread">
                         <td>
@@ -58,6 +59,7 @@ class Account extends React.Component {
                   </Table>
                 </Card.Body>
               </Card>
+              <PermittedApps />
             </Col>
           </Row>
         </Aux>

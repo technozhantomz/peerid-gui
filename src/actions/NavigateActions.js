@@ -47,7 +47,6 @@ class NavigateActions {
   static navigateToDashboard() {
     return (dispatch) => {
       dispatch(push('/dashboard'));
-      window.location.reload(false);
     };
   }
 

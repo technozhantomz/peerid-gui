@@ -121,7 +121,7 @@ class Dashboard extends React.Component {
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={6} xl={12}>
+            <Col>
               <Card className='Recent-Users'>
                 <Card.Header>
                   <Card.Title as='h5'>Registered Apps</Card.Title>
