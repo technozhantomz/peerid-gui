@@ -85,7 +85,7 @@ class Dashboard extends React.Component {
     const { navigateToCreateApp } = this.props;
 
     const linkStyle = {
-      cursor: "pointer" 
+      cursor: "pointer"
     }
 
     return (
@@ -121,6 +121,8 @@ class Dashboard extends React.Component {
                 </Card.Body>
               </Card>
             </Col>
+          </Row>
+          <Row>
             <Col>
               <Card className='Recent-Users'>
                 <Card.Header>
