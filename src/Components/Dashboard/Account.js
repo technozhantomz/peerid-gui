@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
 import PermittedApps from '../PermittedApps/PermittedApps';
 
@@ -22,41 +22,43 @@ class Account extends React.Component {
                 <Card.Header>
                   <Card.Title as='h5'>Account Details </Card.Title>
                 </Card.Header>
-                <Card.Body className='px-0 py-2'>
-                  <Table responsive>
-                    <tbody>
-                      <tr className="unread">
-                        <td>
-                          <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />Username : </h6>
-                        </td>
-                        <td>
-                          <p className="m-0">{username}</p>
-                        </td>
-                      </tr>
-                      <tr className="unread">
-                        <td>
-                          <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />Email ID : </h6>
-                        </td>
-                        <td>
-                          <p className="m-0">{email}</p>
-                        </td>
-                      </tr><tr className="unread">
-                        <td>
-                          <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays ID : </h6>
-                        </td>
-                        <td>
-                          <p className="m-0">{peerplaysAccountId}</p>
-                        </td>
-                      </tr><tr className="unread">
-                        <td>
-                          <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays Account Name : </h6>
-                        </td>
-                        <td>
-                          <p className="m-0">{peerplaysAccountName}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                <Card.Body>
+                  <Row>
+                    <Col md={6} >
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Username : </h6>
+                    </Col>
+                    <Col md={6}  >
+                      <h6 className="text-muted mx-auto m-0">{username}</h6>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Email ID : </h6>
+                    </Col>
+                    <Col md={6}>
+                      <h6 className="text-muted mx-auto m-0">{email}</h6>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays ID : </h6>
+                    </Col>
+                    <Col md={6}>
+                      <h6 className="text-muted mx-auto m-0">{peerplaysAccountId}</h6>
+                    </Col>
+                  </Row>
+                  <hr />
+                  <Row>
+                    <Col md={6}>
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays Account Name : </h6>
+                    </Col>
+                    <Col md={6}  >
+                      <p className="mx-auto m-0">{peerplaysAccountName}</p>
+                    </Col>
+                  </Row>
+                  <hr />
                 </Card.Body>
               </Card>
               <PermittedApps />
