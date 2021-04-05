@@ -30,27 +30,21 @@ class Account extends React.Component {
                     <Col md={6}  >
                       <h6 className="text-muted mx-auto m-0">{username}</h6>
                     </Col>
-                  </Row>
-                  <hr />
-                  <Row>
+                    <hr />
                     <Col md={6}>
                       <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Email ID : </h6>
                     </Col>
                     <Col md={6}>
                       <h6 className="text-muted mx-auto m-0">{email}</h6>
                     </Col>
-                  </Row>
-                  <hr />
-                  <Row>
+                    <hr />
                     <Col md={6}>
                       <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays ID : </h6>
                     </Col>
                     <Col md={6}>
                       <h6 className="text-muted mx-auto m-0">{peerplaysAccountId}</h6>
                     </Col>
-                  </Row>
-                  <hr />
-                  <Row>
+                    <hr />
                     <Col md={6}>
                       <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />Peerplays Account Name : </h6>
                     </Col>
