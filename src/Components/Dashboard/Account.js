@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Card } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
 import PermittedApps from '../PermittedApps/PermittedApps';
+import Footer from '../Footer/Footer';
 
 class Account extends React.Component {
   state = {
@@ -59,6 +60,7 @@ class Account extends React.Component {
             </Col>
           </Row>
         </Aux>
+        <Footer />
       </div>
 
     );

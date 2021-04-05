@@ -18,6 +18,7 @@ import LoadBar from '../../Spinner/LoadBar'
 import { AppActions } from '../../../actions';
 import querystring from 'query-string';
 import { toast } from 'react-toastify';
+import Footer from '../../Footer/Footer';
 
 toast.configure()
 const translate = GenUtil.translate;
@@ -411,6 +412,7 @@ class SignUp1 extends React.Component {
                     {!this.props.location.search ? <LoginFooter /> : ''}
                   </div>
                 </div>
+                <Footer />
               </div>
             </div>
           </div>

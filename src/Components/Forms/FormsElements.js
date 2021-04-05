@@ -13,6 +13,7 @@ import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { AppService } from '../../services';
 import { ValidationUtil } from '../../utility';
 import { toast } from 'react-toastify';
+import Footer from '../Footer/Footer'
 
 toast.configure()
 class FormsElements extends React.Component {
@@ -706,6 +707,7 @@ class FormsElements extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Footer />
       </Aux>
     );
   }

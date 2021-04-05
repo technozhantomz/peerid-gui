@@ -8,6 +8,7 @@ import { NavigateActions } from '../../actions';
 import { AppService } from '../../services';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import { toast } from 'react-toastify';
+import Footer from '../Footer/Footer';
 
 toast.configure()
 
@@ -159,7 +160,10 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
           </Row>
+
         </Aux>
+        <Footer/>
+
       </div>
 
     );

@@ -11,6 +11,7 @@ import { GenUtil } from '../../utility';
 import psl from 'psl';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
+import Footer from '../Footer/Footer';
 
 const translate = GenUtil.translate;
 
@@ -205,6 +206,7 @@ class AppPermission extends Component {
             </Card>
           </Col>
         </Row>
+        <Footer/>
       </Aux>
     );
   }

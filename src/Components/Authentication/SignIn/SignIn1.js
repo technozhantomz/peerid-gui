@@ -14,6 +14,8 @@ import { ModalTypes } from '../../../constants';
 
 import LoginFooter from '../../Login/LoginFooter/LoginFooter';
 import LoadBar from '../../Spinner/LoadBar'
+import Footer from '../../Footer/Footer';
+
 const translate = GenUtil.translate;
 
 class SignUp1 extends React.Component {
@@ -139,6 +141,7 @@ class SignUp1 extends React.Component {
                   {/* <LoginFooter></LoginFooter> */}
                   <LoginFooter />
                 </div>
+                <Footer/>
               </div>
             </div>
           </div>
