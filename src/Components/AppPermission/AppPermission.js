@@ -162,18 +162,19 @@ class AppPermission extends Component {
         <Row>
           <Col md={12}>
             <Card className='card'>
-              <Card.Body className='border-bottom'>
+              <Card.Body>
                 <div className="row align-items-center justify-content-center">
                   <div className="card-body text-center">
                     <div className="mb-4">
                       <img src={peerplaysImg2X} alt={'peerplaysIcon'}
                         style={{ height: 80 }}
                       />
+                      <hr />
+                      <h5>Logged in as : <span >{this.props.username}</span></h5>
                     </div>
                   </div>
                 </div>
-                <div className="col text-right">
-                  <h5 className="text-muted">Logged in as : <span >{this.props.username}</span></h5>
+                <div className="float-right">
                   <h4 className="text-muted">{`${this.state.appName} is a product of :`}</h4>
                   <h6 className="text-muted">{this.state.organizationName}</h6>
                   <h6 className="text-muted">{this.state.addressLine1}</h6>
@@ -183,9 +184,10 @@ class AppPermission extends Component {
                   <h6 className="text-muted">{this.state.country}</h6>
                   <h6 className="text-muted">{this.state.email}</h6>
                 </div>
-                <div>
-                  <h5 className="text-muted">{this.state.appName} ,</h5>
-                  <h6 className="text-muted">{`Requests permission to execute the following transactions on your behalf on the Peerplays Blockchain:`}
+              </Card.Body>
+              <Card.Body>
+                <div >
+                  <h6 className="text-muted">{`${this.state.appName} requests permission to execute the following transactions on your behalf on the Peerplays Blockchain:`}
                     {this.state.operations && this.state.operations.map((op, index) => <div key={index}>{`${index + 1}. ${op}`}</div>)}</h6>
                 </div>
               </Card.Body>
