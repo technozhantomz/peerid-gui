@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
 import { bindActionCreators } from 'redux';
@@ -128,40 +128,38 @@ class Dashboard extends React.Component {
                 <Card.Header>
                   <Card.Title as='h5'>Registered Apps</Card.Title>
                 </Card.Header>
-                <Card.Body className='px-0 py-2'>
-                  <Table responsive hover >
-                    <tbody>
-                      <tr>
-                        <th></th>
-                        <th>App Name</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                      </tr>
-                      {this.state.data.map((apps) => (
-                        <tr key={apps.id} className="unread">
-                          <td><img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" /></td>
-                          <td>
-                            <h5 className="mb-1">{apps.appname} </h5>
-                            <p className="m-0">Client ID : {apps.id}</p>
-                            <p className="m-0">Client Secret : {apps.app_secret}</p>
-                          </td>
-                          <td>
-                            {apps.createdAt}
-                          </td>
-                          <td>
-                            <AppsRow key={apps.id} apps={apps} edit={navigateToCreateApp} deleteApp={this.deleteApp.bind(this)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
+                {this.state.data.map((apps) => (
+                  <Card.Body key={apps.id} className='border-bottom'>
+                    <Row className="justify-content-center align-items-center">
+                      <Col md={1} xs={2} >
+                        <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
+                      </Col>
+                      <Col xs={10} md={7}>
+                        <dl className="dl-horizontal row">
+                          <dt className="col-sm-3">App Name : </dt>
+                          <dd className="col-sm-9">{apps.appname}</dd>
+
+                          <dt className="col-sm-3">Client ID : </dt>
+                          <dd className="col-sm-9">{apps.id}</dd>
+
+                          <dt className="col-sm-3 text-truncate">Client Secret :</dt>
+                          <dd className="col-sm-9">{apps.app_secret}</dd>
+
+                          <dt className="col-sm-3">Created : </dt>
+                          <dd className="col-sm-9">{apps.createdAt}</dd>
+                        </dl>
+                      </Col>
+                      <Col md={4} xs={8} className="align-items-center">
+                        <AppsRow key={apps.id} apps={apps} edit={navigateToCreateApp} deleteApp={this.deleteApp.bind(this)} />
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                ))}
               </Card>
             </Col>
           </Row>
         </Aux>
       </div>
-
     );
   }
 }
