@@ -174,7 +174,7 @@ class AppPermission extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="float-right">
+                <div className="float-left">
                   <h4 className="text-muted">{`${this.state.appName} is a product of :`}</h4>
                   <h6 className="text-muted">{this.state.organizationName}</h6>
                   <h6 className="text-muted">{this.state.addressLine1}</h6>
