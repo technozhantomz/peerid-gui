@@ -116,12 +116,7 @@ class AppPermission extends Component {
             redirect_uri: redirectUri,
             state
           });
-        })
-          .catch((e) => {
-            this.props.setModalType(ModalTypes.ERROR);
-            this.props.setModalData({ headerText: translate('error'), subText: 'App does not exist.', redirect: RouteConstants.DASHBOARD });
-            this.props.toggleModal();
-          });
+        });
       }
     }
   }
@@ -144,10 +139,10 @@ class AppPermission extends Component {
 
         window.open(redirect, '_self');
       })
-      .catch((e) => {
+      .catch((err) => {
         this.props.HideLoader();
 
-        console.error(e);
+        console.error(err);
         this.setState({
           err: e.statusText,
         });
