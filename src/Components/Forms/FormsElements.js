@@ -405,10 +405,10 @@ class FormsElements extends React.Component {
         } else {
           this.setState({
             addLine2Err: '* Should be between 5 and 255 characters',
-            disableBtn: false 
+            disableBtn: false
           })
         }
-        if (this.state.addressLine2 === ''){
+        if (this.state.addressLine2 === '') {
           this.setState({
             addLine2Err: '',
             disableBtn: true
@@ -671,7 +671,7 @@ class FormsElements extends React.Component {
                           multiple
                           value={operationsSelected}
                           onChange={this.selectOperations}
-                          style={{maxWidth:350}}
+                          style={{ display: 'flex', flexWrap: 'wrap' }}
                         >
                           <MenuItem value=''>
                             <em>None</em>
