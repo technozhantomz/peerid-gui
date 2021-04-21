@@ -7,8 +7,7 @@ const {
   DEV_BASE_ROUTE,
   PRODUCTION_BASE_ROUTE,
   BLOCKCHAIN_USE_TESTNET,
-  BLOCKCHAIN_ENDPOINTS,
-  PEERPLAYS_PAYMENT_ACCOUNT_ID
+  BLOCKCHAIN_ENDPOINTS
 } = process.env;
 
 /**
@@ -81,14 +80,6 @@ const Config = {
    * @memberof Config
    */
   elizabethEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
-
-  /**
-   * Represents payment id.
-   *
-   * @type {string}
-   * @memberof Config
-   */
-  payment: PEERPLAYS_PAYMENT_ACCOUNT_ID,
 
   /**
    * Represents the base uri.
