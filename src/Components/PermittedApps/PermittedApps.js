@@ -1,19 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Card, Table } from 'react-bootstrap';
-
 import Aux from "../../hoc/_Aux";
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../actions';
 import { AppService } from '../../services';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
-import { toast } from 'react-toastify';
-import {ChainTypes} from 'peerplaysjs-lib';
-
-toast.configure()
+import { ChainTypes } from 'peerplaysjs-lib';
 
 const AppsRow = ({ apps, edit, revokePermission }) => {
-
 
   let revokePermissionButton = (
     <span className='header__link' onClick={() => revokePermission(apps)}>
@@ -29,17 +24,16 @@ const AppsRow = ({ apps, edit, revokePermission }) => {
 };
 
 class PermittedApps extends React.Component {
-  state={
+  state = {
     apps: []
   };
 
-
   componentDidMount() {
-    if(!this.props.isLoggedIn) {
+    if (!this.props.isLoggedIn) {
       this.props.navigateToSignIn();
     } else {
       AppService.getPermittedApps().then((res) => {
-        for(let i = 0; i < res.length; i++) {
+        for (let i = 0; i < res.length; i++) {
           res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
         }
 
@@ -50,15 +44,6 @@ class PermittedApps extends React.Component {
         console.error(err);
       });
     }
-  }
-
-
-  deleteAppSuccessAlert() {
-    toast.success('App Deleted Successfully!')
-  }
-
-  deleteAppErrorAlert() {
-    toast.error('App not deleted!')
   }
 
   revokePermission = async (app) => {
@@ -96,7 +81,7 @@ class PermittedApps extends React.Component {
                             {row.operationNames}
                           </td>
                           <td>
-                            <AppsRow key={row.id} apps={row} revokePermissionApp={this.revokePermission.bind(this)} />
+                            <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} />
                           </td>
                         </tr>
                       ))}
@@ -108,7 +93,6 @@ class PermittedApps extends React.Component {
           </Row>
         </Aux>
       </div>
-
     );
   }
 }
@@ -122,7 +106,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     navigate: NavigateActions.navigate,
     navigateToCreateApp: NavigateActions.navigateToCreateApp,
     navigateToSignIn: NavigateActions.navigateToSignIn,
-    navigateAddApp: NavigateActions.navigateAddApp
+    navigateAddApp: NavigateActions.navigateAddApp,
+    navigateToDashboard: NavigateActions.navigateToDashboard
   },
   dispatch
 );
