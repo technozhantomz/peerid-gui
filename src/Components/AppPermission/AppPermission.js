@@ -116,6 +116,11 @@ class AppPermission extends Component {
             redirect_uri: redirectUri,
             state
           });
+        })
+          .catch((e) => {
+            this.props.setModalType(ModalTypes.ERROR);
+            this.props.setModalData({ headerText: translate('error'), subText: 'App does not exist.', redirect: RouteConstants.DASHBOARD });
+            this.props.toggleModal();
         });
       }
     }
@@ -130,8 +135,8 @@ class AppPermission extends Component {
 
     this.props.ShowLoader();
 
-    const code = await AppService.joinApp(this.state.appId, this.state.redirect_uri)
-      .then(() => {
+    await AppService.joinApp(this.state.appId, this.state.redirect_uri)
+      .then((code) => {
         let redirect = `${this.state.redirect_uri}?code=${code}`;
         if (this.state.state) {
           redirect = redirect + '&state=' + this.state.state;
@@ -144,7 +149,7 @@ class AppPermission extends Component {
 
         console.error(err);
         this.setState({
-          err: e.statusText,
+          err: err.statusText,
         });
       })
   }
