@@ -62,6 +62,10 @@ class Callback extends Component {
         }
 
         case 'login':
+          const account = await ProfileService.getProfile();
+          this.props.setAccount(account);
+          this.props.setLoggedIn(true);
+          this.props.navigateToDashboard();
           break;
 
         default:
