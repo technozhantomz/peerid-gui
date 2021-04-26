@@ -153,7 +153,7 @@ const PrivateValidationUtils = {
    * @memberof PrivateValidationUtil
    */
   emailDomain(email) {
-    const regex=/\.([^\.]+?)$/;
+    const regex=/\.([^.]+?)$/;
     const lineBreak = EOL;
     const acceptedDomains = supportedEmailDomains.split(lineBreak);
     const extractedDomain = regex.exec(email);

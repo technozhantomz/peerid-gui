@@ -5,6 +5,8 @@ import AppReducer from './AppReducer';
 import ModalReducer from './ModalReducer';
 import AccountReducer from './AccountReducer';
 import ErrorBoxReducer from './ErrorBoxReducer';
+import PeerplaysReducer from './PeerplaysReducer';
+import navReducer from './navReducer'
 
 export default (history) => combineReducers({
   router: connectRouter(history),
@@ -12,5 +14,8 @@ export default (history) => combineReducers({
   app: AppReducer,
   modal: ModalReducer,
   profiles: AccountReducer,
-  errorBox: ErrorBoxReducer
+  errorBox: ErrorBoxReducer,
+  peerplays: PeerplaysReducer,
+  nav: navReducer
+
 });
