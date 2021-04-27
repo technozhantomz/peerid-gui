@@ -37,8 +37,10 @@ class PermittedApps extends React.Component {
           res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
         }
 
+        let sortingResponse = res.filter((app, ind) => ind === res.findIndex(sortedApps => sortedApps.id === app.id));
+
         this.setState({
-          apps: res
+          apps: sortingResponse
         });
       }).catch((err) => {
         console.error(err);
