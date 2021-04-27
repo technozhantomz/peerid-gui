@@ -44,7 +44,7 @@ deploy:
     - peerid-runner
   only:
     refs:
-      - feature/New-UI
+      - develop
       
 sonarcloud-check:
  image:
