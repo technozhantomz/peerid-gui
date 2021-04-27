@@ -76,7 +76,7 @@ class PermittedApps extends React.Component {
                           <dd className="col-sm-9">{row.appname}</dd>
 
                           <dt className="col-sm-3">Operations Permitted : </dt>
-                          <dd className="col-sm-9">{row.operationNames}</dd>
+                          <dd className="col-sm-9">{row.operationNames + ' , ' } </dd>
                         </dl>
                       </Col>
                       <Col md={4} xs={8} className="align-items-center">
