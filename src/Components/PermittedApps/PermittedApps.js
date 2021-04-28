@@ -60,26 +60,26 @@ class PermittedApps extends React.Component {
         <Aux>
           <Row>
             <Col>
-              <Card className='Recent-Users'>
+              <Card className='Registered-Apps'>
                 <Card.Header>
                   <Card.Title as='h5'>Registered Apps</Card.Title>
                 </Card.Header>
                 {this.state.apps.map((row) => (
                   <Card.Body key={row.id} className='border-bottom'>
                     <Row className="justify-content-center align-items-center">
-                      <Col md={1} xs={2} >
+                      <Col xs={2} md={1}>
                         <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
                       </Col>
                       <Col xs={10} md={7}>
                         <dl className="dl-horizontal row">
-                          <dt className="col-sm-3">App Name : </dt>
-                          <dd className="col-sm-9">{row.appname}</dd>
+                          <dt className="col-sm-7">App Name : </dt>
+                          <dd className="col-sm-7">{row.appname}</dd>
 
-                          <dt className="col-sm-3">Operations Permitted : </dt>
-                          <dd className="col-sm-9">{row.operationNames + ' , ' } </dd>
+                          <dt className="col-sm-6">Operations Permitted : </dt>
+                          <dd className="col-sm-12">{row.operationNames + ' , ' } </dd>
                         </dl>
                       </Col>
-                      <Col md={4} xs={8} className="align-items-center">
+                      <Col md={4} xs={10} className="align-items-center">
                         <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} />
                       </Col>
                     </Row>
