@@ -67,7 +67,7 @@ class PermittedApps extends React.Component {
                 {this.state.apps.map((row) => (
                   <Card.Body key={row.id} className='border-bottom'>
                     <Row className="justify-content-center align-items-center">
-                      <Col xs={2} md={1}>
+                      <Col xs={2} md={1} className='Registered-Apps'>
                         <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="Registered-Apps" />
                       </Col>
                       <Col xs={10} md={7}>
