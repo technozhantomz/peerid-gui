@@ -68,7 +68,7 @@ class PermittedApps extends React.Component {
                   <Card.Body key={row.id} className='border-bottom'>
                     <Row className="justify-content-center align-items-center">
                       <Col xs={2} md={1}>
-                        <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
+                        <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="Registered-Apps" />
                       </Col>
                       <Col xs={10} md={7}>
                         <dl className="dl-horizontal row">
