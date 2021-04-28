@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
                 {this.state.data.map((apps) => (
                   <Card.Body key={apps.id} className='border-bottom'>
                     <Row className="justify-content-center align-items-center">
-                      <Col md={1} xs={2} >
+                      <Col xs={2} md={1}>
                         <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" />
                       </Col>
                       <Col xs={10} md={7}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import Aux from "../../hoc/_Aux";
 import { bindActionCreators } from 'redux';
 import { NavigateActions } from '../../actions';
@@ -37,8 +37,10 @@ class PermittedApps extends React.Component {
           res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
         }
 
+        let sortingResponse = res.filter((app, ind) => ind === res.findIndex(sortedApps => sortedApps.id === app.id));
+
         this.setState({
-          apps: res
+          apps: sortingResponse
         });
       }).catch((err) => {
         console.error(err);
@@ -58,36 +60,31 @@ class PermittedApps extends React.Component {
         <Aux>
           <Row>
             <Col>
-              <Card className='Recent-Users'>
+              <Card className='Registered-Apps'>
                 <Card.Header>
-                  <Card.Title as='h5'>Permitted Apps</Card.Title>
+                  <Card.Title as='h5'>Registered Apps</Card.Title>
                 </Card.Header>
-                <Card.Body className='px-0 py-2'>
-                  <Table responsive hover >
-                    <tbody>
-                      <tr>
-                        <th></th>
-                        <th>App Name</th>
-                        <th>Operations Permitted</th>
-                        <th>Actions</th>
-                      </tr>
-                      {this.state.apps.map((row) => (
-                        <tr key={row.id} className="unread">
-                          <td><img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="activity-user" /></td>
-                          <td>
-                            <h5 className="mb-1">{row.appname} </h5>
-                          </td>
-                          <td>
-                            {row.operationNames}
-                          </td>
-                          <td>
-                            <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Card.Body>
+                {this.state.apps.map((row) => (
+                  <Card.Body key={row.id} className='border-bottom'>
+                    <Row className="justify-content-center align-items-center">
+                      <Col xs={2} md={1} className='Registered-Apps'>
+                        <img className="rounded-circle" style={{ width: '40px' }} src={avatar1} alt="Registered-Apps" />
+                      </Col>
+                      <Col xs={10} md={7}>
+                        <dl className="dl-horizontal row">
+                          <dt className="col-sm-7">App Name : </dt>
+                          <dd className="col-sm-7">{row.appname}</dd>
+
+                          <dt className="col-sm-6">Operations Permitted : </dt>
+                          <dd className="col-sm-12">{row.operationNames + ' , ' } </dd>
+                        </dl>
+                      </Col>
+                      <Col md={4} xs={10} className="align-items-center">
+                        <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} />
+                      </Col>
+                    </Row>
+                  </Card.Body>
+                ))}
               </Card>
             </Col>
           </Row>
