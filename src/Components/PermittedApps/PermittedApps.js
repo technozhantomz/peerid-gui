@@ -96,7 +96,7 @@ class PermittedApps extends React.Component {
             <Col>
               <Card className='Registered-Apps'>
                 <Card.Header>
-                  <Card.Title as='h5'>Registered Apps</Card.Title>
+                  <Card.Title as='h5'>Permitted Apps</Card.Title>
                 </Card.Header>
                 {this.state.apps.map((row) => (
                   <Card.Body key={row.id} className='border-bottom'>
