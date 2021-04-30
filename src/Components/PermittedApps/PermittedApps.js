@@ -7,25 +7,31 @@ import { NavigateActions } from '../../actions';
 import { AppService } from '../../services';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import { ChainTypes } from 'peerplaysjs-lib';
+import { toast } from 'react-toastify';
 
-const AppsRow = ({ apps, edit, revokePermission }) => {
+toast.configure()
 
+const AppsRow = ({ apps, loading, revokePermission, disabled }) => {
   let revokePermissionButton = (
     <span className='header__link' onClick={() => revokePermission(apps)}>
-      Revoke Permission
+      {loading === apps.id && <i className="fa fa-refresh fa-spin"></i>}{' '}
+      {loading === apps.id && <span>loading...</span>}
+      {loading !== apps.id && <span>Revoke Permission</span>}
     </span>
   );
 
   return (
     <React.Fragment>
-      <span style={{ cursor: "pointer" }} className="label theme-bg text-white f-12">{revokePermissionButton}</span>
+      <span style={{ cursor: "pointer", pointerEvents: disabled }} className="label theme-bg text-white f-12">{revokePermissionButton}</span>
     </React.Fragment>
   );
 };
 
 class PermittedApps extends React.Component {
   state = {
-    apps: []
+    apps: [],
+    loading: null,
+    disabled: null
   };
 
   componentDidMount() {
@@ -49,8 +55,41 @@ class PermittedApps extends React.Component {
   }
 
   revokePermission = async (app) => {
-    await AppService.revokeAppPermission(app.id);
-    this.props.navigateToDashboard();
+    this.setState({
+      loading: app.id,
+      disabled: "none"
+    });
+
+    await AppService.revokeAppPermission(app.id).then(() => {
+      AppService.getPermittedApps().then((res) => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
+        }
+
+        let sortingResponse = res.filter((apps, ind) => ind === res.findIndex(sortedApps => sortedApps.id === apps.id));
+
+        this.setState({
+          apps: sortingResponse,
+          loading: null,
+          disabled: null
+        });
+      });
+      this.permissionRevokeSuccess();
+    }).catch(() => {
+      this.setState({
+        loading: null,
+        disabled: null
+      });
+      this.permissionRevokeFail();
+    });
+  }
+
+  permissionRevokeSuccess() {
+    toast.success('Permission successfully revoked!')
+  }
+
+  permissionRevokeFail() {
+    toast.error('Failed to revoke permission.!')
   }
 
   render() {
@@ -76,11 +115,11 @@ class PermittedApps extends React.Component {
                           <dd className="col-sm-7">{row.appname}</dd>
 
                           <dt className="col-sm-6">Operations Permitted : </dt>
-                          <dd className="col-sm-12">{row.operationNames + ' , ' } </dd>
+                          <dd className="col-sm-12">{row.operationNames + ' , '} </dd>
                         </dl>
                       </Col>
                       <Col md={4} xs={10} className="align-items-center">
-                        <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} />
+                        <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} loading={this.state.loading} disabled={this.state.disabled}/>
                       </Col>
                     </Row>
                   </Card.Body>
