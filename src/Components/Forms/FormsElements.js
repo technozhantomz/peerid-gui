@@ -615,7 +615,7 @@ class FormsElements extends React.Component {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <h5 className="mt-5">Conctact Details</h5>
+                  <h5 className="mt-5">Contact Details</h5>
                   <hr />
                   <Row>
                     <Col md={6}>
