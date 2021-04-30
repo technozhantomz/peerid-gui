@@ -1,6 +1,6 @@
 {
-  "name": "peerid",
-  "version": "0.19.7",
+  "name": "peerid-gui",
+  "version": "0.1.0",
   "description": "",
   "homepage": "https://www.peerid.com",
   "main": "index.js",
