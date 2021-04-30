@@ -38,20 +38,26 @@ class PermittedApps extends React.Component {
     if (!this.props.isLoggedIn) {
       this.props.navigateToSignIn();
     } else {
-      AppService.getPermittedApps().then((res) => {
-        for (let i = 0; i < res.length; i++) {
-          res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
-        }
-
-        let sortingResponse = res.filter((app, ind) => ind === res.findIndex(sortedApps => sortedApps.id === app.id));
-
-        this.setState({
-          apps: sortingResponse
-        });
-      }).catch((err) => {
-        console.error(err);
-      });
+      this.gettingApps();
     }
+  }
+
+  gettingApps = (disabled) => {
+    AppService.getPermittedApps().then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
+      }
+
+      let sortingResponse = res.filter((app, ind) => ind === res.findIndex(sortedApps => sortedApps.id === app.id));
+
+      this.setState({
+        apps: sortingResponse,
+        loading: disabled,
+        disabled: disabled
+      });
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   revokePermission = async (app) => {
@@ -61,19 +67,8 @@ class PermittedApps extends React.Component {
     });
 
     await AppService.revokeAppPermission(app.id).then(() => {
-      AppService.getPermittedApps().then((response) => {
-        for (let i = 0; i < response.length; i++) {
-          response[i].operationNames = response[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
-        }
+      this.gettingApps(null);
 
-        let gettingResponse = response.filter((apps, ind) => ind === response.findIndex(sortedApps => sortedApps.id === apps.id));
-
-        this.setState({
-          apps: gettingResponse,
-          loading: null,
-          disabled: null
-        });
-      });
       this.permissionRevokeSuccess();
     }).catch(() => {
       this.setState({
@@ -119,7 +114,7 @@ class PermittedApps extends React.Component {
                         </dl>
                       </Col>
                       <Col md={4} xs={10} className="align-items-center">
-                        <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} loading={this.state.loading} disabled={this.state.disabled}/>
+                        <AppsRow key={row.id} apps={row} revokePermission={this.revokePermission.bind(this)} loading={this.state.loading} disabled={this.state.disabled} />
                       </Col>
                     </Row>
                   </Card.Body>
