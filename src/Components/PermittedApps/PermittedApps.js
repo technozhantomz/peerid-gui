@@ -22,7 +22,7 @@ const AppsRow = ({ apps, loading, revokePermission, disabled }) => {
 
   return (
     <React.Fragment>
-      <span style={{ cursor: "pointer", pointerEvents: disabled }} className="label theme-bg text-white f-12">{revokePermissionButton}</span>
+      <span style={{ cursor: "pointer", pointerEvents: disabled }} className="label theme-bg2 text-white f-12">{revokePermissionButton}</span>
     </React.Fragment>
   );
 };
