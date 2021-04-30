@@ -61,15 +61,15 @@ class PermittedApps extends React.Component {
     });
 
     await AppService.revokeAppPermission(app.id).then(() => {
-      AppService.getPermittedApps().then((res) => {
-        for (let i = 0; i < res.length; i++) {
-          res[i].operationNames = res[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
+      AppService.getPermittedApps().then((response) => {
+        for (let i = 0; i < response.length; i++) {
+          response[i].operationNames = response[i].operations.map((op) => Object.keys(ChainTypes.operations)[op]);
         }
 
-        let sortingResponse = res.filter((apps, ind) => ind === res.findIndex(sortedApps => sortedApps.id === apps.id));
+        let gettingResponse = response.filter((apps, ind) => ind === response.findIndex(sortedApps => sortedApps.id === apps.id));
 
         this.setState({
-          apps: sortingResponse,
+          apps: gettingResponse,
           loading: null,
           disabled: null
         });
