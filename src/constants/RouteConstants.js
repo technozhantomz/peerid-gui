@@ -1,5 +1,5 @@
 export default {
-  ROOT: '/',
+  ROOT: '/dashboard',
   RESET_PASSWORD: '/reset-password',
   DASHBOARD: '/dashboard',
   CALLBACK: '/callback',
@@ -7,6 +7,7 @@ export default {
   PEERPLAYS_WALLET_LOGIN: '/peerplays',
   LOGIN: '/login',
   REGISTER: '/signup',
-  CREATE_APP: '/create-app',
-  PERMISSIONS: '/permissions'
+  CREATE_APP: '/forms/form-basic',
+  PERMISSIONS: '/permissions',
+  ACCOUNT: '/account'
 };

@@ -85,6 +85,10 @@ module.exports = {
       {
         test: /\.txt$/i,
         use: 'raw-loader',
+      },
+      {
+        test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
+        loader: 'file-loader?name=assets/fonts/[name].[ext]',
       }
     ]
   },
@@ -141,7 +145,7 @@ module.exports = {
     new Clean(),
     new webpack.ProgressPlugin((percentage, msg) => {
       process.stdout.write(chalk.green(
-        (percentage * 100).toFixed(2) + '% ' + msg + '                 \033[0G'
+        (percentage * 100).toFixed(2) + '% ' + msg + '                   \n'
       ));
     }),
     new StyleLintPlugin({

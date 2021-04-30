@@ -1,6 +1,5 @@
 import {push, replace} from 'connected-react-router';
 import {RouteConstants as Routes} from '../constants';
-import {Dispatch} from 'redux';
 
 /**
  * Handles all navigation within the application.
@@ -48,6 +47,19 @@ class NavigateActions {
   static navigateToDashboard() {
     return (dispatch) => {
       dispatch(push('/dashboard'));
+    };
+  }
+
+  /**
+   * Navigate the user to the account page.
+   *
+   * @static
+   * @returns {Dispatch}
+   * @memberof NavigateActions
+   */
+  static navigateToAccount() {
+    return (dispatch) => {
+      dispatch(push('/account'));
     };
   }
 
@@ -124,7 +136,13 @@ class NavigateActions {
    */
   static navigateToPasswordReset(token) {
     return (dispatch) => {
-      dispatch(push(Routes.RESET_PASSWORD + `/?token=${token}`));
+      dispatch(push(Routes.REGISTER + `/?token=${token}`));
+    };
+  }
+
+  static navigateAddApp() {
+    return (dispatch) => {
+      dispatch(push(Routes.CREATE_APP));
     };
   }
 

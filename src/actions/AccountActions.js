@@ -1,5 +1,4 @@
 import ActionTypes from './ActionTypes';
-import {Action} from 'redux';
 import {fromJS} from 'immutable';
 
 /**

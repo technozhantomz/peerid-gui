@@ -36,6 +36,10 @@ const AuthUtil = {
           authUrl = `${apiRoot}api/v1/auth/facebook${query}`;
           window.location.assign(authUrl);
           break;
+        case 'discord':
+          authUrl = `${apiRoot}api/v1/auth/discord${query}`;
+          window.location.assign(authUrl);
+          break;
         default:
           console.warn('Error');
           break;

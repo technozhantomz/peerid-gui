@@ -26,7 +26,7 @@ module.exports = {
   'templates': {
     'cleverLinks': false,
     'monospaceLinks': false,
-    'name': 'Streamers Edge Front End Documentation',
+    'name': 'PeerID GUI Documentation',
     'footerText': 'Peerplays Global©'
   }
 };

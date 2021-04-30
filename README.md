@@ -1,4 +1,4 @@
-# Streamers Edge
+# PeerID
 
 [![JavaScript](https://img.shields.io/badge/</>-JavaScript-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
 
@@ -47,9 +47,7 @@ The following tools are used:
 
 You must provide the following information in a `.env` file in the root of the repository for full application functionality.
 
-### General
-
-The application itself requires certain criteria to be provided such as the API endpoint for calls to the backend node server API:
+The application requires certain parameters to be provided such as the API endpoint for calls to the backend node server API:
 
 ```js
 DEV_API_ROUTE='http://localhost:3000/'
@@ -59,49 +57,8 @@ DEV_BASE_ROUTE='http://localhost:8082'
 PRODUCTION_BASE_ROUTE='http://localhost:8082'
 ```
 
-#### Testnet Connections
+The API routes mentioned above are the urls for the PeerID backend. Start PeerID backend before starting this project.
 
-Sometimes a testnet connection is required. The `.env` file should have the endpoints declared as a comma delimited string.
-ie:
+## Starting the app
 
-```js
-BLOCKCHAIN_ENDPOINTS='endpoint_1, endpoint_2'
-```
-
-> spaces are allowed as they will be removed before being set to the application configuration object.
-
-
-## Releases
-
-This repository uses a [standard version](https://www.npmjs.com/package/standard-version) to aid in version control and release management.
-
-When using standard version to cut a release, there is automated changelog modifitions made based on commit messages.
-
-If you typically use npm version to cut a new release, do this instead:
-
-```shell
-npm run release
-```
-
-To cut a release and bump the version by major, minor, or patch, use the following respectively:  
-
-```shell
-npm run release -- --release-as major
-npm run release -- --release-as minor
-npm run release -- --release-as patch
-```
-
-To cut a pre-release:
-
-```shell
-npm run pre-release // v0.2.1 to v0.2.2-rc.0
-```
-
-To cut a version for a specific version:
-
-```shell
-npm run release -- --release-as <v0.6.7>
-```
-
-> Replace the text in the <> with your desired version.
-
+Once the `.env` file has been added, use the command `npm i` to install the dependencies and then `npm run start` to start the app. The app will build and run at `http://localhost:8082`.

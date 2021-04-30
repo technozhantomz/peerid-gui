@@ -1,5 +1,4 @@
 import ActionTypes from './ActionTypes';
-import {Action} from 'redux';
 
 /**
  * Public actions related to Peerplays actions.
