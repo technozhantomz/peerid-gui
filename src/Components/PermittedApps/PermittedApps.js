@@ -110,7 +110,7 @@ class PermittedApps extends React.Component {
                           <dd className="col-sm-7">{row.appname}</dd>
 
                           <dt className="col-sm-6">Operations Permitted : </dt>
-                          <dd className="col-sm-12">{row.operationNames + ' , '} </dd>
+                          <dd className="col-sm-12">{row.operationNames.join(' , ')}</dd>
                         </dl>
                       </Col>
                       <Col md={4} xs={10} className="align-items-center">
