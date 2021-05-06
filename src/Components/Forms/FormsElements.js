@@ -126,7 +126,7 @@ class FormsElements extends React.Component {
   }
 
   validatePhone = (phone) => {
-    var regex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
+    var regex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[ ]?[0-9]{4,6}$/);
 
     return phone.match(regex);
   }
@@ -453,7 +453,7 @@ class FormsElements extends React.Component {
         }
         break;
       case 'phone':
-        var phoneregex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[0-9]{4,6}$/);
+        var phoneregex = new RegExp(/^[\]?[(]?[0-9]{3}[)]?[-\s\]?[0-9]{3}[-\s\]?[ ]?[0-9]{4,6}$/);
 
         if (phoneregex.test(this.state.phone)) {
           this.setState({
@@ -615,7 +615,7 @@ class FormsElements extends React.Component {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <h5 className="mt-5">Conctact Details</h5>
+                  <h5 className="mt-5">Contact Details</h5>
                   <hr />
                   <Row>
                     <Col md={6}>

@@ -96,7 +96,7 @@ class PermittedApps extends React.Component {
             <Col>
               <Card className='Registered-Apps'>
                 <Card.Header>
-                  <Card.Title as='h5'>Registered Apps</Card.Title>
+                  <Card.Title as='h5'>Permitted Apps</Card.Title>
                 </Card.Header>
                 {this.state.apps.map((row) => (
                   <Card.Body key={row.id} className='border-bottom'>
@@ -110,7 +110,7 @@ class PermittedApps extends React.Component {
                           <dd className="col-sm-7">{row.appname}</dd>
 
                           <dt className="col-sm-6">Operations Permitted : </dt>
-                          <dd className="col-sm-12">{row.operationNames + ' , '} </dd>
+                          <dd className="col-sm-12">{row.operationNames.join(' , ')}</dd>
                         </dl>
                       </Col>
                       <Col md={4} xs={10} className="align-items-center">
