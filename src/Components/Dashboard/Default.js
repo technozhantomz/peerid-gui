@@ -114,7 +114,7 @@ class Dashboard extends React.Component {
                     <div className="col-auto">
                       <i onClick={this.props.navigateAddApp} style={{ cursor: "pointer" }} className="feather icon-plus-square f-30 text-c-blue" />
                     </div>
-                    <div className="col">
+                    <div className="col-auto">
                       <span onClick={this.props.navigateAddApp} style={linkStyle} className="d-block text-uppercase">Add Apps</span>
                     </div>
                   </div>
