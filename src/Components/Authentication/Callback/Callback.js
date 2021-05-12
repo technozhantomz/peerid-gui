@@ -2,13 +2,13 @@
  * Callback Handler on the front end for redirects initiated from the backend.
  */
 
-import React, {Component} from 'react';
-import {NavigateActions, AccountActions, ModalActions} from '../../../actions';
-import {ProfileService, AuthService} from '../../../services';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {StorageUtil, GenUtil} from '../../../utility';
-import {ModalTypes} from '../../../constants';
+import React, { Component } from 'react';
+import { NavigateActions, AccountActions, ModalActions } from '../../../actions';
+import { ProfileService, AuthService } from '../../../services';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { StorageUtil, GenUtil } from '../../../utility';
+import { ModalTypes, RouteConstants } from '../../../constants';
 
 const translate = GenUtil.translate;
 
@@ -33,17 +33,28 @@ class Callback extends Component {
     try {
       switch (cb) {
         case 'confirm-email': {
-          const account = await AuthService.confirmEmail(pathAry[3]);
-          this.props.setAccount(account);
-          this.props.setLoggedIn(true);
-          StorageUtil.set('se-user', JSON.stringify(account));
-          this.props.navigateToDashboard();
+          await AuthService.confirmEmail(pathAry[3])
+            .then((accountResposne) => {
+              this.props.setAccount(accountResposne);
+              this.props.setLoggedIn(true);
+              StorageUtil.set('se-user', JSON.stringify(accountResposne));
+              this.props.navigateToDashboard();
+            })
+            .catch((err) => {
+              if (err.includes(404)) {
+                this.props.setModalType(ModalTypes.ERROR);
+                this.props.setModalData({ subText: 'Account already verified.', redirect: RouteConstants.DASHBOARD });
+                this.props.toggleModal();
+              } else {
+                console.log(err)
+              }
+            })
           break;
         }
 
         case 'change-email': {
-          const account = await ProfileService.changeEmail(pathAry[3]);
-          this.props.setAccount(account);
+          const emailChnageAccount = await ProfileService.changeEmail(pathAry[3]);
+          this.props.setAccount(emailChnageAccount);
           this.props.setLoggedIn(true);
           this.props.navigateToDashboard();
           break;
@@ -54,8 +65,8 @@ class Callback extends Component {
           break;
 
         case 'permissions': {
-          const response = await ProfileService.getProfile();
-          this.props.setAccount(response);
+          const profileResponse = await ProfileService.getProfile();
+          this.props.setAccount(profileResponse);
           this.props.setLoggedIn(true);
           this.props.navigateToPermissions(query);
           break;
@@ -75,7 +86,7 @@ class Callback extends Component {
           this.props.navigateToDashboard();
           break;
       }
-    }catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
@@ -93,7 +104,7 @@ class Callback extends Component {
   handleError(err) {
     const errString = err.error ? err.error : err.message ? err.message : err;
 
-    this.props.setModalData({headerText: translate('error'), subText: errString});
+    this.props.setModalData({ headerText: translate('error'), subText: errString });
     this.props.setModalType(ModalTypes.ERROR);
     this.props.toggleModal();
   }
