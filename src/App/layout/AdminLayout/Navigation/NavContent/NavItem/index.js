@@ -48,16 +48,16 @@ class NavItem extends Component {
 
     if (this.props.layout === 'horizontal') {
       mainContent = (
-        <li onClick={ this.props.onItemLeave }>{subContent}</li>
+        <li style={{marginRight:"auto"}} onClick={ this.props.onItemLeave }>{subContent}</li>
       );
     } else {
       if (this.props.windowWidth < 992) {
         mainContent = (
-          <li className={ this.props.item.classes } onClick={ this.props.onItemClick }>{subContent}</li>
+          <li style={{marginRight:"auto"}} className={ this.props.item.classes } onClick={ this.props.onItemClick }>{subContent}</li>
         );
       } else {
         mainContent = (
-          <li className={ this.props.item.classes }>{subContent}</li>
+          <li style={{marginRight:"auto"}} className={ this.props.item.classes }>{subContent}</li>
         );
       }
     }
