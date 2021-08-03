@@ -113,12 +113,12 @@ class FormsElements extends React.Component {
   }
   // Form validations
   validateForm = () => {
-    return this.state.appName && this.state.appName.length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName)
-      && this.state.description && this.state.description.length >= 5 && this.state.description.length <= 1000
-      && this.state.organizationName && this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
-      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255 && this.state.disableBtn
-      && this.state.city && this.state.city.length >= 2 && this.state.city.length <= 100
-      && this.state.provinceSelected && this.state.contact && this.state.contact.length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact)
+    return this.state.appName && this.state.appName.trim().length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName)
+      && this.state.description && this.state.description.trim().length >= 5 && this.state.description.length <= 1000
+      && this.state.organizationName && this.state.organizationName.trim().length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
+      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.trim().length >= 5 && this.state.addressLine1.length <= 255 && this.state.disableBtn
+      && this.state.city && this.state.city.trim().length >= 2 && this.state.city.length <= 100
+      && this.state.provinceSelected && this.state.contact && this.state.contact.trim().length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact)
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
       && this.state.phone && this.validatePhone(this.state.phone)
       && this.state.domains && this.validateDomains(this.state.domains)
@@ -281,14 +281,14 @@ class FormsElements extends React.Component {
 
     try {
       const app = {
-        appname: this.state.appName,
+        appname: this.state.appName.trim(),
         email: this.state.email,
-        description: this.state.description,
-        organization_name: this.state.organizationName,
+        description: this.state.description.trim(),
+        organization_name: this.state.organizationName.trim(),
         country: csc.getCountryById(this.state.countrySelected).name,
         province: csc.getStateById(this.state.provinceSelected).name,
-        city: this.state.city,
-        address_line1: this.state.addressLine1,
+        city: this.state.city.trim(),
+        address_line1: this.state.addressLine1.trim(),
         contactname: this.state.contact,
         phone: this.state.phone,
         operations: [],
