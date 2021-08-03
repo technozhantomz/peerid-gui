@@ -97,24 +97,52 @@ class AppPermission extends Component {
             }
           }
 
-          const Ops = res.operations.map((opId) => Object.keys(ChainTypes.operations)[opId]);
-          this.setState({
-            appId,
-            appName: res.appname,
-            description: res.description,
-            organizationName: res.organization_name,
-            country: res.country,
-            addressLine1: res.address_line1,
-            addressLine2: res.address_line2,
-            city: res.city,
-            province: res.province,
-            postalCode: res.postal_code,
-            email: res.email,
-            domains: res.domains,
-            operations: Ops,
-            operationNums: res.operations,
-            redirect_uri: redirectUri,
-            state
+          AppService.getPermittedApps().then((res) => {
+            let appExists = res.find((app) => app.id === appId);
+
+            if(appExists) {
+              AppService.joinApp(this.state.appId, this.state.redirect_uri)
+              .then((code) => {
+                let redirect = `${this.state.redirect_uri}?code=${code}`;
+
+                if (this.state.state) {
+                  redirect = redirect + '&state=' + this.state.state;
+                }
+
+                window.open(redirect, '_self');
+              })
+              .catch((err) => {
+                console.error(err);
+                this.setState({
+                  err: err.statusText
+                });
+              });
+            } else {
+              const Ops = res.operations.map((opId) => Object.keys(ChainTypes.operations)[opId]);
+              this.setState({
+                appId,
+                appName: res.appname,
+                description: res.description,
+                organizationName: res.organization_name,
+                country: res.country,
+                addressLine1: res.address_line1,
+                addressLine2: res.address_line2,
+                city: res.city,
+                province: res.province,
+                postalCode: res.postal_code,
+                email: res.email,
+                domains: res.domains,
+                operations: Ops,
+                operationNums: res.operations,
+                redirect_uri: redirectUri,
+                state
+              });
+            }
+          }).catch((err) => {
+            console.error(err);
+            this.setState({
+              err: "Error while fetching the apps"
+            })
           });
         })
           .catch((e) => {
@@ -135,23 +163,22 @@ class AppPermission extends Component {
 
     this.props.ShowLoader();
 
-    await AppService.joinApp(this.state.appId, this.state.redirect_uri)
-      .then((code) => {
-        let redirect = `${this.state.redirect_uri}?code=${code}`;
-        if (this.state.state) {
-          redirect = redirect + '&state=' + this.state.state;
-        }
+    try {
+      let code = await AppService.joinApp(this.state.appId, this.state.redirect_uri);
+      let redirect = `${this.state.redirect_uri}?code=${code}`;
+      if (this.state.state) {
+        redirect = redirect + '&state=' + this.state.state;
+      }
 
-        window.open(redirect, '_self');
-      })
-      .catch((err) => {
-        this.props.HideLoader();
+      window.open(redirect, '_self');
+    } catch(err) {
+      this.props.HideLoader();
 
-        console.error(err);
-        this.setState({
-          err: err.statusText,
-        });
-      })
+      console.error(err);
+      this.setState({
+        err: err.statusText,
+      });
+    }
   }
 
   render() {
