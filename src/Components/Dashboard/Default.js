@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
   }
 
   deleteAppSuccessAlert() {
-    toast.success('App Deleted Successfully!')
+    toast.success('A confirmation email has been sent to your email. Please check your email and confirm the deletion.')
   }
 
   deleteAppErrorAlert() {
@@ -66,13 +66,8 @@ class Dashboard extends React.Component {
   }
 
   deleteApp(app) {
-    AppService.deleteApp(app.id).then(() => {
-      AppService.getApps().then((res) => {
-        this.setState({
-          data: res
-        });
-        this.deleteAppSuccessAlert();
-      });
+    AppService.sendDeleteAppEmail(app.id).then(() => {
+      this.deleteAppSuccessAlert();
     }).catch((err) => {
       console.error(err);
       this.deleteAppErrorAlert();

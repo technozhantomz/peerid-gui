@@ -84,11 +84,11 @@ class PrivateAppService {
   /**
    * Deletes an app.
    *
-   * @param {string} appId - Id of the app.
+   * @param {string} token - token to delete app.
    * @returns {Promise} A promise that resolves to an app object.
    */
-  static deleteApp(appId) {
-    const query = `${apiRoot}api/v1/app?id=${appId}`;
+  static deleteApp(token) {
+    const query = `${apiRoot}api/v1/app?token=${token}`;
     return new Promise(async(resolve, reject) => {
       try{
         const response = await ApiHandler.delete(query);
@@ -197,6 +197,38 @@ class PrivateAppService {
       }
     });
   }
+
+  /**
+   * Send delete app email.
+   *
+   * @static
+   * @param {number} appId - App ID of the app to unjoin.
+   * @returns {Promise} - A promise that indicates success or failure.
+   * @memberof PrivateAppService
+   */
+   static sendDeleteAppEmail(appId) {
+    let response;
+    const url = `${apiRoot}api/v1/app/delete`;
+
+    const body = {
+      app_id: appId
+    };
+
+    return new Promise(async(resolve, reject) => {
+      const headers = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      };
+
+      try {
+        response = await ApiHandler.post(url, querystring.stringify(body), headers);
+        return resolve(response.data.result);
+      } catch (err) {
+        return reject(err.response);
+      }
+    });
+  }
 }
 
 /**
@@ -230,12 +262,16 @@ class AppService {
     return GenUtil.dummyDataWrapper(PrivateAppService.joinApp(appId, redirectUri));
   }
 
-  static deleteApp(appId) {
-    return GenUtil.dummyDataWrapper(PrivateAppService.deleteApp(appId));
+  static deleteApp(token) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.deleteApp(token));
   }
 
   static revokeAppPermission(appId) {
     return GenUtil.dummyDataWrapper(PrivateAppService.revokeAppPermission(appId));
+  }
+
+  static sendDeleteAppEmail(appId) {
+    return GenUtil.dummyDataWrapper(PrivateAppService.sendDeleteAppEmail(appId));
   }
 }
 

@@ -32,7 +32,8 @@ class AppPermission extends Component {
     operationNums: [],
     state: '',
     redirect_uri: '',
-    err: ''
+    err: '',
+    isRedirecting: false
   };
 
   componentDidMount() {
@@ -97,17 +98,22 @@ class AppPermission extends Component {
             }
           }
 
-          AppService.getPermittedApps().then((res) => {
-            let appExists = res.find((app) => app.id === appId);
+          AppService.getPermittedApps().then((resPermitted) => {
+            let appExists = resPermitted.find((app) => app.id == appId);
 
             if(appExists) {
-              AppService.joinApp(this.state.appId, this.state.redirect_uri)
+              AppService.joinApp(appId, redirectUri)
               .then((code) => {
-                let redirect = `${this.state.redirect_uri}?code=${code}`;
+                let redirect = `${redirectUri}?code=${code}`;
 
-                if (this.state.state) {
-                  redirect = redirect + '&state=' + this.state.state;
+                if (state) {
+                  redirect = redirect + '&state=' + state;
                 }
+
+                this.setState({
+                  isRedirecting: true,
+                  redirect_uri: redirectUri
+                });
 
                 window.open(redirect, '_self');
               })
@@ -170,6 +176,7 @@ class AppPermission extends Component {
         redirect = redirect + '&state=' + this.state.state;
       }
 
+      this.setState({isRedirecting: true});
       window.open(redirect, '_self');
     } catch(err) {
       this.props.HideLoader();
@@ -188,7 +195,7 @@ class AppPermission extends Component {
       <Aux>
         <Row>
           <Col md={12}>
-            <Card className='card'>
+            {this.state.isRedirecting ? <div>Redirecting to {this.state.redirect_uri}</div> : <Card className='card'>
               <Card.Body>
                 <div className="row align-items-center justify-content-center">
                   <div className="card-body text-center">
@@ -231,7 +238,7 @@ class AppPermission extends Component {
                   </div>
                 </div>
               </Card.Body>
-            </Card>
+            </Card>}
           </Col>
         </Row>
       </Aux>

@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import { NavigateActions, AccountActions, ModalActions } from '../../../actions';
-import { ProfileService, AuthService } from '../../../services';
+import { ProfileService, AuthService, AppService } from '../../../services';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StorageUtil, GenUtil } from '../../../utility';
@@ -19,7 +19,8 @@ class Callback extends Component {
   }
 
   state = {
-    error: ''
+    error: '',
+    message: ''
   };
 
   // Handle callback based on type passed
@@ -33,6 +34,9 @@ class Callback extends Component {
     try {
       switch (cb) {
         case 'confirm-email': {
+          this.setState({
+            message: 'Verifying your email. Please hold on! Once the process is complete, you will be redirected to the dashboard.'
+          });
           await AuthService.confirmEmail(pathAry[3])
             .then((accountResposne) => {
               this.props.setAccount(accountResposne);
@@ -79,6 +83,17 @@ class Callback extends Component {
           this.props.navigateToDashboard();
           break;
 
+        case 'app-delete':
+          this.setState({
+            message: 'Deleting the app. Please hold on! Once the process is complete, you will be redirected to the dashboard or the login page.'
+          });
+          const deleteResult = await AppService.deleteApp(pathAry[3]);
+
+          if(deleteResult) {
+            setTimeout(() =>this.props.navigateToDashboard(), 5000);
+          }
+          break;
+
         default:
           const response = await ProfileService.getProfile();
           this.props.setAccount(response);
@@ -88,6 +103,7 @@ class Callback extends Component {
       }
     } catch (e) {
       console.log(e);
+      this.handleError(e);
     }
   };
 
@@ -95,7 +111,8 @@ class Callback extends Component {
     return (
       <>
         <div className='callback-page'>
-          <div className='callback-page__content'>{this.state.error}</div>
+          {this.state.message && <div className='callback-page__content'>{this.state.message}</div>}
+          {this.state.error && <div className='callback-page__content'>{this.state.error}</div>}
         </div>
       </>
     );
