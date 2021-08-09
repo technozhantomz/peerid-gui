@@ -2,13 +2,14 @@ const paths = require('./paths');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const Clean = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const chalk = require('chalk');
 const path = require('path');
 const getClientEnvironment = require('./env');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -25,12 +26,6 @@ module.exports = {
   entry: [paths.appIndexJs],
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        include: paths.appSrc
-      },
       {
         test: /\.scss$/,
         use: [
@@ -72,23 +67,21 @@ module.exports = {
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'static/images/[contenthash].[ext]'
-            }
-          },
-          'image-webpack-loader'
-        ]
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[contenthash].[ext]'
+        }
       },
       {
         test: /\.txt$/i,
-        use: 'raw-loader',
+        type: 'asset/source'
       },
       {
         test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-        loader: 'file-loader?name=assets/fonts/[name].[ext]',
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name].[ext]'
+        }
       }
     ]
   },
@@ -113,9 +106,20 @@ module.exports = {
           chunks: 'all',
           enforce: true,
         },
-      },
-      chunks: 'all'
-    }
+      }
+    },
+    minimizer: [
+      new CssMinimizerPlugin({
+        minimizerOptions: [
+          {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+        ],
+        minify: [
+          CssMinimizerPlugin.cssnanoMinify,
+        ],
+      }),
+    ],
   },
   plugins: [
     // Makes some environment variables available in index.html.
@@ -123,26 +127,29 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(env.stringified),
     // Generates an `index.html` file with the <script> injected.
-  new HtmlWebpackPlugin({
-    inject: true,
-    template: paths.appHtml,
-    minify: {
-      removeComments: devMode ? false : true,
-      collapseWhitespace: devMode ? false : true,
-      removeRedundantAttributes: devMode ? false : true,
-      useShortDoctype: devMode ? false : true,
-      removeEmptyAttributes: devMode ? false : true,
-      removeStyleLinkTypeAttributes: devMode ? false : true,
-      keepClosingSlash: devMode ? false : true,
-      minifyJS: devMode ? false : true,
-      minifyCSS: devMode ? false : true,
-      minifyURLs: devMode ? false : true
-    }
-  }),
-    new Clean(),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+      minify: {
+        removeComments: devMode ? false : true,
+        collapseWhitespace: devMode ? false : true,
+        removeRedundantAttributes: devMode ? false : true,
+        useShortDoctype: devMode ? false : true,
+        removeEmptyAttributes: devMode ? false : true,
+        removeStyleLinkTypeAttributes: devMode ? false : true,
+        keepClosingSlash: devMode ? false : true,
+        minifyJS: devMode ? false : true,
+        minifyCSS: devMode ? false : true,
+        minifyURLs: devMode ? false : true
+      }
+    }),
+    new ESLintPlugin({
+      extensions: [`js`, `jsx`],
+      include: [paths.appSrc]
+    }),
+    new CleanWebpackPlugin(),
     new webpack.ProgressPlugin((percentage, msg) => {
       process.stdout.write(chalk.green(
         (percentage * 100).toFixed(2) + '% ' + msg + '                   \n'
@@ -159,12 +166,5 @@ module.exports = {
       filename: devMode ? ' [name].css' : '[name].[hash].css',
       chunkFilename:devMode ? '[id].css' : '[id].[hash].css'
     }),
-    new OptimizeCssAssetsPlugin({
-      cssProcessor: require('cssnano'),
-      cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
-      },
-      canPrint: true
-    })
   ]
 };

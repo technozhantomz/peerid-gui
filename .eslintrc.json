@@ -4,12 +4,14 @@
     "react",
     "jsdoc"
   ],
+  "parser": "@babel/eslint-parser",
   "extends": [
     "react-app"
   ],
   "env": {
     "browser": true
   },
+  "ignorePatterns": "**/dist/*.min.js",
   "rules": {
     // "jsx-quotes": [2, "prefer-single"],
     // "react/jsx-curly-spacing": [2, "always"],
