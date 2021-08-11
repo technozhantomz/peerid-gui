@@ -35,6 +35,7 @@ class FormsElements extends React.Component {
     domains: '',
     operations: [],
     operationsSelected: [],
+    signingRequestRequired: false,
     btnDisable: true,
     resetToDefault: false,
     // validations Errors
@@ -88,7 +89,6 @@ class FormsElements extends React.Component {
         });
 
         let provinceId = csc.getStatesOfCountry(countryId).find((p) => p.name === data.province).id;
-        console.log(data);
 
         this.setState({
           appId: data.id,
@@ -229,6 +229,11 @@ class FormsElements extends React.Component {
     }, () => this.validate('domains'));
   };
 
+  handleSigningRequest = (e) => {
+    this.setState({
+      signingRequestRequired: e.target.checked
+    });
+  }
 
   selectCountry = (e) => {
     this.setState({
@@ -292,7 +297,8 @@ class FormsElements extends React.Component {
         contactname: this.state.contact,
         phone: this.state.phone,
         operations: [],
-        domains: []
+        domains: [],
+        signing_request_required: this.state.signingRequestRequired
       };
 
       app.domains.push(...this.state.domains.split(','));
@@ -692,6 +698,19 @@ class FormsElements extends React.Component {
                         />
                         <h6 style={{ color: "red" }} >{this.state.domainsErr}</h6>
                         <h6 style={{ color: "red" }} >{this.state.errordomains}</h6>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group margin='normal'>
+                      <Form.Check 
+                        type="checkbox"
+                        id="signingRequestRequired"
+                        label="Send signing request to users for each transaction"
+                        value={this.state.signingRequestRequired}
+                        onChange={this.handleSigningRequest}
+                      />
                       </Form.Group>
                     </Col>
                   </Row>
