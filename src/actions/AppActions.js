@@ -108,6 +108,7 @@ class AppActions {
   static login(account, next) {
     return (dispatch) => {
       dispatch(AppPrivateActions.processLogin(account)).then(() => {
+        dispatch(AppActions.setLoginError({login:''}));
         if(!next) {
           dispatch(NavigateActions.navigateToDashboard());
         } else {
