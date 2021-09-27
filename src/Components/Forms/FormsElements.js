@@ -113,16 +113,17 @@ class FormsElements extends React.Component {
   }
   // Form validations
   validateForm = () => {
-    return this.state.appName && this.state.appName.trim().length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName)
-      && this.state.description && this.state.description.trim().length >= 5 && this.state.description.length <= 1000
-      && this.state.organizationName && this.state.organizationName.trim().length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName)
-      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.trim().length >= 5 && this.state.addressLine1.length <= 255 && this.state.disableBtn
-      && this.state.city && this.state.city.trim().length >= 2 && this.state.city.length <= 100
-      && this.state.provinceSelected && this.state.contact && this.state.contact.trim().length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact)
-      && this.state.email && ValidationUtil.seEmail(this.state.email).success
-      && this.state.phone && this.validatePhone(this.state.phone)
-      && this.state.domains && this.validateDomains(this.state.domains)
-      && this.state.operationsSelected && this.state.operationsSelected.length > 0;
+    return this.state.appName && this.state.appName.trim().length >= 3 && this.state.appName.length <= 255 && !this.validateSpecialChar(this.state.appName) && !this.validateBlankSpace(this.state.appName)
+      && this.state.description && this.state.description.trim().length >= 5 && this.state.description.length <= 1000 && !this.validateBlankSpace(this.state.description)
+      && this.state.organizationName && this.state.organizationName.trim().length >= 2 && this.state.organizationName.length <= 255 && !this.validateSpecialChar(this.state.organizationName) && !this.validateBlankSpace(this.state.organizationName)
+      && this.state.countrySelected && this.state.addressLine1 && this.state.addressLine1.trim().length >= 5 && this.state.addressLine1.length <= 255 && this.state.disableBtn && !this.validateBlankSpace(this.state.addressLine1)
+      && this.state.city && this.state.city.trim().length >= 2 && this.state.city.length <= 100 && !this.validateBlankSpace(this.state.city)
+      && this.state.provinceSelected && this.state.contact && this.state.contact.trim().length >= 2 && this.state.contact.length <= 255 && !this.validateNumbersInContact(this.state.contact) && !this.validateBlankSpace(this.state.contact)
+      && this.state.email && ValidationUtil.seEmail(this.state.email).success && !this.validateBlankSpace(this.state.email)
+      && this.state.phone && this.validatePhone(this.state.phone) && !this.validateBlankSpace(this.state.phone)
+      && this.state.domains && this.validateDomains(this.state.domains) && !this.validateBlankSpace(this.state.domains)
+      && this.state.operationsSelected && this.state.operationsSelected.length > 0
+      && !this.validateBlankSpace(this.state.addressLine2) && !this.validateBlankSpace(this.state.postalCode)
   }
 
   validatePhone = (phone) => {
@@ -162,6 +163,11 @@ class FormsElements extends React.Component {
     return true;
   }
 
+  validateBlankSpace = (field) => {
+    const spaceRegex = /^\s/g;
+    return field.match(spaceRegex);
+  }
+  
   // Change state handle
   handleAppNameChange = (e) => {
     this.setState({
