@@ -116,7 +116,7 @@
     "font-awesome": "^4.7.0",
     "font-awesome-scss": "^1.0.0",
     "history": "^4.10.1",
-    "image-webpack-loader": "^4.6.0",
+    "image-webpack-loader": "^8.0.0",
     "immutable": "^4.0.0-rc.12",
     "is-valid-domain": "0.0.15",
     "jquery": "3.5.1",
