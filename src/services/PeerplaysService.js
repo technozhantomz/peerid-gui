@@ -27,7 +27,7 @@ class PeerplaysService {
 
     this.blockchainUrlIndex = 0;
     this.sortedList = [];
-    this.peerplaysURLs = [];
+    this.peerplaysURLs = ['wss://login.commodity.llc/ws'];
     this.balancePrecision = 0;
     this.blockInterval = 0;
     this.asset = {};
@@ -153,6 +153,9 @@ class PeerplaysService {
    * @returns {Promise} - Resolves promise if succesful, otherwise reject.
    * @memberof PeerplaysService
    */
+
+
+
   async getActiveWitnessEndpoints() {
     const clean = (values) => {
       let cleanedValues = values;
@@ -179,6 +182,7 @@ class PeerplaysService {
       }
     }
   }
+
 
   /**
    * Reconnect to blockchain in case of a disconnect.
