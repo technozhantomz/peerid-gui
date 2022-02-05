@@ -254,7 +254,7 @@ class PrivateAuthService {
 }
 
 /**
- * Handles all server calls related to PeerID accounts.
+ * Handles all server calls related to commodityIDENTINTY accounts.
  *
  * @class AuthService
  */

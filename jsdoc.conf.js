@@ -26,7 +26,7 @@ module.exports = {
   'templates': {
     'cleverLinks': false,
     'monospaceLinks': false,
-    'name': 'PeerID GUI Documentation',
-    'footerText': 'Peerplays Global©'
+    'name': 'commodityLLC',
+    'footerText': 'commodityLLC Global©'
   }
 };

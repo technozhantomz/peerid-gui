@@ -62,7 +62,7 @@ export const translationObject = {
       welcome: 'Hello, welcome again!',
       enterUsername: 'Enter commodity.llc Username or Email',
       enterPassword: 'Enter your commodity.llc Password',
-      dontHaveAccount: 'Don\'t have a PeerID account?',
+      dontHaveAccount: 'Don\'t have a commodityIDENTINTY account?',
       register: 'Register',
       forgotPass: 'Forgot your password?',
       orLoginWith: 'or Login using bellow options',
@@ -81,7 +81,7 @@ export const translationObject = {
       enterUsername: 'Enter your username',
       enterPassword: 'Enter your password',
       confirmPassword: 'Confirm your password',
-      alreadyHaveAccount: 'Already have a PeerID account?',
+      alreadyHaveAccount: 'Already have a commodityIDENTINTY account?',
       login: 'commodity.llc middleware',
       passwordStrength: {
         veryWeak: 'Very Weak',
@@ -103,8 +103,8 @@ export const translationObject = {
     },
     forgotPassword: {
       header: 'Forgot Your Password?',
-      subHeader: 'Enter your email to reset your PeerID password.',
-      enterEmail: 'Enter your PeerID Email',
+      subHeader: 'Enter your email to reset your commodityIDENTINTY password.',
+      enterEmail: 'Enter your commodityIDENTINTY Email',
       resultText: {
         success:'If an account exists that matches the email provided, an email will be sent to reset your password.',
         cooldown:'You have attempted to reset your password too many times, please wait before trying again.',
@@ -137,7 +137,7 @@ export const translationObject = {
       information: {
         title: 'Information',
         content: 'The username you enter is powered by the Peerplays blockchain. If you already have a username at Peerplays, ' +
-        'please enter it here to link your PeerID profile to it. If you don\'t have one, simply proceed to ',
+        'please enter it here to link your commodityIDENTINTY profile to it. If you don\'t have one, simply proceed to ',
         register: 'register your account'
       },
       passwordLengthError: 'Password should be at least 12 characters long'

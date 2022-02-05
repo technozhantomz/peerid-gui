@@ -24,7 +24,7 @@ const Config = {
    *
    * @type {boolean}
    */
-  useDummy: false,
+  useDummy: true,
   /**
    * The current version of the app pulled from package.json.
    *
@@ -52,7 +52,7 @@ const Config = {
    * @type {boolean}
    * @memberof Config
    */
-  requireAuthentication: true,
+  requireAuthentication: false,
   /**
    * List of platforms supported for OAuth.
    *
