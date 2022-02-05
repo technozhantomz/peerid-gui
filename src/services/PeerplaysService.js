@@ -12,7 +12,7 @@ import log from 'loglevel';
 import BlockchainUtils from '../utility/PeerplaysUtil/BlockchainUtils';
 
 const MAX_RECURSION_ATTEMPTS = 10;
-const endpointsGist = 'https://api.github.com/gists/024a306a5dc41fd56bd8656c96d73fd0';
+const endpointsGist = 'https://api.github.com/gists/296605dee8b99f99bfde404f4274df74';
 
 /**
  * Contains functions required to init, connect, reconnect, and obtain data from the Peerplays blockchain.
