@@ -24,7 +24,7 @@ const Config = {
    *
    * @type {boolean}
    */
-  useDummy: true,
+  useDummy: false,
   /**
    * The current version of the app pulled from package.json.
    *
