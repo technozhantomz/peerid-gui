@@ -124,7 +124,7 @@
     "loglevel": "^1.7.1",
     "moment": "^2.24.0",
     "nvd3": "^1.8.6",
-    "nftjs-lib": "git+https://github.com/technozhantomz/nftjs-lib.git",
+    "peerplaysjs-lib": "git+https://github.com/technozhantomz/peerplaysjs-lib.git",
     "pnp-webpack-plugin": "^1.6.4",
     "psl": "^1.8.0",
     "query-string": "^6.14.1",
