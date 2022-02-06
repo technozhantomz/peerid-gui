@@ -1,6 +1,6 @@
 import {version} from '../../package.json';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
 const {
   DEV_API_ROUTE,
   PRODUCTION_API_ROUTE,
