@@ -1,12 +1,12 @@
 import {version} from '../../package.json';
 
-const isDev = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 const {
   DEV_API_ROUTE,
   PRODUCTION_API_ROUTE,
   DEV_BASE_ROUTE,
   PRODUCTION_BASE_ROUTE,
-  BLOCKCHAIN_USE_MAINNET,
+  BLOCKCHAIN_USE_TESTNET,
   BLOCKCHAIN_ENDPOINTS
 } = process.env;
 
@@ -45,7 +45,13 @@ const Config = {
    * @memberof Config
    */
   prodApiRoute: PRODUCTION_API_ROUTE,
-  //apiRoute: isDev ? DEV_API_ROUTE : PRODUCTION_API_ROUTE,
+  /**
+   * 
+   *
+   * @type {string}
+   * @memberof Config
+   */
+  apiRoute: isDev ? DEV_API_ROUTE : PRODUCTION_API_ROUTE,
   /**
    * Toggles the requirement for authenticated routes needing a logged in user.
    *
@@ -71,14 +77,15 @@ const Config = {
   /**
    * Specifies whether testnet or mainnet endpoints are used for the Peerplays connection.
    */
-  usePeerplaysMainnet: BLOCKCHAIN_USE_MAINNET === 'true',
+  usePeerplaysMainnet: BLOCKCHAIN_USE_TESTNET === 'false',
 
   /**
    * Endpoints for elizabeth testnet. Used for Peerplays Global Login.
    *
    * @type {string[]}
-   * @memberof Config
+   * @memberof Config aliceEndpoints
    */
+   //aliceEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
   elizabethEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
 
   /**
