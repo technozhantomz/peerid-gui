@@ -50,11 +50,19 @@ You must provide the following information in a `.env` file in the root of the r
 The application requires certain parameters to be provided such as the API endpoint for calls to the backend node server API:
 
 ```js
-DEV_API_ROUTE='http://localhost:3000/'
-PRODUCTION_API_ROUTE='http://localhost:3000/'
 
-DEV_BASE_ROUTE='http://localhost:8082'
-PRODUCTION_BASE_ROUTE='http://localhost:8082'
+DEV_API_ROUTE='https://api.commodity.llc/'
+PRODUCTION_API_ROUTE='https://api.commodity.llc/'
+
+DEV_BASE_ROUTE='https://register.commodity.llc/api'
+PRODUCTION_BASE_ROUTE='https://register.commodity.llc/api'
+
+
+BLOCKCHAIN_ENDPOINTS='wss://login.commodity.llc/api'
+
+PEERPLAYS_USD_ASSET_ID='1.3.0'
+PEERPLAYS_ESCROW_ACCOUNT_ID='1.2.18'
+PEERPLAYS_PAYMENT_ACCOUNT_ID='1.2.9'
 ```
 
 The API routes mentioned above are the urls for the PeerID backend. Start PeerID backend before starting this project.
