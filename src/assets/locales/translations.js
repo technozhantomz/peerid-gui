@@ -60,8 +60,8 @@ export const translationObject = {
     login: {
       header: 'Login',
       welcome: 'Hello, welcome again!',
-      enterUsername: 'Enter commodity.llc Username or Email',
-      enterPassword: 'Enter your commodity.llc Password',
+      enterUsername: 'Enter commodityLLC Username or Email',
+      enterPassword: 'Enter your commodityLLC Password',
       dontHaveAccount: 'Don\'t have a commodityIDENTINTY account?',
       register: 'Register',
       forgotPass: 'Forgot your password?',
@@ -82,7 +82,7 @@ export const translationObject = {
       enterPassword: 'Enter your password',
       confirmPassword: 'Confirm your password',
       alreadyHaveAccount: 'Already have a commodityIDENTINTY account?',
-      login: 'commodity.llc middleware',
+      login: 'commodityLLC middleware',
       passwordStrength: {
         veryWeak: 'Very Weak',
         weak: 'Weak',
@@ -126,10 +126,10 @@ export const translationObject = {
       }
     },
     peerplays: {
-      login: 'Login via commodity.LLC',
+      login: 'Login via commodityLLC',
       enterUsername: 'Enter your username',
       enterPassword: 'Enter your password',
-      dontHaveAccount: 'Don\'t have a Commodity.LLC account?',
+      dontHaveAccount: 'Don\'t have a CommodityLLC account?',
       register: 'Register',
       authenticate: 'Authenticate Your Peerplays Account',
       username: 'Username',
