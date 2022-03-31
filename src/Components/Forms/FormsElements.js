@@ -122,7 +122,7 @@ class FormsElements extends React.Component {
       && this.state.email && ValidationUtil.seEmail(this.state.email).success
       && this.state.phone && this.validatePhone(this.state.phone)
       && this.state.domains && this.validateDomains(this.state.domains)
-      && this.state.operationsSelected && this.state.operationsSelected.length > 0;
+      && this.state.operationsSelected && this.state.operationsSelected.length > 0
   }
 
   validatePhone = (phone) => {
@@ -161,7 +161,7 @@ class FormsElements extends React.Component {
     }
     return true;
   }
-
+ 
   // Change state handle
   handleAppNameChange = (e) => {
     this.setState({
@@ -359,58 +359,60 @@ class FormsElements extends React.Component {
   validate = (type) => {
     switch (type) {
       case 'appName':
-        if ((this.state.appName.length >= 3 && this.state.appName.length <= 255) && !(this.validateSpecialChar(this.state.appName))) {
+        if ((this.state.appName.trim().length >= 3 && this.state.appName.length <= 255) && !(this.validateSpecialChar(this.state.appName))) {
           this.setState({
             appErr: '',
+            errorappname: ''
           })
         } else {
           this.setState({
-            appErr: '* Should be between 3 and 255 characters & special characters are not allowed.',
+            appErr: <div>* Should be between 3 and 255 characters. <br/>* Special characters are not allowed. <br/> * Only spaces are not allowed.</div>,
+            errorappname: ''
           })
         }
         break;
       case 'description':
-        if (this.state.description.length >= 5 && this.state.description.length <= 1000) {
+        if (this.state.description.trim().length >= 5 && this.state.description.length <= 1000) {
           this.setState({
             descriptionErr: '',
           })
         } else {
           this.setState({
-            descriptionErr: '* Should be between 5 and 1000 characters',
+            descriptionErr: <div>* Should be between 5 and 1000 characters. <br/> * Only spaces are not allowed.</div>,
           })
         }
         break;
       case 'organizationName':
-        if (this.state.organizationName.length >= 2 && this.state.organizationName.length <= 255 && !(this.validateSpecialChar(this.state.organizationName))) {
+        if (this.state.organizationName.trim().length >= 2 && this.state.organizationName.length <= 255 && !(this.validateSpecialChar(this.state.organizationName))) {
           this.setState({
             organizationErr: '',
           })
         } else {
           this.setState({
-            organizationErr: '* Should be between 2 and 255 characters & special characters are not allowed.',
+            organizationErr: <div>* Should be between 2 and 255 characters. <br/>* Special characters are not allowed.  <br/>* Only spaces are not allowed.</div>,
           })
         }
         break;
       case 'addressLine1':
-        if (this.state.addressLine1.length >= 5 && this.state.addressLine1.length <= 255) {
+        if (this.state.addressLine1.trim().length >= 5 && this.state.addressLine1.length <= 255) {
           this.setState({
             addLine1Err: '',
           })
         } else {
           this.setState({
-            addLine1Err: '* Should be between 5 and 255 characters',
+            addLine1Err: <div>* Should be between 5 and 255 characters. <br/>* Only spaces are not allowed. </div>,
           })
         }
         break;
       case 'addressLine2':
-        if (this.state.addressLine2.length >= 5 && this.state.addressLine2.length <= 255) {
+        if (this.state.addressLine2.trim().length >= 5 && this.state.addressLine2.length <= 255) {
           this.setState({
             addLine2Err: '',
             disableBtn: true
           })
         } else {
           this.setState({
-            addLine2Err: '* Should be between 5 and 255 characters',
+            addLine2Err: <div>* Should be between 5 and 255 characters. <br/>* Only spaces are not allowed. </div>,
             disableBtn: false
           })
         }
@@ -422,26 +424,26 @@ class FormsElements extends React.Component {
         }
         break;
       case 'city':
-        if (this.state.city.length >= 2 && this.state.city.length <= 100) {
+        if (this.state.city.trim().length >= 2 && this.state.city.length <= 100) {
           this.setState({
             cityErr: '',
           })
         } else {
           this.setState({
-            cityErr: '* Should be between 2 and 100 characters',
+            cityErr: <div>* Should be between 2 and 100 characters. <br/>* Only spaces are not allowed. </div>,
           })
         }
         break;
       case 'contact':
         var contactregex = /[0-9]/g
 
-        if (this.state.contact.length >= 2 && this.state.contact.length <= 255 && !contactregex.test(this.state.contact)) {
+        if (this.state.contact.trim().length >= 2 && this.state.contact.length <= 255 && !contactregex.test(this.state.contact)) {
           this.setState({
             contactErr: '',
           })
         } else {
           this.setState({
-            contactErr: '* Should be between 2 and 255 characters & numbers not allowed.',
+            contactErr: <div>* Should be between 2 and 255 characters and numbers not allowed. <br/>* Only spaces are not allowed. </div>,
           })
         }
         break;
@@ -478,7 +480,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            domainsErr: '* Should be valid domains separated by commas',
+            domainsErr: <div>* Should be valid domains separated by commas <br/>* Only spaces are not allowed.</div>,
           })
         }
         break;

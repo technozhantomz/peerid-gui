@@ -115,7 +115,7 @@ class ForgotPassword extends Component {
                   <i className="feather icon-unlock auth-icon" />
                 </div>
                 <h3 className="mb-4" style={{ display: this.state.display }}>Forgot Your Password?</h3>
-                <h6 className="mb-4" style={{ display: this.state.display }}>Enter your email to reset your commodityLLC password.</h6>
+                <h6 className="mb-4" style={{ display: this.state.display }}>Enter your email to reset your PeerID password.</h6>
 
                 <div className="input-group mb-3">
                   <input className="form-control"

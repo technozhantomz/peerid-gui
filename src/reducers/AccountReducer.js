@@ -40,7 +40,8 @@ export default (state = initialState, action) => {
 
     case ActionTypes.ACCOUNT_SET_ACCOUNT: {
       return state.merge({
-        currentAccount: action.payload.account
+        currentAccount: action.payload.account,
+        loginErrorText: ''
       });
     }
 

@@ -50,7 +50,6 @@ You must provide the following information in a `.env` file in the root of the r
 The application requires certain parameters to be provided such as the API endpoint for calls to the backend node server API:
 
 ```js
-
 DEV_API_ROUTE='https://api.commodity.llc/'
 PRODUCTION_API_ROUTE='https://api.commodity.llc/'
 

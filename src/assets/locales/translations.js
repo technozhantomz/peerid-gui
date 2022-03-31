@@ -60,12 +60,12 @@ export const translationObject = {
     login: {
       header: 'Login',
       welcome: 'Hello, welcome again!',
-      enterUsername: 'Enter commodityLLC Username or Email',
-      enterPassword: 'Enter your commodityLLC Password',
-      dontHaveAccount: 'Don\'t have a commodityIDENTINTY account?',
+      enterUsername: 'Enter your PeerID Username or Email',
+      enterPassword: 'Enter your PeerID Password',
+      dontHaveAccount: 'Don\'t have a PeerID account?',
       register: 'Register',
       forgotPass: 'Forgot your password?',
-      orLoginWith: 'or Login using bellow options',
+      orLoginWith: 'or Login using our Sign In Partners',
       invalidPassword: 'The password you\'ve entered is incorrect',
       error: 'Login Error',
       verify: 'Please verify your email'
@@ -81,8 +81,8 @@ export const translationObject = {
       enterUsername: 'Enter your username',
       enterPassword: 'Enter your password',
       confirmPassword: 'Confirm your password',
-      alreadyHaveAccount: 'Already have a commodityIDENTINTY account?',
-      login: 'commodityLLC middleware',
+      alreadyHaveAccount: 'Already have a PeerID account?',
+      login: 'Login',
       passwordStrength: {
         veryWeak: 'Very Weak',
         weak: 'Weak',
@@ -103,8 +103,8 @@ export const translationObject = {
     },
     forgotPassword: {
       header: 'Forgot Your Password?',
-      subHeader: 'Enter your email to reset your commodityIDENTINTY password.',
-      enterEmail: 'Enter your commodityIDENTINTY Email',
+      subHeader: 'Enter your email to reset your PeerID password.',
+      enterEmail: 'Enter your PeerID Email',
       resultText: {
         success:'If an account exists that matches the email provided, an email will be sent to reset your password.',
         cooldown:'You have attempted to reset your password too many times, please wait before trying again.',
@@ -126,10 +126,10 @@ export const translationObject = {
       }
     },
     peerplays: {
-      login: 'Login via commodityLLC',
+      login: 'Login with Peerplays Global',
       enterUsername: 'Enter your username',
       enterPassword: 'Enter your password',
-      dontHaveAccount: 'Don\'t have a CommodityLLC account?',
+      dontHaveAccount: 'Don\'t have a Peerplays Global account?',
       register: 'Register',
       authenticate: 'Authenticate Your Peerplays Account',
       username: 'Username',
@@ -137,7 +137,7 @@ export const translationObject = {
       information: {
         title: 'Information',
         content: 'The username you enter is powered by the Peerplays blockchain. If you already have a username at Peerplays, ' +
-        'please enter it here to link your commodityIDENTINTY profile to it. If you don\'t have one, simply proceed to ',
+        'please enter it here to link your PeerID profile to it. If you don\'t have one, simply proceed to ',
         register: 'register your account'
       },
       passwordLengthError: 'Password should be at least 12 characters long'
