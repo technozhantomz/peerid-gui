@@ -1,0 +1,12 @@
+DEV_API_ROUTE='http://localhost:3000/'
+PRODUCTION_API_ROUTE='http://localhost:3000/'
+
+DEV_BASE_ROUTE='http://localhost:8082'
+PRODUCTION_BASE_ROUTE='http://localhost:8082'
+
+BLOCKCHAIN_ENDPOINTS='wss://wss.commodity.llc/api'
+
+PEERPLAYS_USD_ASSET_ID='1.3.0'
+PEERPLAYS_ESCROW_ACCOUNT_ID='1.2.28'
+PEERPLAYS_PAYMENT_ACCOUNT_ID='1.2.20'
+

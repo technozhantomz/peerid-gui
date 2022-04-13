@@ -39,14 +39,14 @@ class Account extends React.Component {
                     </Col>
                     <hr />
                     <Col md={6}>
-                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />commodityLLC ID : </h6>
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />App ID : </h6>
                     </Col>
                     <Col md={6}>
                       <h6 className="text-muted mx-auto m-0">{peerplaysAccountId}</h6>
                     </Col>
                     <hr />
                     <Col md={6}>
-                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />commodityLLC Account Name : </h6>
+                      <h6><i className="fa fa-circle text-c-green f-10 m-r-15" />App Account Name : </h6>
                     </Col>
                     <Col md={6}  >
                       <p className="mx-auto m-0">{peerplaysAccountName}</p>

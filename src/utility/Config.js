@@ -45,12 +45,6 @@ const Config = {
    * @memberof Config
    */
   prodApiRoute: PRODUCTION_API_ROUTE,
-  /**
-   * 
-   *
-   * @type {string}
-   * @memberof Config
-   */
   apiRoute: isDev ? DEV_API_ROUTE : PRODUCTION_API_ROUTE,
   /**
    * Toggles the requirement for authenticated routes needing a logged in user.
@@ -72,20 +66,19 @@ const Config = {
    * @type {number}
    * @memberof Config
    */
-  userSearchLimit: 1000,
+  userSearchLimit: 100,
 
   /**
    * Specifies whether testnet or mainnet endpoints are used for the Peerplays connection.
    */
-  usePeerplaysMainnet: BLOCKCHAIN_USE_TESTNET === 'false',
+  usePeerplaysTestnet: BLOCKCHAIN_USE_TESTNET === 'true',
 
   /**
    * Endpoints for elizabeth testnet. Used for Peerplays Global Login.
    *
    * @type {string[]}
-   * @memberof Config aliceEndpoints
+   * @memberof Config
    */
-   //aliceEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
   elizabethEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
 
   /**

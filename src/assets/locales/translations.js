@@ -126,17 +126,17 @@ export const translationObject = {
       }
     },
     peerplays: {
-      login: 'Login with Peerplays Global',
+      login: 'Login to kyc',
       enterUsername: 'Enter your username',
       enterPassword: 'Enter your password',
-      dontHaveAccount: 'Don\'t have a Peerplays Global account?',
+      dontHaveAccount: 'Don\'t have a CommodityLLC Global account?',
       register: 'Register',
-      authenticate: 'Authenticate Your Peerplays Account',
+      authenticate: 'Authenticate Your CommodityLLC Account',
       username: 'Username',
       password: 'Password',
       information: {
         title: 'Information',
-        content: 'The username you enter is powered by the Peerplays blockchain. If you already have a username at Peerplays, ' +
+        content: 'The username you enter is powered by the CommodityLLC blockchain. If you already have a username at CommodityLLC, ' +
         'please enter it here to link your PeerID profile to it. If you don\'t have one, simply proceed to ',
         register: 'register your account'
       },
@@ -149,8 +149,8 @@ export const translationObject = {
       }
     },
     error: 'Error!',
-    copyright: 'Peerplays Global©',
-    companyName: 'Peerplays Global',
+    copyright: 'CommodityLLC Global©',
+    companyName: 'CommodityLLC Global',
     companyAddress1: '12 Mount Havelock',
     companyAddress2: 'Douglas, Isle of Man  IM1 2QG',
     dashboard: {
