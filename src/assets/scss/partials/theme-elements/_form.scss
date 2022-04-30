@@ -142,3 +142,6 @@ select.form-control-lg:not([size]):not([multiple]) {
   padding-top: 0.25em;
 }
 
+.required {
+    color: $danger-color
+}

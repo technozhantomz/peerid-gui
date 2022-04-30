@@ -99,7 +99,7 @@ class AppPermission extends Component {
           }
 
           AppService.getPermittedApps().then((resPermitted) => {
-            let appExists = resPermitted.find((app) => app.id === appId);
+            let appExists = resPermitted.find((app) => app.id == appId);
 
             if(appExists) {
               AppService.joinApp(appId, redirectUri)

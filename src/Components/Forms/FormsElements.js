@@ -161,7 +161,7 @@ class FormsElements extends React.Component {
     }
     return true;
   }
- 
+
   // Change state handle
   handleAppNameChange = (e) => {
     this.setState({
@@ -366,7 +366,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            appErr: <div>* Should be between 3 and 255 characters. <br/>* Special characters are not allowed. <br/> * Only spaces are not allowed.</div>,
+            appErr: <div>* Should be between 3 and 255 characters. <br />* Special characters are not allowed. <br /> * Only spaces are not allowed.</div>,
             errorappname: ''
           })
         }
@@ -378,7 +378,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            descriptionErr: <div>* Should be between 5 and 1000 characters. <br/> * Only spaces are not allowed.</div>,
+            descriptionErr: <div>* Should be between 5 and 1000 characters. <br /> * Only spaces are not allowed.</div>,
           })
         }
         break;
@@ -389,7 +389,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            organizationErr: <div>* Should be between 2 and 255 characters. <br/>* Special characters are not allowed.  <br/>* Only spaces are not allowed.</div>,
+            organizationErr: <div>* Should be between 2 and 255 characters. <br />* Special characters are not allowed.  <br />* Only spaces are not allowed.</div>,
           })
         }
         break;
@@ -400,7 +400,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            addLine1Err: <div>* Should be between 5 and 255 characters. <br/>* Only spaces are not allowed. </div>,
+            addLine1Err: <div>* Should be between 5 and 255 characters. <br />* Only spaces are not allowed. </div>,
           })
         }
         break;
@@ -412,7 +412,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            addLine2Err: <div>* Should be between 5 and 255 characters. <br/>* Only spaces are not allowed. </div>,
+            addLine2Err: <div>* Should be between 5 and 255 characters. <br />* Only spaces are not allowed. </div>,
             disableBtn: false
           })
         }
@@ -430,7 +430,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            cityErr: <div>* Should be between 2 and 100 characters. <br/>* Only spaces are not allowed. </div>,
+            cityErr: <div>* Should be between 2 and 100 characters. <br />* Only spaces are not allowed. </div>,
           })
         }
         break;
@@ -443,7 +443,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            contactErr: <div>* Should be between 2 and 255 characters and numbers not allowed. <br/>* Only spaces are not allowed. </div>,
+            contactErr: <div>* Should be between 2 and 255 characters and numbers not allowed. <br />* Only spaces are not allowed. </div>,
           })
         }
         break;
@@ -480,7 +480,7 @@ class FormsElements extends React.Component {
           })
         } else {
           this.setState({
-            domainsErr: <div>* Should be valid domains separated by commas <br/>* Only spaces are not allowed.</div>,
+            domainsErr: <div>* Should be valid domains separated by commas <br />* Only spaces are not allowed.</div>,
           })
         }
         break;
@@ -505,7 +505,7 @@ class FormsElements extends React.Component {
                   <Row>
                     <Col md={6}>
                       <Form.Group controlId="formBasicEmail">
-                        <Form.Label>App Name</Form.Label>
+                        <Form.Label>App Name<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Enter app name"
                           name='appName'
@@ -517,7 +517,7 @@ class FormsElements extends React.Component {
                       <h6 style={{ color: "red" }} className='register__apiTxt--error'>{this.state.errorappname}</h6>
 
                       <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Organization Name</Form.Label>
+                        <Form.Label>Organization Name<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Organization Name"
                           name='organizationName'
@@ -530,7 +530,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Description</Form.Label>
+                        <Form.Label>Description<span className='required'>*</span></Form.Label>
                         <Form.Control as="textarea" rows="5"
                           placeholder="Description"
                           name='description'
@@ -547,7 +547,7 @@ class FormsElements extends React.Component {
                   <Row>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Country</Form.Label>
+                        <Form.Label>Country<span className='required'>*</span></Form.Label>
                         <Form.Control as="select"
                           placeholder="Enter Country"
                           value={countrySelected}
@@ -561,7 +561,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Address Line 1</Form.Label>
+                        <Form.Label>Address Line 1<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Address Line 1"
                           name='addressLine1'
@@ -586,7 +586,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>City</Form.Label>
+                        <Form.Label>City<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Enter City"
                           name='city'
@@ -599,7 +599,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>State</Form.Label>
+                        <Form.Label>State<span className='required'>*</span></Form.Label>
                         <Form.Control as="select"
                           placeholder="Enter state"
                           value={provinceSelected}
@@ -628,7 +628,7 @@ class FormsElements extends React.Component {
                   <Row>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Contact Person</Form.Label>
+                        <Form.Label>Contact Person<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Enter contact person"
                           name='contact'
@@ -641,7 +641,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Email<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Enter email"
                           name='email'
@@ -655,7 +655,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Phone</Form.Label>
+                        <Form.Label>Phone<span className='required'>*</span></Form.Label>
                         <Form.Control type="text"
                           placeholder="Enter Phone"
                           name='phone'
@@ -672,7 +672,7 @@ class FormsElements extends React.Component {
                   <Row>
                     <Col md={6}>
                       <Form.Group variant='outlined' margin='normal'>
-                        <InputLabel id='operationslabel'>Operations</InputLabel>
+                        <InputLabel id='operationslabel'>Operations<span className='required'>*</span></InputLabel>
                         <Select
                           labelId='operationslabel'
                           id='operations'
@@ -691,7 +691,7 @@ class FormsElements extends React.Component {
                     </Col>
                     <Col md={6}>
                       <Form.Group >
-                        <Form.Label>Domains</Form.Label>
+                        <Form.Label>Domains<span className='required'>*</span></Form.Label>
                         <Form.Control as="textarea" rows="3"
                           placeholder="Domains"
                           name='domains'
@@ -706,13 +706,13 @@ class FormsElements extends React.Component {
                   <Row>
                     <Col md={6}>
                       <Form.Group margin='normal'>
-                      <Form.Check 
-                        type="checkbox"
-                        id="signingRequestRequired"
-                        label="Send signing request to users for each transaction"
-                        value={this.state.signingRequestRequired}
-                        onChange={this.handleSigningRequest}
-                      />
+                        <Form.Check
+                          type="checkbox"
+                          id="signingRequestRequired"
+                          label="Send signing request to users for each transaction"
+                          value={this.state.signingRequestRequired}
+                          onChange={this.handleSigningRequest}
+                        />
                       </Form.Group>
                     </Col>
                   </Row>

@@ -66,7 +66,7 @@ const Config = {
    * @type {number}
    * @memberof Config
    */
-  userSearchLimit: 100,
+  userSearchLimit: 1000,
 
   /**
    * Specifies whether testnet or mainnet endpoints are used for the Peerplays connection.
