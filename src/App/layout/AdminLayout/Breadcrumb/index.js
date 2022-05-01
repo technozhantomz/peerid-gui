@@ -51,7 +51,7 @@ class Breadcrumb extends Component {
     render() {
       let main, item;
       let breadcrumb = '';
-      let title = 'PeerID Dashboard';
+      let title = 'Dashboard';
 
       if (this.state.main && this.state.main.type === 'collapse') {
         main = (
