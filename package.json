@@ -124,7 +124,7 @@
     "loglevel": "^1.7.1",
     "moment": "^2.24.0",
     "nvd3": "^1.8.6",
-    "peerplaysjs-lib": "git+https://github.com/technozhantomz/peerplaysjs-lib.git",
+    "peerplaysjs-lib": "git+https://gitlab.com/PBSA/PeerplaysIO/tools-libs/peerplaysjs-lib.git#account-roles",
     "pnp-webpack-plugin": "^1.6.4",
     "psl": "^1.8.0",
     "query-string": "^6.14.1",
