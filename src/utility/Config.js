@@ -1,12 +1,12 @@
 import {version} from '../../package.json';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
 const {
   DEV_API_ROUTE,
   PRODUCTION_API_ROUTE,
   DEV_BASE_ROUTE,
   PRODUCTION_BASE_ROUTE,
-  BLOCKCHAIN_USE_TESTNET,
+  BLOCKCHAIN_USE_MAINNET,
   BLOCKCHAIN_ENDPOINTS
 } = process.env;
 
@@ -66,12 +66,13 @@ const Config = {
    * @type {number}
    * @memberof Config
    */
-  userSearchLimit: 1000,
+  userSearchLimit: 100,
 
   /**
    * Specifies whether testnet or mainnet endpoints are used for the Peerplays connection.
    */
-  usePeerplaysTestnet: BLOCKCHAIN_USE_TESTNET === 'true',
+  //usePeerplaysTestnet: BLOCKCHAIN_USE_TESTNET === 'false',
+   usePeerplaysMainnet: BLOCKCHAIN_USE_MAINNET === 'true',
 
   /**
    * Endpoints for elizabeth testnet. Used for Peerplays Global Login.
@@ -79,7 +80,7 @@ const Config = {
    * @type {string[]}
    * @memberof Config
    */
-  elizabethEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
+  aliceEndpoints: BLOCKCHAIN_ENDPOINTS.replace(' ', '').split(','),
 
   /**
    * Represents the base uri.
